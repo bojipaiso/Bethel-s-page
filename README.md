@@ -716,7 +716,7 @@
 
             // subtle welcome alert (after 1.5s)
             setTimeout(function() {
-                alert("🦅 Welcome to Bethel International School!\n\nPawing, Palo, Leyte — Enrollment for SY 2024-2025 is now open.");
+                alert("Welcome to Bethel International School!\n\nPawing, Palo, Leyte — Enrollment for SY 2025-2026 is now open.");
             }, 1500);
 
             // small extra: ensure eagle pulse stays
