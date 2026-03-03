@@ -552,7 +552,7 @@
         <h2 class="section-title">Why Choose Bethel International School?</h2>
         <div class="features">
             <div class="feature-card eagle-feature">
-                <img src="https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-4.0.3&auto=format&fit=crop&w=1172&q=80" alt="Modern Science Lab" loading="lazy">
+                <img src="https://tse4.mm.bing.net/th/id/OIP.JYhqY4VyBQCsuLR8M5SSGAHaEK?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Modern Science Lab" loading="lazy">
                 <div class="feature-content">
                     <h3><span class="eagle-theme">World-Class Facilities</span></h3>
                     <p>Our campus in Pawing, Palo features modern classrooms, science labs, sports facilities, and a well-stocked library to support holistic learning and innovation.</p>
@@ -560,7 +560,7 @@
             </div>
             
             <div class="feature-card eagle-feature">
-                <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Qualified Teachers" loading="lazy">
+                <img src="https://scontent.fmnl8-5.fna.fbcdn.net/v/t39.30808-6/494677778_1184092173509966_1467242287750961667_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=109&ccb=1-7&_nc_sid=13d280&_nc_ohc=kTbREoPvYM4Q7kNvwFs7ehw&_nc_oc=Adl-QeWcukz5wpPNbI_IsJgh8YWplKqxTVl1ERIHbgos4M41AlYvR1qAK1qekuRD9Vs&_nc_zt=23&_nc_ht=scontent.fmnl8-5.fna&_nc_gid=4tTIb_UuAdc2a852Sm9THw&_nc_ss=8&oh=00_AfyJb7vXS6CIW0kHdyzgdaxcH9TbcG0v-4F6du9dXG7I8g&oe=69ABF7E0" loading="lazy">
                 <div class="feature-content">
                     <h3><span class="eagle-theme">International Curriculum</span></h3>
                     <p>We offer an internationally-recognized curriculum combined with Filipino values and context to prepare students for global opportunities while remaining rooted in Philippine heritage.</p>
@@ -568,7 +568,7 @@
             </div>
             
             <div class="feature-card eagle-feature">
-                <img src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1171&q=80" alt="Extracurricular activities" loading="lazy">
+                <img src="https://scontent.fmnl8-3.fna.fbcdn.net/v/t39.30808-6/559251768_1300527395199776_1833264895074228545_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=105&ccb=1-7&_nc_sid=13d280&_nc_ohc=-GpvvZjRtpcQ7kNvwH3MFLf&_nc_oc=AdkuWAhLfokdmTM92GtfVP_A-WIag9YFNeznc6IqDeTY_An5ScraFOuces7YhJERtLk&_nc_zt=23&_nc_ht=scontent.fmnl8-3.fna&_nc_gid=nuqr1aZYvEJ9cM2UWvYQYQ&_nc_ss=8&oh=00_AfxCSxUppLB656RcwlnDwZLeEbUhas3V2XDbK5yC-PCcig&oe=69AC0BFB" loading="lazy">
                 <div class="feature-content">
                     <h3><span class="eagle-theme">Soaring Talents Program</span></h3>
                     <p>Inspired by the Philippine Eagle, our Soaring Talents Program offers sports, arts, music, leadership, and cultural activities to help students discover and develop their unique talents.</p>
@@ -585,8 +585,8 @@
                     <div class="month">June</div>
                 </div>
                 <div class="announcement-text">
-                    <h3>Enrollment for SY 2024-2025</h3>
-                    <p>Enrollment for the School Year 2024-2025 is now open. Visit our campus in Pawing, Palo, Leyte for inquiries and campus tours.</p>
+                    <h3>Enrollment for SY 2026-2027</h3>
+                    <p>Enrollment for the School Year 2026-2027 is now open. Visit our campus in Pawing, Palo, Leyte for inquiries and campus tours.</p>
                 </div>
             </div>
             
@@ -612,6 +612,31 @@
                 </div>
             </div>
         </div>
+
+        <!-- quick links with eagle flair -->
+        <h2 class="section-title">Quick Links</h2>
+        <div class="quick-links">
+            <a href="#" class="link-card">
+                <i class="fas fa-calendar-alt"></i>
+                <h3>School Calendar</h3>
+                <p>View important dates and events</p>
+            </a>
+            <a href="#" class="link-card">
+                <i class="fas fa-user-graduate"></i>
+                <h3>Student Portal</h3>
+                <p>Access grades and assignments</p>
+            </a>
+            <a href="#" class="link-card">
+                <i class="fas fa-bus"></i>
+                <h3>Transportation</h3>
+                <p>Bus routes and schedules</p>
+            </a>
+            <a href="#" class="link-card">
+                <i class="fas fa-eagle"></i> 
+                <h3>Eagle's Nest</h3>
+                <p>Student achievements & gallery</p>
+            </a>
+        </div>
     </main>
 
     <footer>
@@ -623,7 +648,7 @@
                         <span style="font-size: 2rem;">🦅</span>
                         <span>Pawing, Palo, Leyte<br>Philippines 6501</span>
                     </div>
-                    <p class="school-location">Soaring to academic excellence since 2005</p>
+                    <p class="school-location">Soaring to academic excellence since 2001</p>
                     <p>Phone: (067) 676-6767<br>Email: secretary@bethel.edu.ph</p>
                     <div class="social-icons">
                         <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
@@ -655,7 +680,7 @@
             </div>
             
             <div class="copyright">
-                <p>&copy; 2024 Bethel International School, Pawing, Palo, Leyte. All Rights Reserved. | The Philippine Eagle symbolizes our commitment to strength, vision, and soaring excellence.</p>
+                <p>&copy; 2026 Bethel International School, Pawing, Palo, Leyte. All Rights Reserved. | The Philippine Eagle symbolizes our commitment to strength, vision, and soaring excellence.</p>
             </div>
         </div>
     </footer>
@@ -691,7 +716,7 @@
 
             // subtle welcome alert (after 1.5s)
             setTimeout(function() {
-                alert("Welcome to Bethel International School!\n\nPawing, Palo, Leyte — Enrollment for SY 2025-2026 is now open.");
+                alert("🦅 Welcome to Bethel International School!\n\nPawing, Palo, Leyte — Enrollment for SY 2024-2025 is now open.");
             }, 1500);
 
             // small extra: ensure eagle pulse stays
