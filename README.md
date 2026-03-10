@@ -549,7 +549,7 @@
     <main class="container">
 
         <!-- features (three cards) -->
-        <h2 class="section-title">Why Choose Bethel International School?</h2>
+        yes <h2 class="section-title">Why Choose Bethel International School?</h2>
         <div class="features">
             <div class="feature-card eagle-feature">
                 <img src="https://tse4.mm.bing.net/th/id/OIP.JYhqY4VyBQCsuLR8M5SSGAHaEK?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Modern Science Lab" loading="lazy">
