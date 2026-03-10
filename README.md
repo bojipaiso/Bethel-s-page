@@ -549,10 +549,10 @@
     <main class="container">
 
         <!-- features (three cards) -->
-        yes <h2 class="section-title">Why Choose Bethel International School?</h2>
+        <h2 class="section-title">Why Choose Bethel International School?</h2>
         <div class="features">
             <div class="feature-card eagle-feature">
-                <img src="https://tse4.mm.bing.net/th/id/OIP.JYhqY4VyBQCsuLR8M5SSGAHaEK?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Modern Science Lab" loading="lazy">
+                <img src="https://scontent.fmnl8-3.fna.fbcdn.net/v/t39.30808-6/495732260_1183854323533751_7318929907381943288_n.png?_nc_cat=110&ccb=1-7&_nc_sid=2a1932&_nc_ohc=zq51vdNwjjwQ7kNvwF_5o7a&_nc_oc=Admybj6GOkgLexRgkiwES-jf3XibbGC8lKIu4_ZKV1YGR-49r_BSDPlSHzkYjyYTgnw&_nc_zt=23&_nc_ht=scontent.fmnl8-3.fna&_nc_gid=xHWirJsm6aBvc2DpEuHZFw&_nc_ss=8&oh=00_AfzVx2jdB0NWEEfhBYOc3E3-YtGk-VlF475UbK6VhAX6_w&oe=69ABFB01" alt="Modern Science Lab" loading="lazy">
                 <div class="feature-content">
                     <h3><span class="eagle-theme">World-Class Facilities</span></h3>
                     <p>Our campus in Pawing, Palo features modern classrooms, science labs, sports facilities, and a well-stocked library to support holistic learning and innovation.</p>
@@ -560,7 +560,7 @@
             </div>
             
             <div class="feature-card eagle-feature">
-                <img src="https://scontent.fmnl8-5.fna.fbcdn.net/v/t39.30808-6/494677778_1184092173509966_1467242287750961667_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=109&ccb=1-7&_nc_sid=13d280&_nc_ohc=kTbREoPvYM4Q7kNvwFs7ehw&_nc_oc=Adl-QeWcukz5wpPNbI_IsJgh8YWplKqxTVl1ERIHbgos4M41AlYvR1qAK1qekuRD9Vs&_nc_zt=23&_nc_ht=scontent.fmnl8-5.fna&_nc_gid=4tTIb_UuAdc2a852Sm9THw&_nc_ss=8&oh=00_AfyJb7vXS6CIW0kHdyzgdaxcH9TbcG0v-4F6du9dXG7I8g&oe=69ABF7E0" loading="lazy">
+                <img src="https://scontent.fmnl8-2.fna.fbcdn.net/v/t39.30808-6/495062395_1183829323536251_7942918354039119915_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=111&ccb=1-7&_nc_sid=13d280&_nc_ohc=b_Ejith73hgQ7kNvwErU0Pl&_nc_oc=AdlaAMhySR5TPdIsWHHJdyn0NY81-iEnW0_7gxHxf8L5eyvoqJ9jWJxz6gpnjXmSL0M&_nc_zt=23&_nc_ht=scontent.fmnl8-2.fna&_nc_gid=_32HRZ6FRYxLO-ozzNBhUQ&_nc_ss=8&oh=00_AfzwKr5uBCPtYb3ZhVF27pRbXMPThhdXMGOfkvjhy0Zxag&oe=69ABF718" alt="Qualified Teachers" loading="lazy">
                 <div class="feature-content">
                     <h3><span class="eagle-theme">International Curriculum</span></h3>
                     <p>We offer an internationally-recognized curriculum combined with Filipino values and context to prepare students for global opportunities while remaining rooted in Philippine heritage.</p>
@@ -568,7 +568,7 @@
             </div>
             
             <div class="feature-card eagle-feature">
-                <img src="https://scontent.fmnl8-3.fna.fbcdn.net/v/t39.30808-6/559251768_1300527395199776_1833264895074228545_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=105&ccb=1-7&_nc_sid=13d280&_nc_ohc=-GpvvZjRtpcQ7kNvwH3MFLf&_nc_oc=AdkuWAhLfokdmTM92GtfVP_A-WIag9YFNeznc6IqDeTY_An5ScraFOuces7YhJERtLk&_nc_zt=23&_nc_ht=scontent.fmnl8-3.fna&_nc_gid=nuqr1aZYvEJ9cM2UWvYQYQ&_nc_ss=8&oh=00_AfxCSxUppLB656RcwlnDwZLeEbUhas3V2XDbK5yC-PCcig&oe=69AC0BFB" loading="lazy">
+                <img src="https://scontent.fmnl8-4.fna.fbcdn.net/v/t39.30808-6/615801503_1384170693502112_9069250568869932829_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=102&ccb=1-7&_nc_sid=13d280&_nc_ohc=TL3ZoOgihjgQ7kNvwF6iGpV&_nc_oc=Adn6AJiMz6JU2A8wTgwbVbJNkt2lvSy2AJsdcc8e3UU7fCrdoQZiVJsFi2LgSmYPVvQ&_nc_zt=23&_nc_ht=scontent.fmnl8-4.fna&_nc_gid=uo5fzvXFj03IRkouGhJ_ag&_nc_ss=8&oh=00_AfwgvPYH8eHc5seJ1RHqcCOk5tiChCO2utRAzQ7DFmpVEw&oe=69B52FCA" alt="Extracurricular activities" loading="lazy">
                 <div class="feature-content">
                     <h3><span class="eagle-theme">Soaring Talents Program</span></h3>
                     <p>Inspired by the Philippine Eagle, our Soaring Talents Program offers sports, arts, music, leadership, and cultural activities to help students discover and develop their unique talents.</p>
@@ -585,8 +585,8 @@
                     <div class="month">June</div>
                 </div>
                 <div class="announcement-text">
-                    <h3>Enrollment for SY 2026-2027</h3>
-                    <p>Enrollment for the School Year 2026-2027 is now open. Visit our campus in Pawing, Palo, Leyte for inquiries and campus tours.</p>
+                    <h3>Enrollment for SY 2025-2026</h3>
+                    <p>Enrollment for the School Year 2025-2026 is now open. Visit our campus in Pawing, Palo, Leyte for inquiries and campus tours.</p>
                 </div>
             </div>
             
@@ -649,7 +649,7 @@
                         <span>Pawing, Palo, Leyte<br>Philippines 6501</span>
                     </div>
                     <p class="school-location">Soaring to academic excellence since 2001</p>
-                    <p>Phone: (067) 676-6767<br>Email: secretary@bethel.edu.ph</p>
+                    <p>Phone: 0917-173-0284<br>Email: secretary@bethel.edu.ph</p>
                     <div class="social-icons">
                         <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
                         <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
@@ -716,7 +716,7 @@
 
             // subtle welcome alert (after 1.5s)
             setTimeout(function() {
-                alert("🦅 Welcome to Bethel International School!\n\nPawing, Palo, Leyte — Enrollment for SY 2024-2025 is now open.");
+                alert("Welcome to Bethel International School!\n\nPawing, Palo, Leyte — Enrollment for SY 2025-2026 is now open.");
             }, 1500);
 
             // small extra: ensure eagle pulse stays
