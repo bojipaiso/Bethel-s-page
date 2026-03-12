@@ -552,7 +552,7 @@
         <h2 class="section-title">Why Choose Bethel International School?</h2>
         <div class="features">
             <div class="feature-card eagle-feature">
-                <img src="https://scontent.fmnl8-3.fna.fbcdn.net/v/t39.30808-6/495732260_1183854323533751_7318929907381943288_n.png?_nc_cat=110&ccb=1-7&_nc_sid=2a1932&_nc_ohc=zq51vdNwjjwQ7kNvwF_5o7a&_nc_oc=Admybj6GOkgLexRgkiwES-jf3XibbGC8lKIu4_ZKV1YGR-49r_BSDPlSHzkYjyYTgnw&_nc_zt=23&_nc_ht=scontent.fmnl8-3.fna&_nc_gid=xHWirJsm6aBvc2DpEuHZFw&_nc_ss=8&oh=00_AfzVx2jdB0NWEEfhBYOc3E3-YtGk-VlF475UbK6VhAX6_w&oe=69ABFB01" alt="Modern Science Lab" loading="lazy">
+                <img src="Images/Campus.png" alt="Modern Science Lab" loading="lazy">
                 <div class="feature-content">
                     <h3><span class="eagle-theme">World-Class Facilities</span></h3>
                     <p>Our campus in Pawing, Palo features modern classrooms, science labs, sports facilities, and a well-stocked library to support holistic learning and innovation.</p>
@@ -560,7 +560,7 @@
             </div>
             
             <div class="feature-card eagle-feature">
-                <img src="https://scontent.fmnl8-2.fna.fbcdn.net/v/t39.30808-6/495062395_1183829323536251_7942918354039119915_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=111&ccb=1-7&_nc_sid=13d280&_nc_ohc=b_Ejith73hgQ7kNvwErU0Pl&_nc_oc=AdlaAMhySR5TPdIsWHHJdyn0NY81-iEnW0_7gxHxf8L5eyvoqJ9jWJxz6gpnjXmSL0M&_nc_zt=23&_nc_ht=scontent.fmnl8-2.fna&_nc_gid=_32HRZ6FRYxLO-ozzNBhUQ&_nc_ss=8&oh=00_AfzwKr5uBCPtYb3ZhVF27pRbXMPThhdXMGOfkvjhy0Zxag&oe=69ABF718" alt="Qualified Teachers" loading="lazy">
+                <img src="Images/International.jpg" alt="Qualified Teachers" loading="lazy">
                 <div class="feature-content">
                     <h3><span class="eagle-theme">International Curriculum</span></h3>
                     <p>We offer an internationally-recognized curriculum combined with Filipino values and context to prepare students for global opportunities while remaining rooted in Philippine heritage.</p>
@@ -568,7 +568,7 @@
             </div>
             
             <div class="feature-card eagle-feature">
-                <img src="https://scontent.fmnl8-4.fna.fbcdn.net/v/t39.30808-6/615801503_1384170693502112_9069250568869932829_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=102&ccb=1-7&_nc_sid=13d280&_nc_ohc=TL3ZoOgihjgQ7kNvwF6iGpV&_nc_oc=Adn6AJiMz6JU2A8wTgwbVbJNkt2lvSy2AJsdcc8e3UU7fCrdoQZiVJsFi2LgSmYPVvQ&_nc_zt=23&_nc_ht=scontent.fmnl8-4.fna&_nc_gid=uo5fzvXFj03IRkouGhJ_ag&_nc_ss=8&oh=00_AfwgvPYH8eHc5seJ1RHqcCOk5tiChCO2utRAzQ7DFmpVEw&oe=69B52FCA" alt="Extracurricular activities" loading="lazy">
+                <img src="Images/Play.jpg" alt="Extracurricular activities" loading="lazy">
                 <div class="feature-content">
                     <h3><span class="eagle-theme">Soaring Talents Program</span></h3>
                     <p>Inspired by the Philippine Eagle, our Soaring Talents Program offers sports, arts, music, leadership, and cultural activities to help students discover and develop their unique talents.</p>
@@ -611,6 +611,31 @@
                     <p>Celebrate Philippine Independence Day with us on June 12 featuring cultural performances, historical exhibits, and patriotic activities.</p>
                 </div>
             </div>
+        </div>
+
+        <!-- quick links with eagle flair -->
+        <h2 class="section-title">Quick Links</h2>
+        <div class="quick-links">
+            <a href="#" class="link-card">
+                <i class="fas fa-calendar-alt"></i>
+                <h3>School Calendar</h3>
+                <p>View important dates and events</p>
+            </a>
+            <a href="#" class="link-card">
+                <i class="fas fa-user-graduate"></i>
+                <h3>Student Portal</h3>
+                <p>Access grades and assignments</p>
+            </a>
+            <a href="#" class="link-card">
+                <i class="fas fa-bus"></i>
+                <h3>Transportation</h3>
+                <p>Bus routes and schedules</p>
+            </a>
+            <a href="#" class="link-card">
+                <i class="fas fa-eagle"></i> 
+                <h3>Eagle's Nest</h3>
+                <p>Student achievements & gallery</p>
+            </a>
         </div>
     </main>
 
