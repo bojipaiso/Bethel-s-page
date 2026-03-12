@@ -612,31 +612,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- quick links with eagle flair -->
-        <h2 class="section-title">Quick Links</h2>
-        <div class="quick-links">
-            <a href="#" class="link-card">
-                <i class="fas fa-calendar-alt"></i>
-                <h3>School Calendar</h3>
-                <p>View important dates and events</p>
-            </a>
-            <a href="#" class="link-card">
-                <i class="fas fa-user-graduate"></i>
-                <h3>Student Portal</h3>
-                <p>Access grades and assignments</p>
-            </a>
-            <a href="#" class="link-card">
-                <i class="fas fa-bus"></i>
-                <h3>Transportation</h3>
-                <p>Bus routes and schedules</p>
-            </a>
-            <a href="#" class="link-card">
-                <i class="fas fa-eagle"></i> 
-                <h3>Eagle's Nest</h3>
-                <p>Student achievements & gallery</p>
-            </a>
-        </div>
     </main>
 
     <footer>
@@ -739,3 +714,4 @@
     </script>
 </body>
 </html>
+
