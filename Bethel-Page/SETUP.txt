@@ -1,0 +1,57 @@
+==========================================
+BETHEL SCHOOL CRUD SYSTEM - SETUP GUIDE
+==========================================
+
+1. DATABASE SETUP:
+   - Open phpMyAdmin or MySQL command line
+   - Run the setup.sql code provided above
+   - This creates database, tables, and default data
+
+2. FILE STRUCTURE:
+   Create these folders in your website root:
+   bethel-school/
+   ├── admin/
+   ├── includes/
+   ├── css/
+   ├── uploads/
+   └── Images/ (your existing images folder)
+
+3. UPLOAD FILES:
+   Place all PHP files in their respective folders:
+   - index.php (modified version) → root folder
+   - All admin/*.php files → admin folder
+   - All includes/*.php files → includes folder
+   - admin-style.css → css folder
+   - .htaccess & index.html → uploads folder
+
+4. PERMISSIONS:
+   - Set uploads folder permissions to 755 (or 777 on some servers)
+   - chmod 755 uploads/
+
+5. DATABASE CONFIGURATION:
+   - Edit includes/db.php with your database credentials
+   - Default: username "root", password "" (empty)
+
+6. ACCESS ADMIN PANEL:
+   - URL: http://yoursite.com/admin/login.php
+   - Username: admin
+   - Password: admin123
+
+7. WHAT YOU CAN MANAGE:
+   ✅ Announcements (add/edit/delete/toggle status)
+   ✅ Feature Cards (with image upload)
+   ✅ Hero Section (text, buttons, background image)
+   ✅ All content appears instantly on your website
+
+8. TROUBLESHOOTING:
+   - If images don't upload: Check uploads folder permissions
+   - If database error: Verify db.php credentials
+   - If 404 errors: Check file paths in includes
+
+9. SECURITY RECOMMENDATIONS:
+   - Change default admin password immediately
+   - Move admin folder to a non-guessable name
+   - Add SSL certificate to your site
+   - Regular database backups
+
+==========================================
