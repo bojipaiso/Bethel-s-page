@@ -1,57 +1,479 @@
-==========================================
-BETHEL SCHOOL CRUD SYSTEM - SETUP GUIDE
-==========================================
+================================================================================
+           BETHEL INTERNATIONAL SCHOOL - COMPLETE SETUP GUIDE
+                            Version 2.0
+================================================================================
 
-1. DATABASE SETUP:
-   - Open phpMyAdmin or MySQL command line
-   - Run the setup.sql code provided above
-   - This creates database, tables, and default data
+TABLE OF CONTENTS:
+1. System Requirements
+2. Installation Steps
+3. Database Configuration
+4. File Structure
+5. Admin Access
+6. CRUD Management Guide
+7. Features Overview
+8. Troubleshooting
+9. Security Recommendations
 
-2. FILE STRUCTURE:
-   Create these folders in your website root:
-   bethel-school/
-   ├── admin/
-   ├── includes/
-   ├── css/
-   ├── uploads/
-   └── Images/ (your existing images folder)
+================================================================================
+1. SYSTEM REQUIREMENTS
+================================================================================
 
-3. UPLOAD FILES:
-   Place all PHP files in their respective folders:
-   - index.php (modified version) → root folder
-   - All admin/*.php files → admin folder
-   - All includes/*.php files → includes folder
-   - admin-style.css → css folder
-   - .htaccess & index.html → uploads folder
+Required:
+- PHP 7.4 or higher (PHP 8.x recommended)
+- MySQL 5.7 or higher / MariaDB 10.2 or higher
+- Web Server (Apache/Nginx/XAMPP/WAMP)
+- 100MB disk space (plus uploads)
 
-4. PERMISSIONS:
-   - Set uploads folder permissions to 755 (or 777 on some servers)
-   - chmod 755 uploads/
+Recommended:
+- XAMPP 7.4+ or WAMP for local development
+- cPanel with Softaculous for live server
+- HTTPS/SSL certificate for production
 
-5. DATABASE CONFIGURATION:
-   - Edit includes/db.php with your database credentials
-   - Default: username "root", password "" (empty)
+================================================================================
+2. INSTALLATION STEPS
+================================================================================
 
-6. ACCESS ADMIN PANEL:
-   - URL: http://yoursite.com/admin/login.php
-   - Username: admin
-   - Password: admin123
+STEP 1: Extract Files
+---------------------
+Extract the bethel-school.zip file to your web directory:
+- Local (XAMPP): C:\xampp\htdocs\bethel-school\
+- Local (WAMP): C:\wamp64\www\bethel-school\
+- Live: /public_html/bethel-school/ (cPanel)
 
-7. WHAT YOU CAN MANAGE:
-   ✅ Announcements (add/edit/delete/toggle status)
-   ✅ Feature Cards (with image upload)
-   ✅ Hero Section (text, buttons, background image)
-   ✅ All content appears instantly on your website
+STEP 2: Create Database
+-----------------------
+Via phpMyAdmin:
+1. Open http://localhost/phpmyadmin
+2. Click "New" to create database
+3. Name: bethel_school
+4. Charset: utf8mb4_general_ci
+5. Click "Create"
 
-8. TROUBLESHOOTING:
-   - If images don't upload: Check uploads folder permissions
-   - If database error: Verify db.php credentials
-   - If 404 errors: Check file paths in includes
+Via MySQL command line:
+CREATE DATABASE bethel_school CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 
-9. SECURITY RECOMMENDATIONS:
-   - Change default admin password immediately
-   - Move admin folder to a non-guessable name
-   - Add SSL certificate to your site
-   - Regular database backups
+STEP 3: Import Database
+-----------------------
+1. Open phpMyAdmin
+2. Select 'bethel_school' database
+3. Click "Import" tab
+4. Choose the 'setup.sql' file
+5. Click "Go"
 
-==========================================
+STEP 4: Configure Database Connection
+-------------------------------------
+Edit includes/db.php with your credentials:
+
+For XAMPP (Local):
+$host = 'localhost';
+$dbname = 'bethel_school';
+$username = 'root';
+$password = '';
+
+For Live Server:
+$host = 'localhost';
+$dbname = 'yourcpanelusername_bethel_school';
+$username = 'yourcpanelusername';
+$password = 'your_database_password';
+
+STEP 5: Set Folder Permissions
+------------------------------
+Set these folders to 755 (or 777 on some servers):
+- uploads/
+- uploads/calendar/
+- uploads/newsletters/
+- uploads/news/
+- Images/
+
+On Linux/Mac:
+chmod -R 755 uploads/
+chmod -R 755 Images/
+
+On Windows: Usually not required
+
+STEP 6: Create Required Folders
+-------------------------------
+Create these folders if they don't exist:
+- uploads/
+- uploads/calendar/
+- uploads/newsletters/
+- uploads/news/
+- Images/
+- Images/news/
+
+STEP 7: Test Installation
+-------------------------
+1. Open browser: http://localhost/bethel-school/
+2. You should see the homepage
+3. Test admin login: http://localhost/bethel-school/admin/login.php
+4. Username: admin
+5. Password: admin123
+
+================================================================================
+3. DATABASE CONFIGURATION
+================================================================================
+
+Database Name: bethel_school
+Total Tables: 18 tables
+
+Key Tables and Their Purposes:
+┌─────────────────────────┬────────────────────────────────────────────────┐
+│ Table Name              │ Purpose                                        │
+├─────────────────────────┼────────────────────────────────────────────────┤
+│ admin_users             │ Admin login credentials                        │
+│ announcements           │ Homepage announcements                         │
+│ features                │ "Why Choose Bethel" cards                      │
+│ hero_content            │ Homepage hero section                          │
+│ news_articles           │ News & Events page (with highlights)           │
+│ academic_levels         │ Education levels (K-12)                        │
+│ academic_programs       │ Specific programs under each level             │
+│ special_programs        │ Extracurricular/special offerings              │
+│ admission_steps         │ Admissions process steps                       │
+│ academic_calendar       │ Calendar events                                │
+│ calendar_pdfs           │ Downloadable calendar PDFs                     │
+│ newsletters             │ School newsletter PDFs                         │
+│ about_content           │ About Us page content                          │
+│ about_stats             │ Statistics on About Us page                    │
+│ contact_messages        │ Contact form submissions                       │
+│ school_settings         │ Global website settings                        │
+│ newsletter_subscribers  │ Email subscribers                              │
+└─────────────────────────┴────────────────────────────────────────────────┘
+
+================================================================================
+4. FILE STRUCTURE
+================================================================================
+
+bethel-school/
+│
+├── index.php                 (Homepage)
+├── about.php                 (About Us page)
+├── academics.php             (Academics page)
+├── admissions.php            (Admissions page)
+├── news.php                  (News & Events page)
+├── contact.php               (Contact page)
+├── calendar.php              (Calendar PDF archive)
+├── newsletter.php            (Newsletter archive)
+├── coming-soon.php           (Coming soon template)
+│
+├── admin/                    (Admin Panel)
+│   ├── login.php
+│   ├── logout.php
+│   ├── dashboard.php
+│   ├── manage-announcements.php
+│   ├── manage-features.php
+│   ├── manage-hero.php
+│   ├── manage-news.php
+│   ├── edit-news.php
+│   ├── manage-academics.php
+│   ├── edit-academic-program.php
+│   ├── manage-admissions.php
+│   ├── edit-admission-step.php
+│   ├── manage-calendar.php
+│   ├── edit-calendar-event.php
+│   ├── manage-newsletters.php
+│   ├── manage-about.php
+│   ├── manage-messages.php
+│   ├── view-message.php
+│   └── uploads/
+│
+├── includes/                (PHP includes)
+│   ├── db.php              (Database connection)
+│   ├── auth.php            (Authentication helper)
+│   └── functions.php       (Helper functions)
+│
+├── css/                     (Stylesheets)
+│   └── admin-style.css
+│
+├── images/                  (Website images)
+│   ├── bethel-logo.png
+│   └── news/               (News article images)
+│
+├── uploads/                 (User uploaded files)
+│   ├── calendar/           (Calendar PDFs)
+│   ├── newsletters/        (Newsletter PDFs)
+│   └── news/               (News article images)
+│
+├── database/                (Database files)
+│   └── setup.sql
+│
+├── SETUP.txt               (This file)
+└── README.md               (Documentation)
+
+================================================================================
+5. ADMIN ACCESS
+================================================================================
+
+Admin Panel URL: http://yourdomain.com/bethel-school/admin/login.php
+
+Default Login Credentials:
+┌──────────────┬──────────────────┐
+│ Username     │ admin            │
+├──────────────┼──────────────────┤
+│ Password     │ admin123         │
+└──────────────┴──────────────────┘
+
+⚠️ IMPORTANT: Change these credentials immediately after first login!
+
+How to Change Password:
+1. Login to admin panel
+2. Go to Dashboard
+3. Use the password reset script or update via phpMyAdmin:
+   UPDATE admin_users SET password = 'new_hashed_password' WHERE username = 'admin';
+
+================================================================================
+6. CRUD MANAGEMENT GUIDE
+================================================================================
+
+A. MANAGE HOMEPAGE ANNOUNCEMENTS
+--------------------------------
+Path: Admin → Manage Announcements
+- Add new announcements with date, title, description
+- Edit existing announcements
+- Delete announcements
+- Toggle active/inactive status
+- Reorder display order
+
+B. MANAGE FEATURE CARDS
+-----------------------
+Path: Admin → Manage Features
+- Add/Edit feature cards
+- Enter image URL (local or external)
+- Edit title and description
+- Reorder display order
+
+C. MANAGE HERO SECTION
+----------------------
+Path: Admin → Manage Hero Section
+- Edit main title and subtitle
+- Change CTA button text and link
+- Upload background image
+
+D. MANAGE NEWS & ARTICLES (NEW!)
+--------------------------------
+Path: Admin → Manage News
+
+Features:
+- Write new articles with rich text
+- Upload/enter image URL for featured images
+- Set category (News/Event/Announcement/Feature)
+- Mark as "Highlight" to feature at top
+- Set highlight order
+- Publish or save as draft
+- Search articles
+- View statistics (total, published, highlights, drafts)
+
+E. MANAGE NEWS HIGHLIGHTS
+-------------------------
+Highlights appear at the top of the News page with special styling:
+- Toggle highlight status from manage page
+- Set display order (lower numbers appear first)
+- Highlighted articles get a gold star badge
+
+F. MANAGE ACADEMICS
+-------------------
+Path: Admin → Manage Academics
+- Two tabs: Academic Programs & Special Programs
+- Add/Edit academic programs by level
+- Add features list for each program
+- Manage special programs with icons
+- Reorder display order
+
+G. MANAGE ADMISSIONS
+--------------------
+Path: Admin → Manage Admissions
+- Edit welcome message and requirements
+- Add/Edit admission steps
+- Update enrollment dates
+
+H. MANAGE CALENDAR (PDF + Events)
+---------------------------------
+Path: Admin → Manage Calendar
+
+Two sections:
+1. PDF Calendar Downloads
+   - Upload PDF versions of academic calendar
+   - Set current calendar
+   - Delete old calendars
+
+2. Calendar Events
+   - Add/Edit individual events
+   - Set event types (Regular/Holiday/Exam/Event/Deadline)
+   - Toggle active/inactive
+
+I. MANAGE NEWSLETTERS
+---------------------
+Path: Admin → Manage Newsletters
+- Upload PDF newsletters
+- Add title, issue number, description
+- Toggle Coming Soon mode
+- Manage published newsletters
+
+J. MANAGE ABOUT US PAGE
+-----------------------
+Path: Admin → Manage About Us
+- Edit Mission statement
+- Edit Vision statement
+- Edit Our Story
+- Edit Core Values
+- Add/Edit statistics (numbers with labels)
+
+K. VIEW CONTACT MESSAGES
+------------------------
+Path: Admin → Contact Messages
+- View all contact form submissions
+- Mark messages as read
+- Delete messages
+
+================================================================================
+7. FEATURES OVERVIEW
+================================================================================
+
+Frontend Features:
+✅ Responsive school website design
+✅ Dynamic homepage with editable sections
+✅ News & Events with highlight system
+✅ Academic programs showcase
+✅ Special programs section
+✅ Admissions information with steps
+✅ Contact form with database storage
+✅ Academic calendar (PDF + events)
+✅ Newsletter archive
+✅ About Us page with statistics
+✅ Mobile-friendly navigation
+✅ Coming Soon page with toggle
+
+Admin Features:
+✅ Secure admin login system
+✅ Complete CRUD operations
+✅ News highlight system (⭐ Featured)
+✅ Image URL management (local or external)
+✅ PDF upload for calendars and newsletters
+✅ Coming Soon mode toggle (manual + auto)
+✅ Contact message management
+✅ Publish/draft system
+✅ Reorder content with display order
+✅ Status toggling (active/inactive)
+✅ Search functionality in news management
+✅ Statistics dashboard
+
+================================================================================
+8. COMING SOON MODE TOGGLE
+================================================================================
+
+The Coming Soon feature allows you to hide content while it's being prepared.
+
+How it works:
+┌─────────────────────────────────────────────────────────────────┐
+│ Setting              │ Behavior                                  │
+├─────────────────────────────────────────────────────────────────┤
+│ Coming Soon ON      │ Visitors see "Coming Soon" page          │
+│ Coming Soon OFF     │ Visitors see actual content              │
+│ Auto ON (empty)     │ Coming Soon activates when no content    │
+│ Auto OFF (upload)   │ Coming Soon deactivates when content added│
+└─────────────────────────────────────────────────────────────────┘
+
+Manual Toggle Locations:
+- Newsletter: admin/manage-newsletters.php
+- Calendar: admin/manage-calendar.php
+- Dashboard: Quick toggle buttons
+
+================================================================================
+9. TROUBLESHOOTING
+================================================================================
+
+ISSUE: White screen or PHP errors
+SOLUTION: 
+- Check PHP version (requires 7.4+)
+- Enable error reporting in php.ini
+- Check file permissions
+
+ISSUE: Cannot login to admin
+SOLUTION:
+- Verify database connection in includes/db.php
+- Check if admin user exists in database
+- Run reset_password.php to reset password
+
+ISSUE: Images not loading
+SOLUTION:
+- Check if Images/ folder exists
+- Verify file permissions (755)
+- Use placeholder URLs: https://placehold.co/800x600/002366/FFD700?text=Title
+
+ISSUE: News images not showing
+SOLUTION:
+- Go to Admin → Manage News → Edit Article
+- Enter a valid image URL
+- Recommended: https://placehold.co/800x600/002366/FFD700?text=Your+Title
+
+ISSUE: CSS not loading on admin panel
+SOLUTION:
+- Check that CSS path has ../ prefix
+- Verify admin-style.css exists in css/ folder
+- Clear browser cache (Ctrl+F5)
+
+ISSUE: PDF downloads not working
+SOLUTION:
+- Check uploads/calendar/ and uploads/newsletters/ folders exist
+- Verify PDF files are uploaded
+- Check file permissions (755)
+
+ISSUE: Coming Soon page not showing/hiding
+SOLUTION:
+- Check school_settings table for newsletter_coming_soon and calendar_coming_soon
+- Toggle manually from admin panel
+
+================================================================================
+10. SECURITY RECOMMENDATIONS
+================================================================================
+
+MUST DO:
+--------
+1. Change default admin password immediately
+2. Delete setup.sql from live server
+3. Delete reset_password.php after use
+4. Keep PHP and MySQL updated
+
+RECOMMENDED:
+------------
+1. Enable HTTPS/SSL certificate
+2. Regular database backups
+3. Set proper file permissions (755 for folders, 644 for files)
+4. Add .htaccess to protect uploads folder
+5. Use strong passwords (12+ characters)
+
+BACKUP COMMANDS:
+----------------
+Export database:
+mysqldump -u username -p bethel_school > backup_$(date +%Y%m%d).sql
+
+Backup files:
+tar -czf bethel_backup_$(date +%Y%m%d).tar.gz bethel-school/
+
+================================================================================
+11. QUICK REFERENCE
+================================================================================
+
+Admin Login:     /admin/login.php
+Homepage:        /index.php
+About Us:        /about.php
+Academics:       /academics.php
+Admissions:      /admissions.php
+News & Events:   /news.php
+Contact:         /contact.php
+Calendar:        /calendar.php
+Newsletter:      /newsletter.php
+
+Database:        bethel_school
+Admin User:      admin
+Default Pass:    admin123
+
+================================================================================
+                    INSTALLATION COMPLETE!
+================================================================================
+
+After completing all steps, your Bethel International School website 
+should be fully functional with complete CRUD capabilities!
+
+For additional help, refer to README.md
+
+================================================================================

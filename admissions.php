@@ -1,18 +1,14 @@
 <?php
-// index.php - COMPLETE VERSION with SVG social icons (100% reliable)
+// admissions.php
 require_once 'includes/db.php';
-
-// Fetch data from database
-$announcements = $pdo->query("SELECT * FROM announcements WHERE status='active' ORDER BY display_order ASC, created_at DESC LIMIT 5")->fetchAll();
-$features = $pdo->query("SELECT * FROM features WHERE status='active' ORDER BY display_order ASC")->fetchAll();
-$hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetch();
+$page_title = 'Admissions | Bethel International School';
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bethel International School – Soaring Eagle, Palo Leyte</title>
+    <title><?php echo $page_title; ?></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -172,159 +168,119 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
             padding: 5px;
         }
 
-        .hero {
-            background: linear-gradient(rgba(0, 35, 102, 0.85), rgba(0, 86, 179, 0.9)), 
-                        url('<?php echo $hero['background_image'] ?? 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80'; ?>');
-            background-size: cover;
-            background-position: center 30%;
+        .page-banner {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             color: white;
-            padding: 100px 0;
+            padding: 60px 0;
             text-align: center;
         }
 
-        .hero h2 {
-            font-size: 2.8rem;
-            margin-bottom: 20px;
+        .page-banner h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
             color: var(--accent-color);
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
-        .hero p {
-            font-size: 1.3rem;
-            max-width: 800px;
-            margin: 0 auto 30px;
-            font-weight: 400;
+        .admissions-content {
+            padding: 60px 0;
         }
 
-        .cta-button {
-            display: inline-block;
-            background-color: var(--accent-color);
-            color: var(--primary-color);
-            padding: 12px 40px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1.2rem;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-        }
-
-        .cta-button:hover {
-            background-color: white;
-            transform: translateY(-4px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        .section-title {
-            text-align: center;
-            margin: 50px 0 30px;
-            color: var(--primary-color);
-            font-size: 2.2rem;
-            position: relative;
-            padding-bottom: 15px;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            width: 90px;
-            height: 4px;
-            background: var(--accent-color);
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            border-radius: 4px;
-        }
-
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin: 40px 0;
-        }
-
-        .feature-card {
+        .info-box {
             background: white;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0, 35, 102, 0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-            border-top: 5px solid var(--accent-color);
-        }
-
-        .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 30px rgba(0, 35, 102, 0.2);
-        }
-
-        .feature-card img {
-            width: 100%;
-            height: 210px;
-            object-fit: cover;
-        }
-
-        .feature-content {
-            padding: 25px;
-        }
-
-        .feature-content h3 {
-            color: var(--primary-color);
-            margin-bottom: 12px;
-            font-size: 1.5rem;
-        }
-
-        .announcements {
-            background-color: white;
-            border-radius: 20px;
+            border-radius: 15px;
             padding: 30px;
-            margin: 40px 0;
-            box-shadow: 0 10px 25px rgba(0, 35, 102, 0.08);
-            border-left: 6px solid var(--secondary-color);
+            margin-bottom: 40px;
+            box-shadow: 0 10px 25px rgba(0, 35, 102, 0.1);
+            border-left: 5px solid var(--accent-color);
         }
 
-        .announcement-item {
-            padding: 18px 0;
-            border-bottom: 1px solid #edf2f7;
+        .info-box h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .step {
+            text-align: center;
+            padding: 25px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 35, 102, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .step:hover {
+            transform: translateY(-5px);
+        }
+
+        .step-number {
+            width: 45px;
+            height: 45px;
+            background: var(--primary-color);
+            color: var(--accent-color);
+            border-radius: 50%;
             display: flex;
             align-items: center;
-            gap: 20px;
-        }
-
-        .announcement-item:last-child {
-            border-bottom: none;
-        }
-
-        .announcement-date {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 10px 15px;
-            border-radius: 12px;
-            text-align: center;
-            min-width: 100px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-
-        .announcement-date .day {
-            font-size: 1.8rem;
-            font-weight: 800;
-            line-height: 1.2;
-        }
-
-        .announcement-date .month {
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .announcement-text h3 {
-            color: var(--primary-color);
-            margin-bottom: 6px;
+            justify-content: center;
             font-size: 1.3rem;
+            font-weight: bold;
+            margin: 0 auto 15px;
         }
 
-       /* Footer Styles */
+        .requirements-list {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .requirements-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .requirements-list li i {
+            color: var(--accent-color);
+            width: 25px;
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .cta-box h2 {
+            color: var(--accent-color);
+            margin-bottom: 15px;
+        }
+
+        .cta-box .btn {
+            display: inline-block;
+            background: var(--accent-color);
+            color: var(--primary-color);
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: transform 0.3s;
+        }
+
+        .cta-box .btn:hover {
+            transform: scale(1.05);
+        }
+
         footer {
             background: linear-gradient(145deg, var(--dark-color) 0%, var(--primary-color) 100%);
             color: white;
@@ -416,7 +372,6 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
             font-weight: bold;
         }
 
-        /* Social Icons */
         .social-icons {
             display: flex;
             flex-direction: row;
@@ -480,18 +435,12 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
         }
 
         @media (max-width: 992px) {
-            .hero h2 { font-size: 2.2rem; }
-            .hero p { font-size: 1.1rem; }
             .logo-text h1 { font-size: 1.4rem; }
-            .logo-text p { font-size: 0.7rem; }
             .logo-icon { width: 50px; height: 50px; }
         }
 
         @media (max-width: 768px) {
-            .header-container {
-                flex-direction: row;
-                justify-content: space-between;
-            }
+            .header-container { flex-direction: row; justify-content: space-between; }
             .logo { flex: 1; }
             nav ul {
                 display: none;
@@ -509,10 +458,7 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
             nav ul.active { display: flex; }
             nav ul li { margin: 0; text-align: center; padding: 12px 0; }
             .mobile-menu-btn { display: block; }
-            .hero { padding: 70px 0; }
-            .hero h2 { font-size: 1.9rem; }
-            .section-title { font-size: 1.9rem; }
-            .announcement-item { flex-direction: column; text-align: center; }
+            .steps { grid-template-columns: 1fr; }
             .footer-content { grid-template-columns: 1fr; text-align: center; gap: 30px; }
             .footer-column h3 { border-left: none; padding-left: 0; text-align: center; }
             .hours-item { justify-content: center; gap: 20px; }
@@ -525,6 +471,7 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
             .logo-icon { width: 45px; height: 45px; }
             .logo-text h1 { font-size: 1.2rem; }
             .logo-text p { font-size: 0.65rem; }
+            .cta-box { padding: 25px; }
         }
     </style>
 </head>
@@ -534,7 +481,7 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
             <div class="logo">
                 <div class="logo-icon">
                     <div class="eagle-icon">
-                        <img src="images/bethel-logo.png" alt="Bethel International School Logo">
+                       <img src="images/bethel-logo.png" alt="Bethel International School Logo">
                     </div>
                 </div>
                 <div class="logo-text">
@@ -549,10 +496,10 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
             
             <nav>
                 <ul id="mainNav">
-                    <li><a href="index.php" class="active">Home</a></li>
+                    <li><a href="index.php">Home</a></li>
                     <li><a href="about.php">About Us</a></li>
                     <li><a href="academics.php">Academics</a></li>
-                    <li><a href="admissions.php">Admissions</a></li>
+                    <li><a href="admissions.php" class="active">Admissions</a></li>
                     <li><a href="news.php">News & Events</a></li>
                     <li><a href="contact.php">Contact</a></li>
                 </ul>
@@ -560,103 +507,49 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
         </div>
     </header>
 
-    <section class="hero">
+    <section class="page-banner">
         <div class="container">
-            <h2><?php echo htmlspecialchars($hero['title'] ?? '🦅 Soaring to Excellence in International Education'); ?></h2>
-            <p><?php echo htmlspecialchars($hero['subtitle'] ?? 'Inspired by the majesty of the Philippine Eagle, Bethel International School in Pawing, Palo, Leyte nurtures global citizens with strong Filipino values, academic excellence, and holistic development from kindergarten through senior high school.'); ?></p>
-            <a href="academics.php" class="cta-button"><?php echo htmlspecialchars($hero['cta_text'] ?? 'Explore Our Programs'); ?></a>
+            <h1>Admissions</h1>
+            <p>Begin Your Journey to Excellence at Bethel International School</p>
         </div>
     </section>
 
-    <main class="container">
-        <h2 class="section-title">Why Choose Bethel International School?</h2>
-        <div class="features">
-            <?php if(count($features) > 0): ?>
-                <?php foreach($features as $feature): ?>
-                <div class="feature-card">
-                    <img src="<?php echo htmlspecialchars($feature['image_url'] ?: 'https://via.placeholder.com/800x600/002366/ffffff?text=Bethel+Feature'); ?>" alt="<?php echo htmlspecialchars($feature['title']); ?>" loading="lazy">
-                    <div class="feature-content">
-                        <h3><?php echo htmlspecialchars($feature['title']); ?></h3>
-                        <p><?php echo htmlspecialchars($feature['description']); ?></p>
-                    </div>
-                </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <div class="feature-card">
-                    <img src="images/Campus.png" alt="Modern Science Lab" loading="lazy">
-                    <div class="feature-content">
-                        <h3>World-Class Facilities</h3>
-                        <p>Our campus in Pawing, Palo features modern classrooms, science labs, sports facilities, and a well-stocked library to support holistic learning and innovation.</p>
-                    </div>
-                </div>
-                <div class="feature-card">
-                    <img src="images/International.jpg" alt="Qualified Teachers" loading="lazy">
-                    <div class="feature-content">
-                        <h3>International Curriculum</h3>
-                        <p>We offer an internationally-recognized curriculum combined with Filipino values and context to prepare students for global opportunities while remaining rooted in Philippine heritage.</p>
-                    </div>
-                </div>
-                <div class="feature-card">
-                    <img src="images/Play.jpg" alt="Extracurricular activities" loading="lazy">
-                    <div class="feature-content">
-                        <h3>Soaring Talents Program</h3>
-                        <p>Inspired by the Philippine Eagle, our Soaring Talents Program offers sports, arts, music, leadership, and cultural activities to help students discover and develop their unique talents.</p>
-                    </div>
-                </div>
-            <?php endif; ?>
+    <div class="container admissions-content">
+        <div class="info-box">
+            <h2>Welcome Future Eagles! 🦅</h2>
+            <p>Bethel International School is now accepting applications for School Year 2025-2026. We invite you to become part of our growing community of learners who are committed to academic excellence, character development, and holistic growth.</p>
+            <p><strong>Enrollment Period:</strong> March 1 - July 15, 2025</p>
+            <p><strong>Classes Start:</strong> August 4, 2025</p>
         </div>
 
-        <h2 class="section-title">Latest Announcements</h2>
-        <div class="announcements">
-            <?php if(count($announcements) > 0): ?>
-                <?php foreach($announcements as $announcement): ?>
-                <div class="announcement-item">
-                    <div class="announcement-date">
-                        <div class="day"><?php echo $announcement['day']; ?></div>
-                        <div class="month"><?php echo htmlspecialchars($announcement['month']); ?></div>
-                    </div>
-                    <div class="announcement-text">
-                        <h3><?php echo htmlspecialchars($announcement['title']); ?></h3>
-                        <p><?php echo htmlspecialchars($announcement['description']); ?></p>
-                    </div>
-                </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <div class="announcement-item">
-                    <div class="announcement-date">
-                        <div class="day">15</div>
-                        <div class="month">June</div>
-                    </div>
-                    <div class="announcement-text">
-                        <h3>Enrollment for SY 2025-2026</h3>
-                        <p>Enrollment for the School Year 2025-2026 is now open. Visit our campus in Pawing, Palo, Leyte for inquiries and campus tours.</p>
-                    </div>
-                </div>
-                <div class="announcement-item">
-                    <div class="announcement-date">
-                        <div class="day">25</div>
-                        <div class="month">June</div>
-                    </div>
-                    <div class="announcement-text">
-                        <h3>Philippine Eagle Festival</h3>
-                        <p>Join us for our annual Philippine Eagle Festival celebrating Filipino heritage and environmental conservation on June 25-29.</p>
-                    </div>
-                </div>
-                <div class="announcement-item">
-                    <div class="announcement-date">
-                        <div class="day">12</div>
-                        <div class="month">June</div>
-                    </div>
-                    <div class="announcement-text">
-                        <h3>Independence Day Celebration</h3>
-                        <p>Celebrate Philippine Independence Day with us on June 12 featuring cultural performances, historical exhibits, and patriotic activities.</p>
-                    </div>
-                </div>
-            <?php endif; ?>
+        <h2 class="section-title" style="margin: 40px 0 30px; text-align: center; color: var(--primary-color);">Admission Process</h2>
+        <div class="steps">
+            <div class="step"><div class="step-number">1</div><h3>Submit Application</h3><p>Fill out the application form and submit required documents.</p></div>
+            <div class="step"><div class="step-number">2</div><h3>Entrance Assessment</h3><p>Schedule and take the entrance examination.</p></div>
+            <div class="step"><div class="step-number">3</div><h3>Interview</h3><p>Parent and student interview with administration.</p></div>
+            <div class="step"><div class="step-number">4</div><h3>Enrollment</h3><p>Complete requirements and pay initial fees.</p></div>
         </div>
-    </main>
 
-    <!-- Footer -->
+        <div class="info-box">
+            <h2>Requirements for Admission</h2>
+            <ul class="requirements-list">
+                <li><i class="fas fa-check-circle"></i> Completed Application Form</li>
+                <li><i class="fas fa-check-circle"></i> PSA Birth Certificate (Original & Photocopy)</li>
+                <li><i class="fas fa-check-circle"></i> Report Card (SF9) from previous school</li>
+                <li><i class="fas fa-check-circle"></i> Good Moral Certificate</li>
+                <li><i class="fas fa-check-circle"></i> 2 pcs. 2x2 ID picture (white background)</li>
+                <li><i class="fas fa-check-circle"></i> Medical Certificate</li>
+            </ul>
+        </div>
+
+        <div class="cta-box">
+            <h2>Ready to Join the Bethel Family?</h2>
+            <p>Take the first step towards a bright future. Contact us today to schedule a campus tour!</p>
+            <a href="contact.php" class="btn">Inquire Now →</a>
+        </div>
+    </div>
+
+        <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
@@ -683,7 +576,7 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
                 <!-- Resources - PDF Links -->
                 <div class="footer-column">
                     <h3>📚 Resources</h3>
-                    <ul class="footer-links">
+                   <ul class="footer-links">
                         <li><a href="calendar.php"><i class="fas fa-calendar-alt"></i> Academic Calendar</a></li>
                         <li><a href="newsletter.php"><i class="fas fa-newspaper"></i> School Newsletter</a></li>
                     </ul>
@@ -713,8 +606,7 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
     <script>
         const mobileBtn = document.getElementById('mobileMenuBtn');
         const mainNav = document.getElementById('mainNav');
-        
-        if (mobileBtn && mainNav) {
+        if(mobileBtn && mainNav) {
             mobileBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
                 mainNav.classList.toggle('active');
@@ -727,12 +619,11 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
                     icon.classList.add('fa-bars');
                 }
             });
-
             document.querySelectorAll('#mainNav a').forEach(link => {
                 link.addEventListener('click', function() {
                     mainNav.classList.remove('active');
                     const icon = mobileBtn.querySelector('i');
-                    if (icon) {
+                    if(icon) {
                         icon.classList.remove('fa-times');
                         icon.classList.add('fa-bars');
                     }

@@ -1,8 +1,10 @@
 <?php
-// admin/manage-features.php
+// admin/manage-features.php - FIXED (preserves images)
 require_once '../includes/auth.php';
 requireAdmin();
 require_once '../includes/db.php';
+
+$message = '';
 
 // Handle add/edit
 if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_feature'])) {
@@ -12,14 +14,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_feature'])) {
     $display_order = $_POST['display_order'];
     
     // Handle image upload
-    $image_url = $_POST['existing_image'] ?? '';
+    $image_url = '';
     if(isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
         $allowed = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
         $filename = $_FILES['image']['name'];
         $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
         
         if(in_array($ext, $allowed)) {
-            // Create uploads directory if not exists
             if(!is_dir('../uploads')) {
                 mkdir('../uploads', 0777, true);
             }
@@ -39,10 +40,20 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_feature'])) {
     }
     
     if($id > 0) {
-        $stmt = $pdo->prepare("UPDATE features SET title=?, description=?, image_url=?, display_order=? WHERE id=?");
-        $stmt->execute([$title, $description, $image_url, $display_order, $id]);
-        $message = "Feature updated!";
+        // UPDATE EXISTING FEATURE
+        if(!empty($image_url)) {
+            // New image uploaded - update everything
+            $stmt = $pdo->prepare("UPDATE features SET title=?, description=?, image_url=?, display_order=? WHERE id=?");
+            $stmt->execute([$title, $description, $image_url, $display_order, $id]);
+            $message = "Feature updated with new image!";
+        } else {
+            // No new image - keep existing image
+            $stmt = $pdo->prepare("UPDATE features SET title=?, description=?, display_order=? WHERE id=?");
+            $stmt->execute([$title, $description, $display_order, $id]);
+            $message = "Feature updated! (image unchanged)";
+        }
     } else {
+        // ADD NEW FEATURE
         $stmt = $pdo->prepare("INSERT INTO features (title, description, image_url, display_order) VALUES (?, ?, ?, ?)");
         $stmt->execute([$title, $description, $image_url, $display_order]);
         $message = "Feature added!";
@@ -82,6 +93,7 @@ if(isset($_GET['edit'])) {
     $editFeature = $stmt->fetch();
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -134,8 +146,11 @@ if(isset($_GET['edit'])) {
                         <?php if(isset($editFeature['image_url']) && $editFeature['image_url']): ?>
                             <div class="current-image">
                                 <img src="../<?php echo $editFeature['image_url']; ?>" alt="Current image" style="max-width: 200px; margin-bottom: 10px;">
-                                <p>Current image</p>
+                                <p><strong>Current image:</strong> <?php echo basename($editFeature['image_url']); ?></p>
+                                <p><small>Leave file upload empty to keep this image</small></p>
                             </div>
+                        <?php else: ?>
+                            <p><small>No image currently set. Upload one below.</small></p>
                         <?php endif; ?>
                         <input type="file" name="image" accept="image/*">
                         <small>Leave empty to keep current image. Recommended size: 800x600px</small>
@@ -171,7 +186,7 @@ if(isset($_GET['edit'])) {
                                 <?php if($feature['image_url']): ?>
                                     <img src="../<?php echo $feature['image_url']; ?>" alt="<?php echo htmlspecialchars($feature['title']); ?>" style="width: 50px; height: 50px; object-fit: cover;">
                                 <?php else: ?>
-                                    No image
+                                    <span style="color: #999;">No image</span>
                                 <?php endif; ?>
                             </td>
                             <td><?php echo htmlspecialchars($feature['title']); ?></td>

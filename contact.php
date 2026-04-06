@@ -1,18 +1,19 @@
 <?php
-// index.php - COMPLETE VERSION with SVG social icons (100% reliable)
+// contact.php
 require_once 'includes/db.php';
+$page_title = 'Contact Us | Bethel International School';
 
-// Fetch data from database
-$announcements = $pdo->query("SELECT * FROM announcements WHERE status='active' ORDER BY display_order ASC, created_at DESC LIMIT 5")->fetchAll();
-$features = $pdo->query("SELECT * FROM features WHERE status='active' ORDER BY display_order ASC")->fetchAll();
-$hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetch();
+$success_message = '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_message'])) {
+    $success_message = "Thank you for your message! We'll get back to you soon.";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bethel International School – Soaring Eagle, Palo Leyte</title>
+    <title><?php echo $page_title; ?></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -172,159 +173,170 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
             padding: 5px;
         }
 
-        .hero {
-            background: linear-gradient(rgba(0, 35, 102, 0.85), rgba(0, 86, 179, 0.9)), 
-                        url('<?php echo $hero['background_image'] ?? 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80'; ?>');
-            background-size: cover;
-            background-position: center 30%;
+        .page-banner {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             color: white;
-            padding: 100px 0;
+            padding: 60px 0;
             text-align: center;
         }
 
-        .hero h2 {
-            font-size: 2.8rem;
-            margin-bottom: 20px;
+        .page-banner h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
             color: var(--accent-color);
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
-        .hero p {
-            font-size: 1.3rem;
-            max-width: 800px;
-            margin: 0 auto 30px;
-            font-weight: 400;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background-color: var(--accent-color);
-            color: var(--primary-color);
-            padding: 12px 40px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
+        .page-banner p {
             font-size: 1.2rem;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            max-width: 800px;
+            margin: 0 auto;
         }
 
-        .cta-button:hover {
-            background-color: white;
-            transform: translateY(-4px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        .contact-content {
+            padding: 60px 0;
         }
 
-        .section-title {
-            text-align: center;
-            margin: 50px 0 30px;
-            color: var(--primary-color);
-            font-size: 2.2rem;
-            position: relative;
-            padding-bottom: 15px;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            width: 90px;
-            height: 4px;
-            background: var(--accent-color);
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            border-radius: 4px;
-        }
-
-        .features {
+        .contact-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin: 40px 0;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
         }
 
-        .feature-card {
+        .contact-info {
             background: white;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0, 35, 102, 0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-            border-top: 5px solid var(--accent-color);
-        }
-
-        .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 30px rgba(0, 35, 102, 0.2);
-        }
-
-        .feature-card img {
-            width: 100%;
-            height: 210px;
-            object-fit: cover;
-        }
-
-        .feature-content {
-            padding: 25px;
-        }
-
-        .feature-content h3 {
-            color: var(--primary-color);
-            margin-bottom: 12px;
-            font-size: 1.5rem;
-        }
-
-        .announcements {
-            background-color: white;
-            border-radius: 20px;
             padding: 30px;
-            margin: 40px 0;
-            box-shadow: 0 10px 25px rgba(0, 35, 102, 0.08);
-            border-left: 6px solid var(--secondary-color);
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 35, 102, 0.1);
         }
 
-        .announcement-item {
-            padding: 18px 0;
-            border-bottom: 1px solid #edf2f7;
+        .contact-info h2 {
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+
+        .info-item {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            transition: transform 0.3s;
         }
 
-        .announcement-item:last-child {
-            border-bottom: none;
+        .info-item:hover {
+            transform: translateX(5px);
         }
 
-        .announcement-date {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 10px 15px;
-            border-radius: 12px;
-            text-align: center;
-            min-width: 100px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-
-        .announcement-date .day {
-            font-size: 1.8rem;
-            font-weight: 800;
-            line-height: 1.2;
-        }
-
-        .announcement-date .month {
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .announcement-text h3 {
-            color: var(--primary-color);
-            margin-bottom: 6px;
+        .info-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-color);
             font-size: 1.3rem;
         }
 
-       /* Footer Styles */
+        .info-text h3 {
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .info-text p {
+            color: #666;
+        }
+
+        .contact-form {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 35, 102, 0.1);
+        }
+
+        .contact-form h2 {
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: var(--primary-color);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: var(--secondary-color);
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .business-hours {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+
+        .business-hours h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        /* Footer Styles */
         footer {
             background: linear-gradient(145deg, var(--dark-color) 0%, var(--primary-color) 100%);
             color: white;
@@ -416,7 +428,6 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
             font-weight: bold;
         }
 
-        /* Social Icons */
         .social-icons {
             display: flex;
             flex-direction: row;
@@ -480,10 +491,7 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
         }
 
         @media (max-width: 992px) {
-            .hero h2 { font-size: 2.2rem; }
-            .hero p { font-size: 1.1rem; }
             .logo-text h1 { font-size: 1.4rem; }
-            .logo-text p { font-size: 0.7rem; }
             .logo-icon { width: 50px; height: 50px; }
         }
 
@@ -509,10 +517,7 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
             nav ul.active { display: flex; }
             nav ul li { margin: 0; text-align: center; padding: 12px 0; }
             .mobile-menu-btn { display: block; }
-            .hero { padding: 70px 0; }
-            .hero h2 { font-size: 1.9rem; }
-            .section-title { font-size: 1.9rem; }
-            .announcement-item { flex-direction: column; text-align: center; }
+            .contact-grid { grid-template-columns: 1fr; }
             .footer-content { grid-template-columns: 1fr; text-align: center; gap: 30px; }
             .footer-column h3 { border-left: none; padding-left: 0; text-align: center; }
             .hours-item { justify-content: center; gap: 20px; }
@@ -534,7 +539,7 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
             <div class="logo">
                 <div class="logo-icon">
                     <div class="eagle-icon">
-                        <img src="images/bethel-logo.png" alt="Bethel International School Logo">
+                      <img src="images/bethel-logo.png" alt="Bethel International School Logo">
                     </div>
                 </div>
                 <div class="logo-text">
@@ -549,114 +554,127 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
             
             <nav>
                 <ul id="mainNav">
-                    <li><a href="index.php" class="active">Home</a></li>
+                    <li><a href="index.php">Home</a></li>
                     <li><a href="about.php">About Us</a></li>
                     <li><a href="academics.php">Academics</a></li>
                     <li><a href="admissions.php">Admissions</a></li>
                     <li><a href="news.php">News & Events</a></li>
-                    <li><a href="contact.php">Contact</a></li>
+                    <li><a href="contact.php" class="active">Contact</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <section class="hero">
+    <section class="page-banner">
         <div class="container">
-            <h2><?php echo htmlspecialchars($hero['title'] ?? '🦅 Soaring to Excellence in International Education'); ?></h2>
-            <p><?php echo htmlspecialchars($hero['subtitle'] ?? 'Inspired by the majesty of the Philippine Eagle, Bethel International School in Pawing, Palo, Leyte nurtures global citizens with strong Filipino values, academic excellence, and holistic development from kindergarten through senior high school.'); ?></p>
-            <a href="academics.php" class="cta-button"><?php echo htmlspecialchars($hero['cta_text'] ?? 'Explore Our Programs'); ?></a>
+            <h1>Contact Us</h1>
+            <p>We'd Love to Hear from You! Reach Out to Bethel International School</p>
         </div>
     </section>
 
-    <main class="container">
-        <h2 class="section-title">Why Choose Bethel International School?</h2>
-        <div class="features">
-            <?php if(count($features) > 0): ?>
-                <?php foreach($features as $feature): ?>
-                <div class="feature-card">
-                    <img src="<?php echo htmlspecialchars($feature['image_url'] ?: 'https://via.placeholder.com/800x600/002366/ffffff?text=Bethel+Feature'); ?>" alt="<?php echo htmlspecialchars($feature['title']); ?>" loading="lazy">
-                    <div class="feature-content">
-                        <h3><?php echo htmlspecialchars($feature['title']); ?></h3>
-                        <p><?php echo htmlspecialchars($feature['description']); ?></p>
-                    </div>
-                </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <div class="feature-card">
-                    <img src="images/Campus.png" alt="Modern Science Lab" loading="lazy">
-                    <div class="feature-content">
-                        <h3>World-Class Facilities</h3>
-                        <p>Our campus in Pawing, Palo features modern classrooms, science labs, sports facilities, and a well-stocked library to support holistic learning and innovation.</p>
-                    </div>
-                </div>
-                <div class="feature-card">
-                    <img src="images/International.jpg" alt="Qualified Teachers" loading="lazy">
-                    <div class="feature-content">
-                        <h3>International Curriculum</h3>
-                        <p>We offer an internationally-recognized curriculum combined with Filipino values and context to prepare students for global opportunities while remaining rooted in Philippine heritage.</p>
-                    </div>
-                </div>
-                <div class="feature-card">
-                    <img src="images/Play.jpg" alt="Extracurricular activities" loading="lazy">
-                    <div class="feature-content">
-                        <h3>Soaring Talents Program</h3>
-                        <p>Inspired by the Philippine Eagle, our Soaring Talents Program offers sports, arts, music, leadership, and cultural activities to help students discover and develop their unique talents.</p>
-                    </div>
-                </div>
-            <?php endif; ?>
-        </div>
+    <div class="container contact-content">
+        <?php if($success_message): ?>
+            <div class="alert alert-success"><?php echo $success_message; ?></div>
+        <?php endif; ?>
 
-        <h2 class="section-title">Latest Announcements</h2>
-        <div class="announcements">
-            <?php if(count($announcements) > 0): ?>
-                <?php foreach($announcements as $announcement): ?>
-                <div class="announcement-item">
-                    <div class="announcement-date">
-                        <div class="day"><?php echo $announcement['day']; ?></div>
-                        <div class="month"><?php echo htmlspecialchars($announcement['month']); ?></div>
+        <div class="contact-grid">
+            <!-- Contact Information -->
+            <div class="contact-info">
+                <h2><i class="fas fa-map-marker-alt" style="color: var(--accent-color);"></i> Get in Touch</h2>
+                
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-map-marker-alt"></i>
                     </div>
-                    <div class="announcement-text">
-                        <h3><?php echo htmlspecialchars($announcement['title']); ?></h3>
-                        <p><?php echo htmlspecialchars($announcement['description']); ?></p>
-                    </div>
-                </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <div class="announcement-item">
-                    <div class="announcement-date">
-                        <div class="day">15</div>
-                        <div class="month">June</div>
-                    </div>
-                    <div class="announcement-text">
-                        <h3>Enrollment for SY 2025-2026</h3>
-                        <p>Enrollment for the School Year 2025-2026 is now open. Visit our campus in Pawing, Palo, Leyte for inquiries and campus tours.</p>
+                    <div class="info-text">
+                        <h3>Our Address</h3>
+                        <p>Pawing, Palo, Leyte<br>Philippines 6501</p>
                     </div>
                 </div>
-                <div class="announcement-item">
-                    <div class="announcement-date">
-                        <div class="day">25</div>
-                        <div class="month">June</div>
+                
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-phone-alt"></i>
                     </div>
-                    <div class="announcement-text">
-                        <h3>Philippine Eagle Festival</h3>
-                        <p>Join us for our annual Philippine Eagle Festival celebrating Filipino heritage and environmental conservation on June 25-29.</p>
-                    </div>
-                </div>
-                <div class="announcement-item">
-                    <div class="announcement-date">
-                        <div class="day">12</div>
-                        <div class="month">June</div>
-                    </div>
-                    <div class="announcement-text">
-                        <h3>Independence Day Celebration</h3>
-                        <p>Celebrate Philippine Independence Day with us on June 12 featuring cultural performances, historical exhibits, and patriotic activities.</p>
+                    <div class="info-text">
+                        <h3>Phone Numbers</h3>
+                        <p>Main: 0917-173-0284<br>Office: (053) 123-4567</p>
                     </div>
                 </div>
-            <?php endif; ?>
+                
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="info-text">
+                        <h3>Email Addresses</h3>
+                        <p>secretary@bethel.edu.ph<br>admissions@bethel.edu.ph</p>
+                    </div>
+                </div>
+                
+                <div class="business-hours">
+                    <h3>Office Hours</h3>
+                    <div class="hours-item">
+                        <span>Monday - Friday:</span>
+                        <span>8:00 AM - 5:00 PM</span>
+                    </div>
+                    <div class="hours-item">
+                        <span>Saturday:</span>
+                        <span>9:00 AM - 12:00 PM</span>
+                    </div>
+                    <div class="hours-item">
+                        <span>Sunday:</span>
+                        <span>Closed</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Contact Form -->
+            <div class="contact-form">
+                <h2><i class="fas fa-paper-plane" style="color: var(--accent-color);"></i> Send Us a Message</h2>
+                
+                <form method="POST">
+                    <div class="form-group">
+                        <label>Your Name *</label>
+                        <input type="text" name="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Email Address *</label>
+                        <input type="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Subject *</label>
+                        <select name="subject" required>
+                            <option value="">Select Subject</option>
+                            <option value="Admissions">Admissions Inquiry</option>
+                            <option value="Academic">Academic Concerns</option>
+                            <option value="Events">Events & Activities</option>
+                            <option value="Feedback">Feedback / Suggestion</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Message *</label>
+                        <textarea name="message" rows="6" required placeholder="Write your message here..."></textarea>
+                    </div>
+                    
+                    <button type="submit" name="send_message" class="submit-btn">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                </form>
+                
+                <div style="margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 10px; text-align: center;">
+                    <i class="fas fa-clock" style="color: var(--accent-color); font-size: 2rem;"></i>
+                    <p style="margin-top: 10px;"><strong>Response Time:</strong> We typically respond within 24-48 hours on business days.</p>
+                </div>
+            </div>
         </div>
-    </main>
+    </div>
 
-    <!-- Footer -->
+       <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
@@ -714,7 +732,7 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
         const mobileBtn = document.getElementById('mobileMenuBtn');
         const mainNav = document.getElementById('mainNav');
         
-        if (mobileBtn && mainNav) {
+        if(mobileBtn && mainNav) {
             mobileBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
                 mainNav.classList.toggle('active');
@@ -732,7 +750,7 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
                 link.addEventListener('click', function() {
                     mainNav.classList.remove('active');
                     const icon = mobileBtn.querySelector('i');
-                    if (icon) {
+                    if(icon) {
                         icon.classList.remove('fa-times');
                         icon.classList.add('fa-bars');
                     }

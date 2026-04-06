@@ -5,27 +5,27 @@ require_once '../includes/db.php';
 
 // Debug - Check if session works
 $_SESSION['test'] = 'working';
-if(!isset($_SESSION['test'])) {
+if (!isset($_SESSION['test'])) {
     die("Session is not working! Check PHP session configuration.");
 }
 
 $error = '';
 
-if($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
-    
+
     // Debug - See what's being submitted
     echo "<!-- Username: $username, Password: $password -->";
-    
+
     $stmt = $pdo->prepare("SELECT * FROM admin_users WHERE username = :username");
     $stmt->execute([':username' => $username]);
     $user = $stmt->fetch();
-    
+
     // Debug - See if user found
-    if($user) {
+    if ($user) {
         echo "<!-- User found in database -->";
-        if(password_verify($password, $user['password'])) {
+        if (password_verify($password, $user['password'])) {
             echo "<!-- Password verified -->";
             $_SESSION['admin_logged_in'] = true;
             $_SESSION['admin_username'] = $user['username'];

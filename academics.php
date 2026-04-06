@@ -1,20 +1,17 @@
 <?php
-// index.php - COMPLETE VERSION with SVG social icons (100% reliable)
+// academics.php
 require_once 'includes/db.php';
-
-// Fetch data from database
-$announcements = $pdo->query("SELECT * FROM announcements WHERE status='active' ORDER BY display_order ASC, created_at DESC LIMIT 5")->fetchAll();
-$features = $pdo->query("SELECT * FROM features WHERE status='active' ORDER BY display_order ASC")->fetchAll();
-$hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetch();
+$page_title = 'Academics | Bethel International School';
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bethel International School – Soaring Eagle, Palo Leyte</title>
+    <title><?php echo $page_title; ?></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* Copy ALL CSS from about.php here (same styles) */
         * {
             margin: 0;
             padding: 0;
@@ -172,159 +169,154 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
             padding: 5px;
         }
 
-        .hero {
-            background: linear-gradient(rgba(0, 35, 102, 0.85), rgba(0, 86, 179, 0.9)), 
-                        url('<?php echo $hero['background_image'] ?? 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80'; ?>');
-            background-size: cover;
-            background-position: center 30%;
+        .page-banner {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             color: white;
-            padding: 100px 0;
+            padding: 60px 0;
             text-align: center;
         }
 
-        .hero h2 {
-            font-size: 2.8rem;
-            margin-bottom: 20px;
+        .page-banner h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
             color: var(--accent-color);
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
-        .hero p {
-            font-size: 1.3rem;
-            max-width: 800px;
-            margin: 0 auto 30px;
-            font-weight: 400;
+        .academic-content {
+            padding: 60px 0;
         }
 
-        .cta-button {
-            display: inline-block;
-            background-color: var(--accent-color);
+        .level-section {
+            margin-bottom: 60px;
+        }
+
+        .level-title {
             color: var(--primary-color);
-            padding: 12px 40px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1.2rem;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-        }
-
-        .cta-button:hover {
-            background-color: white;
-            transform: translateY(-4px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        .section-title {
+            font-size: 2rem;
+            margin-bottom: 30px;
             text-align: center;
-            margin: 50px 0 30px;
-            color: var(--primary-color);
-            font-size: 2.2rem;
             position: relative;
             padding-bottom: 15px;
         }
 
-        .section-title::after {
+        .level-title::after {
             content: '';
             position: absolute;
-            width: 90px;
-            height: 4px;
-            background: var(--accent-color);
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            border-radius: 4px;
+            width: 80px;
+            height: 3px;
+            background: var(--accent-color);
         }
 
-        .features {
+        .programs-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 30px;
-            margin: 40px 0;
         }
 
-        .feature-card {
+        .program-card {
             background: white;
-            border-radius: 16px;
+            border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 10px 25px rgba(0, 35, 102, 0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-            border-top: 5px solid var(--accent-color);
+            transition: transform 0.3s;
         }
 
-        .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 30px rgba(0, 35, 102, 0.2);
+        .program-card:hover {
+            transform: translateY(-5px);
         }
 
-        .feature-card img {
-            width: 100%;
-            height: 210px;
-            object-fit: cover;
+        .program-icon {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 30px;
+            text-align: center;
         }
 
-        .feature-content {
+        .program-icon i {
+            font-size: 3rem;
+            color: var(--accent-color);
+        }
+
+        .program-content {
             padding: 25px;
         }
 
-        .feature-content h3 {
+        .program-content h3 {
             color: var(--primary-color);
-            margin-bottom: 12px;
             font-size: 1.5rem;
+            margin-bottom: 15px;
         }
 
-        .announcements {
-            background-color: white;
-            border-radius: 20px;
-            padding: 30px;
-            margin: 40px 0;
-            box-shadow: 0 10px 25px rgba(0, 35, 102, 0.08);
-            border-left: 6px solid var(--secondary-color);
+        .program-content p {
+            color: #555;
+            margin-bottom: 15px;
         }
 
-        .announcement-item {
-            padding: 18px 0;
-            border-bottom: 1px solid #edf2f7;
+        .program-features {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .program-features li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            color: #666;
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 10px;
         }
 
-        .announcement-item:last-child {
-            border-bottom: none;
+        .program-features li i {
+            color: var(--accent-color);
+            width: 20px;
         }
 
-        .announcement-date {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 10px 15px;
-            border-radius: 12px;
-            text-align: center;
-            min-width: 100px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        .special-programs {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 50px;
+            border-radius: 20px;
+            margin: 50px 0;
         }
 
-        .announcement-date .day {
-            font-size: 1.8rem;
-            font-weight: 800;
-            line-height: 1.2;
-        }
-
-        .announcement-date .month {
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .announcement-text h3 {
+        .special-programs h2 {
             color: var(--primary-color);
-            margin-bottom: 6px;
-            font-size: 1.3rem;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2rem;
         }
 
-       /* Footer Styles */
+        .special-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .special-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .special-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .special-card i {
+            font-size: 2rem;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+        }
+
+        .special-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        /* Footer Styles */
         footer {
             background: linear-gradient(145deg, var(--dark-color) 0%, var(--primary-color) 100%);
             color: white;
@@ -416,7 +408,6 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
             font-weight: bold;
         }
 
-        /* Social Icons */
         .social-icons {
             display: flex;
             flex-direction: row;
@@ -480,18 +471,12 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
         }
 
         @media (max-width: 992px) {
-            .hero h2 { font-size: 2.2rem; }
-            .hero p { font-size: 1.1rem; }
             .logo-text h1 { font-size: 1.4rem; }
-            .logo-text p { font-size: 0.7rem; }
             .logo-icon { width: 50px; height: 50px; }
         }
 
         @media (max-width: 768px) {
-            .header-container {
-                flex-direction: row;
-                justify-content: space-between;
-            }
+            .header-container { flex-direction: row; justify-content: space-between; }
             .logo { flex: 1; }
             nav ul {
                 display: none;
@@ -509,10 +494,8 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
             nav ul.active { display: flex; }
             nav ul li { margin: 0; text-align: center; padding: 12px 0; }
             .mobile-menu-btn { display: block; }
-            .hero { padding: 70px 0; }
-            .hero h2 { font-size: 1.9rem; }
-            .section-title { font-size: 1.9rem; }
-            .announcement-item { flex-direction: column; text-align: center; }
+            .programs-grid { grid-template-columns: 1fr; }
+            .special-grid { grid-template-columns: 1fr; }
             .footer-content { grid-template-columns: 1fr; text-align: center; gap: 30px; }
             .footer-column h3 { border-left: none; padding-left: 0; text-align: center; }
             .hours-item { justify-content: center; gap: 20px; }
@@ -525,6 +508,7 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
             .logo-icon { width: 45px; height: 45px; }
             .logo-text h1 { font-size: 1.2rem; }
             .logo-text p { font-size: 0.65rem; }
+            .special-programs { padding: 30px; }
         }
     </style>
 </head>
@@ -534,9 +518,10 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
             <div class="logo">
                 <div class="logo-icon">
                     <div class="eagle-icon">
-                        <img src="images/bethel-logo.png" alt="Bethel International School Logo">
+                       <img src="images/bethel-logo.png" alt="Bethel International School Logo">
                     </div>
                 </div>
+
                 <div class="logo-text">
                     <h1><span class="school-name">Bethel International School</span></h1>
                     <p>Pawing, Palo, Leyte</p>
@@ -549,9 +534,9 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
             
             <nav>
                 <ul id="mainNav">
-                    <li><a href="index.php" class="active">Home</a></li>
+                    <li><a href="index.php">Home</a></li>
                     <li><a href="about.php">About Us</a></li>
-                    <li><a href="academics.php">Academics</a></li>
+                    <li><a href="academics.php" class="active">Academics</a></li>
                     <li><a href="admissions.php">Admissions</a></li>
                     <li><a href="news.php">News & Events</a></li>
                     <li><a href="contact.php">Contact</a></li>
@@ -560,103 +545,142 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
         </div>
     </header>
 
-    <section class="hero">
+    <section class="page-banner">
         <div class="container">
-            <h2><?php echo htmlspecialchars($hero['title'] ?? '🦅 Soaring to Excellence in International Education'); ?></h2>
-            <p><?php echo htmlspecialchars($hero['subtitle'] ?? 'Inspired by the majesty of the Philippine Eagle, Bethel International School in Pawing, Palo, Leyte nurtures global citizens with strong Filipino values, academic excellence, and holistic development from kindergarten through senior high school.'); ?></p>
-            <a href="academics.php" class="cta-button"><?php echo htmlspecialchars($hero['cta_text'] ?? 'Explore Our Programs'); ?></a>
+            <h1>Academic Programs</h1>
+            <p>Nurturing Minds, Shaping Futures - From Kindergarten to Senior High School</p>
         </div>
     </section>
 
-    <main class="container">
-        <h2 class="section-title">Why Choose Bethel International School?</h2>
-        <div class="features">
-            <?php if(count($features) > 0): ?>
-                <?php foreach($features as $feature): ?>
-                <div class="feature-card">
-                    <img src="<?php echo htmlspecialchars($feature['image_url'] ?: 'https://via.placeholder.com/800x600/002366/ffffff?text=Bethel+Feature'); ?>" alt="<?php echo htmlspecialchars($feature['title']); ?>" loading="lazy">
-                    <div class="feature-content">
-                        <h3><?php echo htmlspecialchars($feature['title']); ?></h3>
-                        <p><?php echo htmlspecialchars($feature['description']); ?></p>
+    <div class="container academic-content">
+        <!-- Kindergarten -->
+        <div class="level-section">
+            <h2 class="level-title">Kindergarten (Ages 3-6)</h2>
+            <div class="programs-grid">
+                <div class="program-card">
+                    <div class="program-icon"><i class="fas fa-child"></i></div>
+                    <div class="program-content">
+                        <h3>Early Childhood Education</h3>
+                        <p>Play-based learning that develops foundational skills in literacy, numeracy, and social interaction.</p>
+                        <ul class="program-features">
+                            <li><i class="fas fa-check"></i> Montessori-inspired approach</li>
+                            <li><i class="fas fa-check"></i> Filipino and English languages</li>
+                            <li><i class="fas fa-check"></i> Music and movement classes</li>
+                            <li><i class="fas fa-check"></i> Arts and crafts activities</li>
+                        </ul>
                     </div>
                 </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <div class="feature-card">
-                    <img src="images/Campus.png" alt="Modern Science Lab" loading="lazy">
-                    <div class="feature-content">
-                        <h3>World-Class Facilities</h3>
-                        <p>Our campus in Pawing, Palo features modern classrooms, science labs, sports facilities, and a well-stocked library to support holistic learning and innovation.</p>
-                    </div>
-                </div>
-                <div class="feature-card">
-                    <img src="images/International.jpg" alt="Qualified Teachers" loading="lazy">
-                    <div class="feature-content">
-                        <h3>International Curriculum</h3>
-                        <p>We offer an internationally-recognized curriculum combined with Filipino values and context to prepare students for global opportunities while remaining rooted in Philippine heritage.</p>
-                    </div>
-                </div>
-                <div class="feature-card">
-                    <img src="images/Play.jpg" alt="Extracurricular activities" loading="lazy">
-                    <div class="feature-content">
-                        <h3>Soaring Talents Program</h3>
-                        <p>Inspired by the Philippine Eagle, our Soaring Talents Program offers sports, arts, music, leadership, and cultural activities to help students discover and develop their unique talents.</p>
-                    </div>
-                </div>
-            <?php endif; ?>
+            </div>
         </div>
 
-        <h2 class="section-title">Latest Announcements</h2>
-        <div class="announcements">
-            <?php if(count($announcements) > 0): ?>
-                <?php foreach($announcements as $announcement): ?>
-                <div class="announcement-item">
-                    <div class="announcement-date">
-                        <div class="day"><?php echo $announcement['day']; ?></div>
-                        <div class="month"><?php echo htmlspecialchars($announcement['month']); ?></div>
-                    </div>
-                    <div class="announcement-text">
-                        <h3><?php echo htmlspecialchars($announcement['title']); ?></h3>
-                        <p><?php echo htmlspecialchars($announcement['description']); ?></p>
-                    </div>
-                </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <div class="announcement-item">
-                    <div class="announcement-date">
-                        <div class="day">15</div>
-                        <div class="month">June</div>
-                    </div>
-                    <div class="announcement-text">
-                        <h3>Enrollment for SY 2025-2026</h3>
-                        <p>Enrollment for the School Year 2025-2026 is now open. Visit our campus in Pawing, Palo, Leyte for inquiries and campus tours.</p>
+        <!-- Elementary -->
+        <div class="level-section">
+            <h2 class="level-title">Elementary (Grades 1-6)</h2>
+            <div class="programs-grid">
+                <div class="program-card">
+                    <div class="program-icon"><i class="fas fa-book"></i></div>
+                    <div class="program-content">
+                        <h3>Enhanced Basic Education</h3>
+                        <p>Comprehensive curriculum focusing on core subjects with integrated values education.</p>
+                        <ul class="program-features">
+                            <li><i class="fas fa-check"></i> Mathematics, Science, English, Filipino</li>
+                            <li><i class="fas fa-check"></i> Computer and Technology classes</li>
+                            <li><i class="fas fa-check"></i> Character Education program</li>
+                            <li><i class="fas fa-check"></i> Weekly enrichment activities</li>
+                        </ul>
                     </div>
                 </div>
-                <div class="announcement-item">
-                    <div class="announcement-date">
-                        <div class="day">25</div>
-                        <div class="month">June</div>
-                    </div>
-                    <div class="announcement-text">
-                        <h3>Philippine Eagle Festival</h3>
-                        <p>Join us for our annual Philippine Eagle Festival celebrating Filipino heritage and environmental conservation on June 25-29.</p>
-                    </div>
-                </div>
-                <div class="announcement-item">
-                    <div class="announcement-date">
-                        <div class="day">12</div>
-                        <div class="month">June</div>
-                    </div>
-                    <div class="announcement-text">
-                        <h3>Independence Day Celebration</h3>
-                        <p>Celebrate Philippine Independence Day with us on June 12 featuring cultural performances, historical exhibits, and patriotic activities.</p>
-                    </div>
-                </div>
-            <?php endif; ?>
+            </div>
         </div>
-    </main>
 
-    <!-- Footer -->
+        <!-- Junior High -->
+        <div class="level-section">
+            <h2 class="level-title">Junior High School (Grades 7-10)</h2>
+            <div class="programs-grid">
+                <div class="program-card">
+                    <div class="program-icon"><i class="fas fa-flask"></i></div>
+                    <div class="program-content">
+                        <h3>Junior High School Program</h3>
+                        <p>Advanced curriculum preparing students for Senior High School tracks.</p>
+                        <ul class="program-features">
+                            <li><i class="fas fa-check"></i> Specialized Science and Math</li>
+                            <li><i class="fas fa-check"></i> Research and ICT skills</li>
+                            <li><i class="fas fa-check"></i> Leadership training</li>
+                            <li><i class="fas fa-check"></i> Career guidance seminars</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Senior High -->
+        <div class="level-section">
+            <h2 class="level-title">Senior High School (Grades 11-12)</h2>
+            <div class="programs-grid">
+                <div class="program-card">
+                    <div class="program-icon"><i class="fas fa-microscope"></i></div>
+                    <div class="program-content">
+                        <h3>STEM Strand</h3>
+                        <p>Science, Technology, Engineering, and Mathematics</p>
+                        <ul class="program-features">
+                            <li><i class="fas fa-check"></i> Pre-Calculus & Basic Calculus</li>
+                            <li><i class="fas fa-check"></i> General Biology, Chemistry, Physics</li>
+                            <li><i class="fas fa-check"></i> Research Capstone Project</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="program-card">
+                    <div class="program-icon"><i class="fas fa-chart-line"></i></div>
+                    <div class="program-content">
+                        <h3>ABM Strand</h3>
+                        <p>Accountancy, Business, and Management</p>
+                        <ul class="program-features">
+                            <li><i class="fas fa-check"></i> Fundamentals of Accounting</li>
+                            <li><i class="fas fa-check"></i> Business Mathematics & Finance</li>
+                            <li><i class="fas fa-check"></i> Organizational Management</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="program-card">
+                    <div class="program-icon"><i class="fas fa-gavel"></i></div>
+                    <div class="program-content">
+                        <h3>HUMSS Strand</h3>
+                        <p>Humanities and Social Sciences</p>
+                        <ul class="program-features">
+                            <li><i class="fas fa-check"></i> Philippine Politics & Governance</li>
+                            <li><i class="fas fa-check"></i> Creative Writing & Journalism</li>
+                            <li><i class="fas fa-check"></i> Introduction to World Religions</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="program-card">
+                    <div class="program-icon"><i class="fas fa-laptop-code"></i></div>
+                    <div class="program-content">
+                        <h3>TVL Track</h3>
+                        <p>Technical-Vocational-Livelihood</p>
+                        <ul class="program-features">
+                            <li><i class="fas fa-check"></i> ICT - Computer Systems Servicing</li>
+                            <li><i class="fas fa-check"></i> Home Economics - Bread & Pastry</li>
+                            <li><i class="fas fa-check"></i> Work Immersion Program</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Special Programs -->
+        <div class="special-programs">
+            <h2>Special Programs</h2>
+            <div class="special-grid">
+                <div class="special-card"><i class="fas fa-globe"></i><h3>International Exchange</h3><p>Student exchange programs with partner schools abroad.</p></div>
+                <div class="special-card"><i class="fas fa-robot"></i><h3>Robotics Club</h3><p>After-school robotics and programming classes.</p></div>
+                <div class="special-card"><i class="fas fa-music"></i><h3>Center for the Arts</h3><p>Training in music, dance, theater, and visual arts.</p></div>
+                <div class="special-card"><i class="fas fa-hand-holding-heart"></i><h3>Values Formation</h3><p>Character development and community service.</p></div>
+            </div>
+        </div>
+    </div>
+
+        <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
@@ -713,8 +737,7 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
     <script>
         const mobileBtn = document.getElementById('mobileMenuBtn');
         const mainNav = document.getElementById('mainNav');
-        
-        if (mobileBtn && mainNav) {
+        if(mobileBtn && mainNav) {
             mobileBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
                 mainNav.classList.toggle('active');
@@ -727,12 +750,11 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
                     icon.classList.add('fa-bars');
                 }
             });
-
             document.querySelectorAll('#mainNav a').forEach(link => {
                 link.addEventListener('click', function() {
                     mainNav.classList.remove('active');
                     const icon = mobileBtn.querySelector('i');
-                    if (icon) {
+                    if(icon) {
                         icon.classList.remove('fa-times');
                         icon.classList.add('fa-bars');
                     }

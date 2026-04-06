@@ -1,18 +1,27 @@
 <?php
-// index.php - COMPLETE VERSION with SVG social icons (100% reliable)
+// calendar.php - SLEEK VERSION matching newsletter page
 require_once 'includes/db.php';
+$page_title = 'Academic Calendar | Bethel International School';
 
-// Fetch data from database
-$announcements = $pdo->query("SELECT * FROM announcements WHERE status='active' ORDER BY display_order ASC, created_at DESC LIMIT 5")->fetchAll();
-$features = $pdo->query("SELECT * FROM features WHERE status='active' ORDER BY display_order ASC")->fetchAll();
-$hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetch();
+// Fetch all calendar PDFs
+$calendar_pdfs = $pdo->query("SELECT * FROM calendar_pdfs WHERE status='active' ORDER BY is_current DESC, school_year DESC")->fetchAll();
+$has_calendars = count($calendar_pdfs) > 0;
+
+// Get coming soon setting
+$coming_soon = $pdo->query("SELECT setting_value FROM school_settings WHERE setting_key = 'calendar_coming_soon'")->fetchColumn();
+
+// If coming soon is enabled, redirect to coming soon page
+if($coming_soon == '1') {
+    header("Location: coming-soon.php?resource=calendar");
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bethel International School – Soaring Eagle, Palo Leyte</title>
+    <title><?php echo $page_title; ?></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -43,6 +52,7 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
             padding: 0 20px;
         }
 
+        /* Header Styles */
         header {
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             color: white;
@@ -172,159 +182,193 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
             padding: 5px;
         }
 
-        .hero {
-            background: linear-gradient(rgba(0, 35, 102, 0.85), rgba(0, 86, 179, 0.9)), 
-                        url('<?php echo $hero['background_image'] ?? 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80'; ?>');
-            background-size: cover;
-            background-position: center 30%;
+        /* Page Banner */
+        .page-banner {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             color: white;
-            padding: 100px 0;
+            padding: 60px 0;
             text-align: center;
         }
 
-        .hero h2 {
-            font-size: 2.8rem;
-            margin-bottom: 20px;
+        .page-banner h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
             color: var(--accent-color);
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
-        .hero p {
-            font-size: 1.3rem;
-            max-width: 800px;
-            margin: 0 auto 30px;
-            font-weight: 400;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background-color: var(--accent-color);
-            color: var(--primary-color);
-            padding: 12px 40px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
+        .page-banner p {
             font-size: 1.2rem;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            max-width: 800px;
+            margin: 0 auto;
         }
 
-        .cta-button:hover {
-            background-color: white;
-            transform: translateY(-4px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        /* Calendar Section - Sleek like Newsletter */
+        .calendar-section {
+            padding: 60px 0;
         }
 
-        .section-title {
-            text-align: center;
-            margin: 50px 0 30px;
-            color: var(--primary-color);
-            font-size: 2.2rem;
-            position: relative;
-            padding-bottom: 15px;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            width: 90px;
-            height: 4px;
-            background: var(--accent-color);
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            border-radius: 4px;
-        }
-
-        .features {
+        .calendar-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 30px;
-            margin: 40px 0;
         }
 
-        .feature-card {
+        .calendar-card {
             background: white;
             border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0, 35, 102, 0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-            border-top: 5px solid var(--accent-color);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 35, 102, 0.08);
         }
 
-        .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 30px rgba(0, 35, 102, 0.2);
+        .calendar-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 35, 102, 0.1);
+            border-color: rgba(0, 35, 102, 0.15);
         }
 
-        .feature-card img {
-            width: 100%;
-            height: 210px;
-            object-fit: cover;
+        .calendar-card.current {
+            border: 1px solid var(--accent-color);
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.1);
         }
 
-        .feature-content {
+        .calendar-card.current .calendar-icon {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            position: relative;
+        }
+
+        .calendar-card.current .calendar-icon::after {
+            content: "★ CURRENT";
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--accent-color);
+            color: var(--primary-color);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .calendar-icon {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 35px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .calendar-card:hover .calendar-icon {
+            background: linear-gradient(135deg, #e9ecef, #dee2e6);
+        }
+
+        .calendar-icon i {
+            font-size: 2.8rem;
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .calendar-card:hover .calendar-icon i {
+            transform: scale(1.05);
+        }
+
+        .calendar-content {
             padding: 25px;
         }
 
-        .feature-content h3 {
+        .calendar-title {
             color: var(--primary-color);
-            margin-bottom: 12px;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            font-weight: 600;
         }
 
-        .announcements {
-            background-color: white;
-            border-radius: 20px;
-            padding: 30px;
-            margin: 40px 0;
-            box-shadow: 0 10px 25px rgba(0, 35, 102, 0.08);
-            border-left: 6px solid var(--secondary-color);
-        }
-
-        .announcement-item {
-            padding: 18px 0;
-            border-bottom: 1px solid #edf2f7;
+        .calendar-year {
+            color: #888;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 6px;
         }
 
-        .announcement-item:last-child {
-            border-bottom: none;
+        .calendar-year i {
+            color: var(--accent-color);
+            font-size: 0.8rem;
         }
 
-        .announcement-date {
-            background-color: var(--primary-color);
+        .btn-download {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
-            padding: 10px 15px;
-            border-radius: 12px;
-            text-align: center;
-            min-width: 100px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-
-        .announcement-date .day {
-            font-size: 1.8rem;
-            font-weight: 800;
-            line-height: 1.2;
-        }
-
-        .announcement-date .month {
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 500;
             font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            border: none;
         }
 
-        .announcement-text h3 {
+        .btn-download:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 35, 102, 0.3);
+        }
+
+        .btn-download i {
+            font-size: 0.9rem;
+        }
+
+        /* Empty State */
+        .no-calendar {
+            text-align: center;
+            padding: 60px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 35, 102, 0.08);
+        }
+
+        .no-calendar i {
+            font-size: 4rem;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+        }
+
+        .no-calendar h3 {
             color: var(--primary-color);
-            margin-bottom: 6px;
-            font-size: 1.3rem;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
         }
 
-       /* Footer Styles */
+        .no-calendar p {
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        .btn-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 35, 102, 0.3);
+        }
+
+        /* Footer Styles */
         footer {
             background: linear-gradient(145deg, var(--dark-color) 0%, var(--primary-color) 100%);
             color: white;
@@ -391,10 +435,6 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
             font-size: 0.9rem;
         }
 
-        .hours-item span:first-child {
-            font-weight: 600;
-        }
-
         .emergency-number {
             background: rgba(255, 215, 0, 0.15);
             padding: 12px;
@@ -404,22 +444,14 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
             border: 1px solid var(--accent-color);
         }
 
-        .emergency-number p {
-            margin-bottom: 5px;
-            font-size: 0.85rem;
-        }
-
         .emergency-number a {
             color: var(--accent-color);
             text-decoration: none;
-            font-size: 1.1rem;
             font-weight: bold;
         }
 
-        /* Social Icons */
         .social-icons {
             display: flex;
-            flex-direction: row;
             gap: 12px;
             margin-top: 15px;
         }
@@ -430,7 +462,7 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
             justify-content: center;
             width: 38px;
             height: 38px;
-            background-color: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.1);
             border-radius: 50%;
             transition: all 0.3s;
         }
@@ -438,13 +470,11 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
         .social-icons a svg {
             width: 16px;
             height: 16px;
-            display: block;
             fill: var(--accent-color);
-            transition: fill 0.3s ease;
         }
 
         .social-icons a:hover {
-            background-color: var(--accent-color);
+            background: var(--accent-color);
             transform: translateY(-3px);
         }
 
@@ -474,16 +504,8 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
             box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
-        .admin-login-btn:hover {
-            background: var(--accent-color);
-            color: var(--primary-color);
-        }
-
         @media (max-width: 992px) {
-            .hero h2 { font-size: 2.2rem; }
-            .hero p { font-size: 1.1rem; }
             .logo-text h1 { font-size: 1.4rem; }
-            .logo-text p { font-size: 0.7rem; }
             .logo-icon { width: 50px; height: 50px; }
         }
 
@@ -496,35 +518,31 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
             nav ul {
                 display: none;
                 flex-direction: column;
-                background-color: var(--primary-color);
+                background: var(--primary-color);
                 position: absolute;
                 top: 100%;
                 left: 0;
                 width: 100%;
                 padding: 20px 0;
-                box-shadow: 0 10px 15px rgba(0,0,0,0.2);
-                border-radius: 0 0 20px 20px;
                 z-index: 99;
+                border-radius: 0 0 20px 20px;
             }
             nav ul.active { display: flex; }
             nav ul li { margin: 0; text-align: center; padding: 12px 0; }
             .mobile-menu-btn { display: block; }
-            .hero { padding: 70px 0; }
-            .hero h2 { font-size: 1.9rem; }
-            .section-title { font-size: 1.9rem; }
-            .announcement-item { flex-direction: column; text-align: center; }
-            .footer-content { grid-template-columns: 1fr; text-align: center; gap: 30px; }
+            .calendar-grid { grid-template-columns: 1fr; }
+            .page-banner h1 { font-size: 1.8rem; }
+            .footer-content { grid-template-columns: 1fr; text-align: center; }
             .footer-column h3 { border-left: none; padding-left: 0; text-align: center; }
             .hours-item { justify-content: center; gap: 20px; }
             .social-icons { justify-content: center; }
-            .footer-links li a { justify-content: center; }
         }
 
         @media (max-width: 576px) {
             .logo { gap: 10px; }
             .logo-icon { width: 45px; height: 45px; }
             .logo-text h1 { font-size: 1.2rem; }
-            .logo-text p { font-size: 0.65rem; }
+            .no-calendar { padding: 30px; }
         }
     </style>
 </head>
@@ -549,7 +567,7 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
             
             <nav>
                 <ul id="mainNav">
-                    <li><a href="index.php" class="active">Home</a></li>
+                    <li><a href="index.php">Home</a></li>
                     <li><a href="about.php">About Us</a></li>
                     <li><a href="academics.php">Academics</a></li>
                     <li><a href="admissions.php">Admissions</a></li>
@@ -560,103 +578,47 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
         </div>
     </header>
 
-    <section class="hero">
+    <section class="page-banner">
         <div class="container">
-            <h2><?php echo htmlspecialchars($hero['title'] ?? '🦅 Soaring to Excellence in International Education'); ?></h2>
-            <p><?php echo htmlspecialchars($hero['subtitle'] ?? 'Inspired by the majesty of the Philippine Eagle, Bethel International School in Pawing, Palo, Leyte nurtures global citizens with strong Filipino values, academic excellence, and holistic development from kindergarten through senior high school.'); ?></p>
-            <a href="academics.php" class="cta-button"><?php echo htmlspecialchars($hero['cta_text'] ?? 'Explore Our Programs'); ?></a>
+            <h1>Academic Calendar</h1>
+            <p>Download and view important dates for the school year</p>
         </div>
     </section>
 
-    <main class="container">
-        <h2 class="section-title">Why Choose Bethel International School?</h2>
-        <div class="features">
-            <?php if(count($features) > 0): ?>
-                <?php foreach($features as $feature): ?>
-                <div class="feature-card">
-                    <img src="<?php echo htmlspecialchars($feature['image_url'] ?: 'https://via.placeholder.com/800x600/002366/ffffff?text=Bethel+Feature'); ?>" alt="<?php echo htmlspecialchars($feature['title']); ?>" loading="lazy">
-                    <div class="feature-content">
-                        <h3><?php echo htmlspecialchars($feature['title']); ?></h3>
-                        <p><?php echo htmlspecialchars($feature['description']); ?></p>
+    <div class="container calendar-section">
+        <?php if($has_calendars): ?>
+            <div class="calendar-grid">
+                <?php foreach($calendar_pdfs as $calendar): ?>
+                    <div class="calendar-card <?php echo $calendar['is_current'] ? 'current' : ''; ?>">
+                        <div class="calendar-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="calendar-content">
+                            <h3 class="calendar-title"><?php echo htmlspecialchars($calendar['title']); ?></h3>
+                            <div class="calendar-year">
+                                <i class="fas fa-calendar-week"></i>
+                                School Year: <?php echo htmlspecialchars($calendar['school_year']); ?>
+                            </div>
+                            <a href="<?php echo $calendar['pdf_url']; ?>" class="btn-download" target="_blank">
+                                <i class="fas fa-download"></i> Download PDF
+                            </a>
+                        </div>
                     </div>
-                </div>
                 <?php endforeach; ?>
-            <?php else: ?>
-                <div class="feature-card">
-                    <img src="images/Campus.png" alt="Modern Science Lab" loading="lazy">
-                    <div class="feature-content">
-                        <h3>World-Class Facilities</h3>
-                        <p>Our campus in Pawing, Palo features modern classrooms, science labs, sports facilities, and a well-stocked library to support holistic learning and innovation.</p>
-                    </div>
-                </div>
-                <div class="feature-card">
-                    <img src="images/International.jpg" alt="Qualified Teachers" loading="lazy">
-                    <div class="feature-content">
-                        <h3>International Curriculum</h3>
-                        <p>We offer an internationally-recognized curriculum combined with Filipino values and context to prepare students for global opportunities while remaining rooted in Philippine heritage.</p>
-                    </div>
-                </div>
-                <div class="feature-card">
-                    <img src="images/Play.jpg" alt="Extracurricular activities" loading="lazy">
-                    <div class="feature-content">
-                        <h3>Soaring Talents Program</h3>
-                        <p>Inspired by the Philippine Eagle, our Soaring Talents Program offers sports, arts, music, leadership, and cultural activities to help students discover and develop their unique talents.</p>
-                    </div>
-                </div>
-            <?php endif; ?>
-        </div>
+            </div>
+        <?php else: ?>
+            <div class="no-calendar">
+                <i class="fas fa-calendar-times"></i>
+                <h3>No Calendar Available Yet</h3>
+                <p>The academic calendar is currently being prepared. Please check back soon!</p>
+                <a href="index.php" class="btn-home">
+                    <i class="fas fa-home"></i> Return to Home
+                </a>
+            </div>
+        <?php endif; ?>
+    </div>
 
-        <h2 class="section-title">Latest Announcements</h2>
-        <div class="announcements">
-            <?php if(count($announcements) > 0): ?>
-                <?php foreach($announcements as $announcement): ?>
-                <div class="announcement-item">
-                    <div class="announcement-date">
-                        <div class="day"><?php echo $announcement['day']; ?></div>
-                        <div class="month"><?php echo htmlspecialchars($announcement['month']); ?></div>
-                    </div>
-                    <div class="announcement-text">
-                        <h3><?php echo htmlspecialchars($announcement['title']); ?></h3>
-                        <p><?php echo htmlspecialchars($announcement['description']); ?></p>
-                    </div>
-                </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <div class="announcement-item">
-                    <div class="announcement-date">
-                        <div class="day">15</div>
-                        <div class="month">June</div>
-                    </div>
-                    <div class="announcement-text">
-                        <h3>Enrollment for SY 2025-2026</h3>
-                        <p>Enrollment for the School Year 2025-2026 is now open. Visit our campus in Pawing, Palo, Leyte for inquiries and campus tours.</p>
-                    </div>
-                </div>
-                <div class="announcement-item">
-                    <div class="announcement-date">
-                        <div class="day">25</div>
-                        <div class="month">June</div>
-                    </div>
-                    <div class="announcement-text">
-                        <h3>Philippine Eagle Festival</h3>
-                        <p>Join us for our annual Philippine Eagle Festival celebrating Filipino heritage and environmental conservation on June 25-29.</p>
-                    </div>
-                </div>
-                <div class="announcement-item">
-                    <div class="announcement-date">
-                        <div class="day">12</div>
-                        <div class="month">June</div>
-                    </div>
-                    <div class="announcement-text">
-                        <h3>Independence Day Celebration</h3>
-                        <p>Celebrate Philippine Independence Day with us on June 12 featuring cultural performances, historical exhibits, and patriotic activities.</p>
-                    </div>
-                </div>
-            <?php endif; ?>
-        </div>
-    </main>
-
-    <!-- Footer -->
+       <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
@@ -714,7 +676,7 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
         const mobileBtn = document.getElementById('mobileMenuBtn');
         const mainNav = document.getElementById('mainNav');
         
-        if (mobileBtn && mainNav) {
+        if(mobileBtn && mainNav) {
             mobileBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
                 mainNav.classList.toggle('active');
@@ -727,12 +689,11 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
                     icon.classList.add('fa-bars');
                 }
             });
-
             document.querySelectorAll('#mainNav a').forEach(link => {
                 link.addEventListener('click', function() {
                     mainNav.classList.remove('active');
                     const icon = mobileBtn.querySelector('i');
-                    if (icon) {
+                    if(icon) {
                         icon.classList.remove('fa-times');
                         icon.classList.add('fa-bars');
                     }
