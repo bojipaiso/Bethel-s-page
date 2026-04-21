@@ -1,13 +1,11 @@
 <?php
-// news.php - COMPLETE WORKING VERSION
+// news.php - COMPLETE WITH PROPER HEADER AND FOOTER
 require_once 'includes/db.php';
 $page_title = 'News & Events | Bethel International School';
 
-// Fetch highlighted news
-$highlights = $pdo->query("SELECT * FROM news_articles WHERE status='published' AND is_highlight = 1 ORDER BY highlight_order ASC, published_date DESC LIMIT 3")->fetchAll();
-
-// Fetch regular news
-$regular_news = $pdo->query("SELECT * FROM news_articles WHERE status='published' AND is_highlight = 0 ORDER BY published_date DESC, created_at DESC")->fetchAll();
+$featured = $pdo->query("SELECT * FROM news_articles WHERE status='published' AND is_featured = 1 LIMIT 1")->fetch();
+$highlights = $pdo->query("SELECT * FROM news_articles WHERE status='published' AND is_highlight = 1 AND is_featured = 0 ORDER BY highlight_order ASC, published_date DESC LIMIT 3")->fetchAll();
+$regular_news = $pdo->query("SELECT * FROM news_articles WHERE status='published' AND is_highlight = 0 AND is_featured = 0 ORDER BY published_date DESC, created_at DESC")->fetchAll();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,12 +28,14 @@ $regular_news = $pdo->query("SELECT * FROM news_articles WHERE status='published
             --accent-color: #FFD700;
             --light-color: #ffffff;
             --dark-color: #1a1a2e;
+            --body-bg: #f8fafc;
+            --gray-border: #e0e0e0;
         }
 
         body {
             line-height: 1.6;
             color: var(--dark-color);
-            background-color: #f8fafc;
+            background-color: var(--body-bg);
         }
 
         .container {
@@ -45,6 +45,7 @@ $regular_news = $pdo->query("SELECT * FROM news_articles WHERE status='published
             padding: 0 20px;
         }
 
+        /* Header Styles - Complete */
         header {
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             color: white;
@@ -174,6 +175,7 @@ $regular_news = $pdo->query("SELECT * FROM news_articles WHERE status='published
             padding: 5px;
         }
 
+        /* Page Banner */
         .page-banner {
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             color: white;
@@ -197,7 +199,110 @@ $regular_news = $pdo->query("SELECT * FROM news_articles WHERE status='published
             padding: 60px 0;
         }
 
-        /* Highlights Section */
+        /* FEATURED ARTICLE */
+        .featured-article {
+            margin-bottom: 50px;
+        }
+
+        .featured-label {
+            display: inline-block;
+            background: #dc3545;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .featured-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 35, 102, 0.15);
+            transition: transform 0.3s;
+        }
+
+        .featured-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .featured-image {
+            min-height: 350px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .featured-image-category {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            background: var(--accent-color);
+            color: var(--primary-color);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .featured-content {
+            padding: 35px 35px 35px 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .featured-date {
+            color: #666;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .featured-date i {
+            color: var(--accent-color);
+        }
+
+        .featured-title {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .featured-excerpt {
+            color: #555;
+            margin-bottom: 25px;
+        }
+
+        .btn-featured {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--primary-color);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            width: fit-content;
+        }
+
+        .btn-featured:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+            gap: 12px;
+        }
+
+        /* HIGHLIGHTS SECTION */
         .highlights-section {
             margin-bottom: 50px;
         }
@@ -213,7 +318,7 @@ $regular_news = $pdo->query("SELECT * FROM news_articles WHERE status='published
 
         .highlights-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 30px;
         }
 
@@ -237,98 +342,72 @@ $regular_news = $pdo->query("SELECT * FROM news_articles WHERE status='published
             position: relative;
         }
 
-        /* Regular News Grid */
-        .news-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-            margin-bottom: 50px;
+        .highlight-content {
+            padding: 20px;
         }
 
-        .news-card {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0, 35, 102, 0.1);
-            transition: transform 0.3s;
-        }
-
-        .news-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .news-image {
-            height: 200px;
-            background-size: cover;
-            background-position: center;
-            position: relative;
+        .highlight-title {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-weight: 600;
         }
 
         .news-category {
             position: absolute;
-            top: 15px;
-            right: 15px;
+            top: 12px;
+            right: 12px;
             background: var(--accent-color);
             color: var(--primary-color);
-            padding: 5px 15px;
+            padding: 4px 12px;
             border-radius: 20px;
-            font-size: 0.85rem;
+            font-size: 0.7rem;
             font-weight: bold;
         }
 
-        .news-content {
-            padding: 25px;
-        }
-
         .news-date {
-            color: var(--secondary-color);
-            font-size: 0.9rem;
-            margin-bottom: 10px;
+            color: #999;
+            font-size: 0.75rem;
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 5px;
         }
 
         .news-date i {
             color: var(--accent-color);
         }
 
-        .news-title {
-            color: var(--primary-color);
-            font-size: 1.3rem;
-            margin-bottom: 15px;
-        }
-
         .news-excerpt {
             color: #666;
-            margin-bottom: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+            line-height: 1.5;
         }
 
         .read-more {
+            font-size: 0.8rem;
             color: var(--secondary-color);
             text-decoration: none;
             font-weight: 600;
             display: inline-flex;
             align-items: center;
             gap: 5px;
-            transition: gap 0.3s;
         }
 
         .read-more:hover {
-            gap: 10px;
+            gap: 8px;
+        }
+
+        /* REGULAR NEWS - Smaller */
+        .regular-section {
+            margin-top: 20px;
         }
 
         .section-divider {
             text-align: center;
             margin: 40px 0;
             position: relative;
-        }
-
-        .section-divider span {
-            background: white;
-            padding: 0 20px;
-            color: var(--primary-color);
-            font-weight: 600;
         }
 
         .section-divider::before {
@@ -342,7 +421,85 @@ $regular_news = $pdo->query("SELECT * FROM news_articles WHERE status='published
             z-index: 0;
         }
 
-        /* Footer */
+        .section-divider span {
+            background: var(--body-bg);
+            padding: 0 20px;
+            color: var(--primary-color);
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .news-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+        }
+
+        .news-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 35, 102, 0.1);
+        }
+
+        .news-image {
+            height: 160px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .news-content {
+            padding: 18px;
+        }
+
+        .news-title {
+            font-size: 1rem;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px;
+            background: white;
+            border-radius: 20px;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+        }
+
+        .empty-state h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .btn-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--primary-color);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+
+        /* Footer - Complete */
         footer {
             background: linear-gradient(145deg, var(--dark-color) 0%, var(--primary-color) 100%);
             color: white;
@@ -484,7 +641,10 @@ $regular_news = $pdo->query("SELECT * FROM news_articles WHERE status='published
         }
 
         @media (max-width: 768px) {
-            .header-container { flex-direction: row; justify-content: space-between; }
+            .header-container {
+                flex-direction: row;
+                justify-content: space-between;
+            }
             .logo { flex: 1; }
             nav ul {
                 display: none;
@@ -502,18 +662,45 @@ $regular_news = $pdo->query("SELECT * FROM news_articles WHERE status='published
             nav ul.active { display: flex; }
             nav ul li { margin: 0; text-align: center; padding: 12px 0; }
             .mobile-menu-btn { display: block; }
-            .news-grid, .highlights-grid { grid-template-columns: 1fr; }
-            .footer-content { grid-template-columns: 1fr; text-align: center; gap: 30px; }
-            .footer-column h3 { border-left: none; padding-left: 0; text-align: center; }
-            .hours-item { justify-content: center; gap: 20px; }
-            .social-icons { justify-content: center; }
+            
+            .featured-card {
+                grid-template-columns: 1fr;
+            }
+            .featured-image {
+                min-height: 200px;
+            }
+            .featured-content {
+                padding: 25px;
+            }
+            .featured-title {
+                font-size: 1.3rem;
+            }
+            .highlights-grid, .news-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 30px;
+            }
+            .footer-column h3 {
+                border-left: none;
+                padding-left: 0;
+                text-align: center;
+            }
+            .hours-item {
+                justify-content: center;
+                gap: 20px;
+            }
+            .social-icons {
+                justify-content: center;
+            }
         }
 
         @media (max-width: 576px) {
             .logo { gap: 10px; }
             .logo-icon { width: 45px; height: 45px; }
             .logo-text h1 { font-size: 1.2rem; }
-            .logo-text p { font-size: 0.65rem; }
         }
     </style>
 </head>
@@ -558,76 +745,83 @@ $regular_news = $pdo->query("SELECT * FROM news_articles WHERE status='published
 
     <div class="container news-section">
         
-        <!-- NEWS HIGHLIGHTS SECTION -->
+        <!-- FEATURED ARTICLE -->
+        <?php if($featured): ?>
+        <div class="featured-article">
+            <div class="featured-label"><i class="fas fa-star"></i> Featured Story</div>
+            <div class="featured-card">
+                <div class="featured-image" style="background-image: url('<?php echo !empty($featured['image_url']) ? htmlspecialchars($featured['image_url']) : 'https://placehold.co/800x600/002366/FFD700?text=Featured+Story'; ?>');">
+                    <div class="featured-image-category"><?php echo ucfirst($featured['category']); ?></div>
+                </div>
+                <div class="featured-content">
+                    <div class="featured-date"><i class="far fa-calendar-alt"></i> <?php echo date('F d, Y', strtotime($featured['published_date'] ?? $featured['created_at'])); ?></div>
+                    <h2 class="featured-title"><?php echo htmlspecialchars($featured['title']); ?></h2>
+                    <p class="featured-excerpt"><?php echo htmlspecialchars(substr($featured['excerpt'] ?: $featured['content'], 0, 200)); ?>...</p>
+                    <a href="#" class="btn-featured">Read Full Story <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+        <?php endif; ?>
+        
+        <!-- HIGHLIGHTS SECTION -->
         <?php if(count($highlights) > 0): ?>
         <div class="highlights-section">
-            <h2 class="highlights-title">⭐ News Highlights</h2>
+            <h2 class="highlights-title"><i class="fas fa-star"></i> More News</h2>
             <div class="highlights-grid">
                 <?php foreach($highlights as $highlight): ?>
                 <div class="highlight-card">
-                    <div class="highlight-image" style="background-image: url('<?php 
-                        $img = !empty($highlight['image_url']) ? $highlight['image_url'] : 'https://placehold.co/800x600/002366/FFD700?text=News+Highlight';
-                        echo $img;
-                    ?>');">
+                    <div class="highlight-image" style="background-image: url('<?php echo !empty($highlight['image_url']) ? htmlspecialchars($highlight['image_url']) : 'https://placehold.co/800x600/002366/FFD700?text=News'; ?>');">
                         <span class="news-category"><?php echo ucfirst($highlight['category']); ?></span>
                     </div>
-                    <div class="news-content">
-                        <div class="news-date">
-                            <i class="far fa-calendar-alt"></i> 
-                            <?php echo date('F d, Y', strtotime($highlight['published_date'] ?? $highlight['created_at'])); ?>
-                        </div>
-                        <h3 class="news-title"><?php echo htmlspecialchars($highlight['title']); ?></h3>
-                        <p class="news-excerpt"><?php echo htmlspecialchars(substr($highlight['excerpt'] ?: $highlight['content'], 0, 120)); ?>...</p>
+                    <div class="highlight-content">
+                        <div class="news-date"><i class="far fa-calendar-alt"></i> <?php echo date('F d, Y', strtotime($highlight['published_date'] ?? $highlight['created_at'])); ?></div>
+                        <h3 class="highlight-title"><?php echo htmlspecialchars($highlight['title']); ?></h3>
+                        <p class="news-excerpt"><?php echo htmlspecialchars(substr($highlight['excerpt'] ?: $highlight['content'], 0, 100)); ?>...</p>
                         <a href="#" class="read-more">Read More →</a>
                     </div>
                 </div>
                 <?php endforeach; ?>
             </div>
         </div>
-        
-        <div class="section-divider">
-            <span>Latest News & Updates</span>
-        </div>
         <?php endif; ?>
         
-        <!-- REGULAR NEWS GRID -->
-        <div class="news-grid">
-            <?php if(count($regular_news) > 0): ?>
+        <!-- REGULAR NEWS -->
+        <?php if(count($regular_news) > 0): ?>
+        <div class="regular-section">
+            <div class="section-divider"><span>Latest Updates</span></div>
+            <div class="news-grid">
                 <?php foreach($regular_news as $article): ?>
                 <div class="news-card">
-                    <div class="news-image" style="background-image: url('<?php 
-                        $img = !empty($article['image_url']) ? $article['image_url'] : 'https://placehold.co/800x600/002366/FFD700?text=News+Article';
-                        echo $img;
-                    ?>');">
+                    <div class="news-image" style="background-image: url('<?php echo !empty($article['image_url']) ? htmlspecialchars($article['image_url']) : 'https://placehold.co/800x600/002366/FFD700?text=News'; ?>');">
                         <span class="news-category"><?php echo ucfirst($article['category']); ?></span>
                     </div>
                     <div class="news-content">
                         <div class="news-date"><i class="far fa-calendar-alt"></i> <?php echo date('F d, Y', strtotime($article['published_date'] ?? $article['created_at'])); ?></div>
                         <h3 class="news-title"><?php echo htmlspecialchars($article['title']); ?></h3>
-                        <p class="news-excerpt"><?php echo htmlspecialchars(substr($article['excerpt'] ?: $article['content'], 0, 100)); ?>...</p>
+                        <p class="news-excerpt"><?php echo htmlspecialchars(substr($article['excerpt'] ?: $article['content'], 0, 80)); ?>...</p>
                         <a href="#" class="read-more">Read More →</a>
                     </div>
                 </div>
                 <?php endforeach; ?>
-            <?php else: ?>
-                <div class="news-card">
-                    <div class="news-content" style="text-align: center; padding: 40px;">
-                        <i class="fas fa-newspaper" style="font-size: 3rem; color: var(--accent-color); margin-bottom: 15px; display: block;"></i>
-                        <h3 class="news-title">No News Articles Yet</h3>
-                        <p class="news-excerpt">Check back soon for updates and announcements!</p>
-                    </div>
-                </div>
-            <?php endif; ?>
+            </div>
         </div>
+        <?php elseif(!$featured && count($highlights) == 0): ?>
+            <div class="empty-state">
+                <i class="fas fa-newspaper"></i>
+                <h3>No News Articles Yet</h3>
+                <p>Check back soon for updates and announcements!</p>
+                <a href="index.php" class="btn-home"><i class="fas fa-home"></i> Return Home</a>
+            </div>
+        <?php endif; ?>
     </div>
 
-    <!-- Footer -->
+       <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
                 <!-- School Info -->
                 <div class="footer-column">
-                    <h3>🏫 Bethel International School</h3>
+                    <h3>Bethel International School</h3>
                     <p><i class="fas fa-map-marker-alt"></i> Pawing, Palo, Leyte, Philippines 6501</p>
                     <p><i class="fas fa-phone-alt"></i> 0917-173-0284</p>
                     <p><i class="fas fa-envelope"></i> secretary@bethel.edu.ph</p>
@@ -647,7 +841,7 @@ $regular_news = $pdo->query("SELECT * FROM news_articles WHERE status='published
 
                 <!-- Resources - PDF Links -->
                 <div class="footer-column">
-                    <h3>📚 Resources</h3>
+                    <h3>Resources</h3>
                     <ul class="footer-links">
                         <li><a href="calendar.php"><i class="fas fa-calendar-alt"></i> Academic Calendar</a></li>
                         <li><a href="newsletter.php"><i class="fas fa-newspaper"></i> School Newsletter</a></li>
@@ -656,24 +850,24 @@ $regular_news = $pdo->query("SELECT * FROM news_articles WHERE status='published
 
                 <!-- Hours -->
                 <div class="footer-column">
-                    <h3>⏰ Hours</h3>
+                    <h3>Hours</h3>
                     <div class="hours-item"><span>Mon-Fri:</span><span>8AM - 5PM</span></div>
                     <div class="hours-item"><span>Sat:</span><span>9AM - 12PM</span></div>
                     <div class="hours-item"><span>Sun:</span><span>Closed</span></div>
                     <div class="emergency-number">
-                        <p>📞 Emergency</p>
+                        <p>Emergency</p>
                         <a href="tel:+639171730284">0917-173-0284</a>
                     </div>
                 </div>
             </div>
             <div class="copyright">
-                <p>© 2026 Bethel International School, Pawing, Palo, Leyte. All Rights Reserved.</p>
+                <p>&copy; 2026 Bethel International School, Pawing, Palo, Leyte. All Rights Reserved.</p>
                 <p style="font-size: 0.75rem; margin-top: 8px;">The Philippine Eagle symbolizes our commitment to strength, vision, and soaring excellence.</p>
             </div>
         </div>
     </footer>
 
-    <a href="admin/login.php" class="admin-login-btn">🔧 Admin</a>
+    <a href="admin/login.php" class="admin-login-btn">Admin</a>
 
     <script>
         const mobileBtn = document.getElementById('mobileMenuBtn');

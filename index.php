@@ -517,7 +517,7 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
             .footer-column h3 { border-left: none; padding-left: 0; text-align: center; }
             .hours-item { justify-content: center; gap: 20px; }
             .social-icons { justify-content: center; }
-            .footer-links li a { justify-content: center; }
+            .footer-links li a { justify-content: center; }=
         }
 
         @media (max-width: 576px) {
@@ -562,7 +562,7 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
 
     <section class="hero">
         <div class="container">
-            <h2><?php echo htmlspecialchars($hero['title'] ?? '🦅 Soaring to Excellence in International Education'); ?></h2>
+            <h2><?php echo htmlspecialchars($hero['title'] ?? 'Soaring to Excellence in International Education'); ?></h2>
             <p><?php echo htmlspecialchars($hero['subtitle'] ?? 'Inspired by the majesty of the Philippine Eagle, Bethel International School in Pawing, Palo, Leyte nurtures global citizens with strong Filipino values, academic excellence, and holistic development from kindergarten through senior high school.'); ?></p>
             <a href="academics.php" class="cta-button"><?php echo htmlspecialchars($hero['cta_text'] ?? 'Explore Our Programs'); ?></a>
         </div>
@@ -656,13 +656,13 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
         </div>
     </main>
 
-    <!-- Footer -->
+   <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
                 <!-- School Info -->
                 <div class="footer-column">
-                    <h3>🏫 Bethel International School</h3>
+                    <h3>Bethel International School</h3>
                     <p><i class="fas fa-map-marker-alt"></i> Pawing, Palo, Leyte, Philippines 6501</p>
                     <p><i class="fas fa-phone-alt"></i> 0917-173-0284</p>
                     <p><i class="fas fa-envelope"></i> secretary@bethel.edu.ph</p>
@@ -682,7 +682,7 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
 
                 <!-- Resources - PDF Links -->
                 <div class="footer-column">
-                    <h3>📚 Resources</h3>
+                    <h3>Resources</h3>
                     <ul class="footer-links">
                         <li><a href="calendar.php"><i class="fas fa-calendar-alt"></i> Academic Calendar</a></li>
                         <li><a href="newsletter.php"><i class="fas fa-newspaper"></i> School Newsletter</a></li>
@@ -691,18 +691,18 @@ $hero = $pdo->query("SELECT * FROM hero_content ORDER BY id DESC LIMIT 1")->fetc
 
                 <!-- Hours -->
                 <div class="footer-column">
-                    <h3>⏰ Hours</h3>
+                    <h3>Hours</h3>
                     <div class="hours-item"><span>Mon-Fri:</span><span>8AM - 5PM</span></div>
                     <div class="hours-item"><span>Sat:</span><span>9AM - 12PM</span></div>
                     <div class="hours-item"><span>Sun:</span><span>Closed</span></div>
                     <div class="emergency-number">
-                        <p>📞 Emergency</p>
+                        <p>Emergency</p>
                         <a href="tel:+639171730284">0917-173-0284</a>
                     </div>
                 </div>
             </div>
             <div class="copyright">
-                <p>© 2026 Bethel International School, Pawing, Palo, Leyte. All Rights Reserved.</p>
+                <p>&copy; 2026 Bethel International School, Pawing, Palo, Leyte. All Rights Reserved.</p>
                 <p style="font-size: 0.75rem; margin-top: 8px;">The Philippine Eagle symbolizes our commitment to strength, vision, and soaring excellence.</p>
             </div>
         </div>

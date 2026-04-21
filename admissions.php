@@ -1,7 +1,14 @@
 <?php
-// admissions.php
+// admissions.php - PULLS CONTENT FROM DATABASE
 require_once 'includes/db.php';
 $page_title = 'Admissions | Bethel International School';
+
+// Fetch admissions content from database
+$welcome = $pdo->query("SELECT * FROM admissions_content WHERE section = 'welcome'")->fetch();
+$enrollment = $pdo->query("SELECT * FROM admissions_content WHERE section = 'enrollment_period'")->fetch();
+$classes = $pdo->query("SELECT * FROM admissions_content WHERE section = 'classes_start'")->fetch();
+$requirements = $pdo->query("SELECT * FROM admissions_content WHERE section = 'requirements'")->fetch();
+$steps = $pdo->query("SELECT * FROM admission_steps WHERE status = 'active' ORDER BY display_order ASC")->fetchAll();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,6 +46,7 @@ $page_title = 'Admissions | Bethel International School';
             padding: 0 20px;
         }
 
+        /* Header Styles */
         header {
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             color: white;
@@ -168,6 +176,7 @@ $page_title = 'Admissions | Bethel International School';
             padding: 5px;
         }
 
+        /* Page Banner */
         .page-banner {
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             color: white;
@@ -181,6 +190,13 @@ $page_title = 'Admissions | Bethel International School';
             color: var(--accent-color);
         }
 
+        .page-banner p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Admissions Content */
         .admissions-content {
             padding: 60px 0;
         }
@@ -197,6 +213,7 @@ $page_title = 'Admissions | Bethel International School';
         .info-box h2 {
             color: var(--primary-color);
             margin-bottom: 20px;
+            font-size: 1.5rem;
         }
 
         .steps {
@@ -231,6 +248,17 @@ $page_title = 'Admissions | Bethel International School';
             font-size: 1.3rem;
             font-weight: bold;
             margin: 0 auto 15px;
+        }
+
+        .step h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .step p {
+            color: #666;
+            font-size: 0.9rem;
         }
 
         .requirements-list {
@@ -281,6 +309,7 @@ $page_title = 'Admissions | Bethel International School';
             transform: scale(1.05);
         }
 
+        /* Footer */
         footer {
             background: linear-gradient(145deg, var(--dark-color) 0%, var(--primary-color) 100%);
             color: white;
@@ -347,10 +376,6 @@ $page_title = 'Admissions | Bethel International School';
             font-size: 0.9rem;
         }
 
-        .hours-item span:first-child {
-            font-weight: 600;
-        }
-
         .emergency-number {
             background: rgba(255, 215, 0, 0.15);
             padding: 12px;
@@ -374,7 +399,6 @@ $page_title = 'Admissions | Bethel International School';
 
         .social-icons {
             display: flex;
-            flex-direction: row;
             gap: 12px;
             margin-top: 15px;
         }
@@ -385,7 +409,7 @@ $page_title = 'Admissions | Bethel International School';
             justify-content: center;
             width: 38px;
             height: 38px;
-            background-color: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.1);
             border-radius: 50%;
             transition: all 0.3s;
         }
@@ -393,13 +417,11 @@ $page_title = 'Admissions | Bethel International School';
         .social-icons a svg {
             width: 16px;
             height: 16px;
-            display: block;
             fill: var(--accent-color);
-            transition: fill 0.3s ease;
         }
 
         .social-icons a:hover {
-            background-color: var(--accent-color);
+            background: var(--accent-color);
             transform: translateY(-3px);
         }
 
@@ -429,18 +451,16 @@ $page_title = 'Admissions | Bethel International School';
             box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
-        .admin-login-btn:hover {
-            background: var(--accent-color);
-            color: var(--primary-color);
-        }
-
         @media (max-width: 992px) {
             .logo-text h1 { font-size: 1.4rem; }
             .logo-icon { width: 50px; height: 50px; }
         }
 
         @media (max-width: 768px) {
-            .header-container { flex-direction: row; justify-content: space-between; }
+            .header-container {
+                flex-direction: row;
+                justify-content: space-between;
+            }
             .logo { flex: 1; }
             nav ul {
                 display: none;
@@ -463,7 +483,6 @@ $page_title = 'Admissions | Bethel International School';
             .footer-column h3 { border-left: none; padding-left: 0; text-align: center; }
             .hours-item { justify-content: center; gap: 20px; }
             .social-icons { justify-content: center; }
-            .footer-links li a { justify-content: center; }
         }
 
         @media (max-width: 576px) {
@@ -481,7 +500,7 @@ $page_title = 'Admissions | Bethel International School';
             <div class="logo">
                 <div class="logo-icon">
                     <div class="eagle-icon">
-                       <img src="images/bethel-logo.png" alt="Bethel International School Logo">
+                        <img src="images/bethel-logo.png" alt="Bethel International School Logo">
                     </div>
                 </div>
                 <div class="logo-text">
@@ -515,33 +534,62 @@ $page_title = 'Admissions | Bethel International School';
     </section>
 
     <div class="container admissions-content">
+        <!-- Welcome Section - FROM DATABASE -->
         <div class="info-box">
-            <h2>Welcome Future Eagles! 🦅</h2>
-            <p>Bethel International School is now accepting applications for School Year 2025-2026. We invite you to become part of our growing community of learners who are committed to academic excellence, character development, and holistic growth.</p>
-            <p><strong>Enrollment Period:</strong> March 1 - July 15, 2025</p>
-            <p><strong>Classes Start:</strong> August 4, 2025</p>
+            <h2><?php echo htmlspecialchars($welcome['title'] ?? 'Welcome Future Eagles!'); ?></h2>
+            <p><?php echo nl2br(htmlspecialchars($welcome['content'] ?? 'Bethel International School is now accepting applications for School Year 2025-2026. We invite you to become part of our growing community of learners who are committed to academic excellence, character development, and holistic growth.')); ?></p>
+            <p><strong>Enrollment Period:</strong> <?php echo htmlspecialchars($enrollment['content'] ?? 'March 1 - July 15, 2025'); ?></p>
+            <p><strong>Classes Start:</strong> <?php echo htmlspecialchars($classes['content'] ?? 'August 4, 2025'); ?></p>
         </div>
 
+        <!-- Admission Steps - FROM DATABASE -->
         <h2 class="section-title" style="margin: 40px 0 30px; text-align: center; color: var(--primary-color);">Admission Process</h2>
         <div class="steps">
-            <div class="step"><div class="step-number">1</div><h3>Submit Application</h3><p>Fill out the application form and submit required documents.</p></div>
-            <div class="step"><div class="step-number">2</div><h3>Entrance Assessment</h3><p>Schedule and take the entrance examination.</p></div>
-            <div class="step"><div class="step-number">3</div><h3>Interview</h3><p>Parent and student interview with administration.</p></div>
-            <div class="step"><div class="step-number">4</div><h3>Enrollment</h3><p>Complete requirements and pay initial fees.</p></div>
+            <?php if(count($steps) > 0): ?>
+                <?php foreach($steps as $step): ?>
+                <div class="step">
+                    <div class="step-number"><?php echo $step['step_number']; ?></div>
+                    <h3><?php echo htmlspecialchars($step['title']); ?></h3>
+                    <p><?php echo htmlspecialchars($step['description']); ?></p>
+                </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <!-- Default steps if none in database -->
+                <div class="step"><div class="step-number">1</div><h3>Submit Application</h3><p>Fill out the application form and submit required documents.</p></div>
+                <div class="step"><div class="step-number">2</div><h3>Entrance Assessment</h3><p>Schedule and take the entrance examination.</p></div>
+                <div class="step"><div class="step-number">3</div><h3>Interview</h3><p>Parent and student interview with administration.</p></div>
+                <div class="step"><div class="step-number">4</div><h3>Enrollment</h3><p>Complete requirements and pay initial fees.</p></div>
+            <?php endif; ?>
         </div>
 
+        <!-- Requirements Section - FROM DATABASE -->
         <div class="info-box">
-            <h2>Requirements for Admission</h2>
+            <h2><?php echo htmlspecialchars($requirements['title'] ?? 'Requirements for Admission'); ?></h2>
             <ul class="requirements-list">
-                <li><i class="fas fa-check-circle"></i> Completed Application Form</li>
-                <li><i class="fas fa-check-circle"></i> PSA Birth Certificate (Original & Photocopy)</li>
-                <li><i class="fas fa-check-circle"></i> Report Card (SF9) from previous school</li>
-                <li><i class="fas fa-check-circle"></i> Good Moral Certificate</li>
-                <li><i class="fas fa-check-circle"></i> 2 pcs. 2x2 ID picture (white background)</li>
-                <li><i class="fas fa-check-circle"></i> Medical Certificate</li>
+                <?php 
+                $req_content = $requirements['content'] ?? '';
+                $req_lines = explode("\n", $req_content);
+                if(count($req_lines) > 0 && trim($req_lines[0]) != ''):
+                    foreach($req_lines as $line):
+                        if(trim($line)):
+                ?>
+                    <li><i class="fas fa-check-circle"></i> <?php echo htmlspecialchars(trim($line)); ?></li>
+                <?php 
+                        endif;
+                    endforeach;
+                else:
+                ?>
+                    <li><i class="fas fa-check-circle"></i> Completed Application Form</li>
+                    <li><i class="fas fa-check-circle"></i> PSA Birth Certificate (Original & Photocopy)</li>
+                    <li><i class="fas fa-check-circle"></i> Report Card (SF9) from previous school</li>
+                    <li><i class="fas fa-check-circle"></i> Good Moral Certificate</li>
+                    <li><i class="fas fa-check-circle"></i> 2 pcs. 2x2 ID picture (white background)</li>
+                    <li><i class="fas fa-check-circle"></i> Medical Certificate</li>
+                <?php endif; ?>
             </ul>
         </div>
 
+        <!-- Call to Action -->
         <div class="cta-box">
             <h2>Ready to Join the Bethel Family?</h2>
             <p>Take the first step towards a bright future. Contact us today to schedule a campus tour!</p>
@@ -549,63 +597,55 @@ $page_title = 'Admissions | Bethel International School';
         </div>
     </div>
 
-        <!-- Footer -->
+    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
-                <!-- School Info -->
                 <div class="footer-column">
-                    <h3>🏫 Bethel International School</h3>
+                    <h3>Bethel International School</h3>
                     <p><i class="fas fa-map-marker-alt"></i> Pawing, Palo, Leyte, Philippines 6501</p>
                     <p><i class="fas fa-phone-alt"></i> 0917-173-0284</p>
                     <p><i class="fas fa-envelope"></i> secretary@bethel.edu.ph</p>
                     <div class="social-icons">
                         <a href="https://www.facebook.com/BethelInternationalSchool" aria-label="Facebook">
-                            <svg viewBox="0 0 24 24" width="16" height="16">
-                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
-                            </svg>
+                            <svg viewBox="0 0 24 24" width="16" height="16"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
                         </a>
                         <a href="https://www.instagram.com/bethel.sc/" aria-label="Instagram">
-                            <svg viewBox="0 0 24 24" width="16" height="16">
-                                <path d="M12 2c2.7 0 3 .1 4.1.2 3.2.2 4.8 1.8 5 5 .1 1.1.1 1.4.1 4.8s0 3.7-.1 4.8c-.2 3.2-1.8 4.8-5 5-1.1.1-1.4.1-4.1.1s-3 0-4.1-.1c-3.2-.2-4.8-1.8-5-5-.1-1.1-.1-1.4-.1-4.8s0-3.7.1-4.8c.2-3.2 1.8-4.8 5-5C9 2.1 9.3 2 12 2zm0 3.8c-3.4 0-6.2 2.8-6.2 6.2s2.8 6.2 6.2 6.2 6.2-2.8 6.2-6.2-2.8-6.2-6.2-6.2zm0 10.2c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4zm6.4-11.8c-.8 0-1.4.6-1.4 1.4s.6 1.4 1.4 1.4 1.4-.6 1.4-1.4-.6-1.4-1.4-1.4z"/>
-                            </svg>
+                            <svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 2c2.7 0 3 .1 4.1.2 3.2.2 4.8 1.8 5 5 .1 1.1.1 1.4.1 4.8s0 3.7-.1 4.8c-.2 3.2-1.8 4.8-5 5-1.1.1-1.4.1-4.1.1s-3 0-4.1-.1c-3.2-.2-4.8-1.8-5-5-.1-1.1-.1-1.4-.1-4.8s0-3.7.1-4.8c.2-3.2 1.8-4.8 5-5C9 2.1 9.3 2 12 2z"/></svg>
                         </a>
                     </div>
                 </div>
-
-                <!-- Resources - PDF Links -->
                 <div class="footer-column">
-                    <h3>📚 Resources</h3>
-                   <ul class="footer-links">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
                         <li><a href="calendar.php"><i class="fas fa-calendar-alt"></i> Academic Calendar</a></li>
                         <li><a href="newsletter.php"><i class="fas fa-newspaper"></i> School Newsletter</a></li>
                     </ul>
                 </div>
-
-                <!-- Hours -->
                 <div class="footer-column">
-                    <h3>⏰ Hours</h3>
+                    <h3>Hours</h3>
                     <div class="hours-item"><span>Mon-Fri:</span><span>8AM - 5PM</span></div>
                     <div class="hours-item"><span>Sat:</span><span>9AM - 12PM</span></div>
                     <div class="hours-item"><span>Sun:</span><span>Closed</span></div>
                     <div class="emergency-number">
-                        <p>📞 Emergency</p>
+                        <p>Emergency</p>
                         <a href="tel:+639171730284">0917-173-0284</a>
                     </div>
                 </div>
             </div>
             <div class="copyright">
-                <p>© 2026 Bethel International School, Pawing, Palo, Leyte. All Rights Reserved.</p>
+                <p>&copy; 2026 Bethel International School, Pawing, Palo, Leyte. All Rights Reserved.</p>
                 <p style="font-size: 0.75rem; margin-top: 8px;">The Philippine Eagle symbolizes our commitment to strength, vision, and soaring excellence.</p>
             </div>
         </div>
     </footer>
 
-    <a href="admin/login.php" class="admin-login-btn">🔧 Admin</a>
+    <a href="admin/login.php" class="admin-login-btn">Admin</a>
 
     <script>
         const mobileBtn = document.getElementById('mobileMenuBtn');
         const mainNav = document.getElementById('mainNav');
+        
         if(mobileBtn && mainNav) {
             mobileBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
@@ -619,6 +659,7 @@ $page_title = 'Admissions | Bethel International School';
                     icon.classList.add('fa-bars');
                 }
             });
+
             document.querySelectorAll('#mainNav a').forEach(link => {
                 link.addEventListener('click', function() {
                     mainNav.classList.remove('active');

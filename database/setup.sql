@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 06, 2026 at 06:28 PM
+-- Generation Time: Apr 21, 2026 at 03:59 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -43,10 +43,10 @@ CREATE TABLE `about_content` (
 --
 
 INSERT INTO `about_content` (`id`, `section`, `title`, `content`, `icon_class`, `display_order`, `status`, `updated_at`) VALUES
-(1, 'mission', 'Our Mission', 'To provide holistic, internationally-competitive education that nurtures students\' intellectual, spiritual, and social development while preserving Filipino values and cultural heritage.', NULL, 1, 'active', '2026-04-06 15:51:16'),
-(2, 'vision', 'Our Vision', 'To be a leading Christian educational institution in the Visayas, producing globally competitive, values-driven leaders who soar like eagles in their chosen fields.', NULL, 2, 'active', '2026-04-06 15:51:16'),
+(1, 'mission', 'Mission Statement', 'Bethel International School aims to develop global citizens who are competent, responsible, possessing an international perspective, and equipped with values grounded on biblical truths to serve as leaders and models of change in an interdependent world.', NULL, 1, 'active', '2026-04-21 09:29:47'),
+(2, 'vision', 'Our Vision', 'To generate excellently trained students prepared to fulfil God\'s purpose', NULL, 2, 'active', '2026-04-21 09:31:26'),
 (3, 'history', 'Our Story', 'Founded in 2001, Bethel International School began with a simple yet powerful vision: to provide quality education that combines international standards with Filipino values. Located in the peaceful community of Pawing, Palo, Leyte, our school has grown from humble beginnings to become one of the region\'s most respected educational institutions.', NULL, 3, 'active', '2026-04-06 15:51:16'),
-(4, 'core_values', 'Our Core Values', 'Excellence, Faith, Service, Global Citizenship, Innovation', NULL, 4, 'active', '2026-04-06 15:51:16');
+(4, 'core_values', 'Our Core Values', 'Excellence, Faith, Service, Global Citizenship, Innovation,|', NULL, 4, 'active', '2026-04-21 13:14:30');
 
 -- --------------------------------------------------------
 
@@ -68,7 +68,7 @@ CREATE TABLE `about_stats` (
 
 INSERT INTO `about_stats` (`id`, `stat_number`, `stat_label`, `display_order`, `status`) VALUES
 (1, '20+', 'Years of Excellence', 1, 'active'),
-(2, '1,500+', 'Students Enrolled', 2, 'active'),
+(2, '300+', 'Students Enrolled', 2, 'active'),
 (3, '100+', 'Qualified Faculty', 3, 'active'),
 (4, '98%', 'Graduation Rate', 4, 'active');
 
@@ -150,13 +150,13 @@ CREATE TABLE `academic_programs` (
 --
 
 INSERT INTO `academic_programs` (`id`, `level_id`, `title`, `description`, `features`, `icon_class`, `display_order`, `status`, `created_at`) VALUES
-(1, 1, 'Early Childhood Education', 'Play-based learning that develops foundational skills in literacy, numeracy, and social interaction.', '[\"Montessori-inspired approach\",\"Filipino and English languages\",\"Music and movement classes\",\"Arts and crafts activities\"]', NULL, 1, 'active', '2026-04-06 15:51:12'),
+(1, 1, 'Early Childhood Education', 'Play-based learning that develops foundational skills in literacy, numeracy, and social interaction.', '[\"Montessori-inspired approach\",\"Filipino and English languages\",\"Music and movement classes\",\"Arts and crafts activities\"]', 'fas fa-graduation-cap', 1, 'active', '2026-04-06 15:51:12'),
 (2, 2, 'Enhanced Basic Education', 'Comprehensive curriculum focusing on core subjects with integrated values education.', '[\"Mathematics, Science, English, Filipino\",\"Computer and Technology classes\",\"Character Education program\",\"Weekly enrichment activities\"]', NULL, 1, 'active', '2026-04-06 15:51:12'),
 (3, 3, 'Junior High School Program', 'Advanced curriculum preparing students for Senior High School tracks with focus on critical thinking.', '[\"Specialized Science and Mathematics\",\"Research and ICT skills development\",\"Leadership training programs\",\"Career guidance seminars\"]', NULL, 1, 'active', '2026-04-06 15:51:12'),
-(4, 4, 'STEM Strand', 'Science, Technology, Engineering, and Mathematics', '[\"Pre-Calculus & Basic Calculus\",\"General Biology, Chemistry, Physics\",\"Research Capstone Project\",\"Robotics and Programming\"]', NULL, 1, 'active', '2026-04-06 15:51:12'),
-(5, 4, 'ABM Strand', 'Accountancy, Business, and Management', '[\"Fundamentals of Accounting\",\"Business Mathematics & Finance\",\"Organizational Management\",\"Marketing Principles\"]', NULL, 2, 'active', '2026-04-06 15:51:12'),
-(6, 4, 'HUMSS Strand', 'Humanities and Social Sciences', '[\"Philippine Politics & Governance\",\"Creative Writing & Journalism\",\"Introduction to World Religions\",\"Social Sciences Research\"]', NULL, 3, 'active', '2026-04-06 15:51:12'),
-(7, 4, 'TVL Track', 'Technical-Vocational-Livelihood', '[\"ICT - Computer Systems Servicing\",\"Home Economics - Bread & Pastry\",\"Industrial Arts - Electrical Installation\",\"Work Immersion Program (240 hours)\"]', NULL, 4, 'active', '2026-04-06 15:51:12');
+(4, 4, 'STEM Strand', 'Science, Technology, Engineering, and Mathematics', '[\"Pre-Calculus & Basic Calculus\",\"General Biology, Chemistry, Physics\",\"Research Capstone Project\",\"Robotics and Programming\"]', 'fas fa-microscope', 1, 'active', '2026-04-06 15:51:12'),
+(5, 4, 'ABM Strand', 'Accountancy, Business, and Management', '[\"Fundamentals of Accounting\",\"Business Mathematics & Finance\",\"Organizational Management\",\"Marketing Principles\"]', 'fas fa-calculator', 2, 'active', '2026-04-06 15:51:12'),
+(6, 4, 'HUMSS Strand', 'Humanities and Social Sciences', '[\"Philippine Politics & Governance\",\"Creative Writing & Journalism\",\"Introduction to World Religions\",\"Social Sciences Research\"]', 'fas fa-male', 3, 'active', '2026-04-06 15:51:12'),
+(7, 4, 'TVL Track', 'Technical-Vocational-Livelihood', '[\"ICT - Computer Systems Servicing\",\"Home Economics - Bread & Pastry\",\"Industrial Arts - Electrical Installation\",\"Work Immersion Program (240 hours)\"]', 'fas fa-draw-polygon', 4, 'active', '2026-04-06 15:51:12');
 
 -- --------------------------------------------------------
 
@@ -242,7 +242,7 @@ INSERT INTO `admin_users` (`id`, `username`, `password`, `email`, `full_name`, `
 
 CREATE TABLE `admissions_content` (
   `id` int(11) NOT NULL,
-  `section` varchar(100) NOT NULL,
+  `section` varchar(50) NOT NULL,
   `title` varchar(200) DEFAULT NULL,
   `content` text DEFAULT NULL,
   `display_order` int(11) DEFAULT 0,
@@ -255,10 +255,10 @@ CREATE TABLE `admissions_content` (
 --
 
 INSERT INTO `admissions_content` (`id`, `section`, `title`, `content`, `display_order`, `status`, `updated_at`) VALUES
-(1, 'welcome', 'Welcome Future Eagles! 🦅', 'Bethel International School is now accepting applications for School Year 2025-2026. We invite you to become part of our growing community of learners who are committed to academic excellence, character development, and holistic growth.', 1, 'active', '2026-04-06 15:51:13'),
-(2, 'enrollment_period', 'Enrollment Period', 'March 1 - July 15, 2025', 2, 'active', '2026-04-06 15:51:13'),
-(3, 'classes_start', 'Classes Start', 'August 4, 2025', 3, 'active', '2026-04-06 15:51:13'),
-(4, 'requirements', 'Requirements for Admission', 'Completed Application Form|PSA Birth Certificate (Original & Photocopy)|Report Card (SF9) from previous school|Good Moral Certificate|2 pcs. 2x2 ID picture (white background)|Medical Certificate', 4, 'active', '2026-04-06 15:51:13');
+(1, 'welcome', 'Welcome, Future Bethel Eagles!', 'Bethel International School is now accepting applications for School Year 2025-2026. We invite you to become part of our growing community of learners who are committed to academic excellence, character development, and holistic growth.', 1, 'active', '2026-04-21 13:07:28'),
+(2, 'enrollment_period', 'Enrollment Period', 'March 1 - July 15, 2025', 2, 'active', '2026-04-21 12:23:15'),
+(3, 'classes_start', 'Classes Start', 'August 4, 2025', 3, 'active', '2026-04-21 12:23:15'),
+(4, 'requirements', 'Requirements for Admission', 'Completed Application Form\r\nPSA Birth Certificate (Original & Photocopy)\r\nReport Card (SF9) from previous school\r\nGood Moral Certificate\r\n2 pcs. 2x2 ID picture (white background)\r\nMedical Certificate', 4, 'active', '2026-04-21 13:07:47');
 
 -- --------------------------------------------------------
 
@@ -281,10 +281,10 @@ CREATE TABLE `admission_steps` (
 --
 
 INSERT INTO `admission_steps` (`id`, `step_number`, `title`, `description`, `display_order`, `status`, `created_at`) VALUES
-(1, 1, 'Submit Application', 'Fill out the application form and submit required documents.', 1, 'active', '2026-04-06 15:51:14'),
-(2, 2, 'Entrance Assessment', 'Schedule and take the entrance examination for your grade level.', 2, 'active', '2026-04-06 15:51:14'),
-(3, 3, 'Interview', 'Parent and student interview with the school administration.', 3, 'active', '2026-04-06 15:51:14'),
-(4, 4, 'Enrollment', 'Complete enrollment requirements and pay initial fees.', 4, 'active', '2026-04-06 15:51:14');
+(1, 1, 'Submit Application', 'Fill out the application form and submit required documents.', 1, 'active', '2026-04-21 12:23:16'),
+(2, 2, 'Entrance Assessment', 'Schedule and take the entrance examination for your grade level.', 2, 'active', '2026-04-21 12:23:16'),
+(3, 3, 'Interview', 'Parent and student interview with the school administration.', 3, 'active', '2026-04-21 12:23:16'),
+(4, 4, 'Enrollment', 'Complete enrollment requirements and pay initial fees.', 4, 'active', '2026-04-21 12:23:16');
 
 -- --------------------------------------------------------
 
@@ -357,6 +357,34 @@ CREATE TABLE `contact_messages` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `core_values`
+--
+
+CREATE TABLE `core_values` (
+  `id` int(11) NOT NULL,
+  `title` varchar(100) NOT NULL,
+  `description` text NOT NULL,
+  `icon_class` varchar(50) DEFAULT 'fas fa-star',
+  `display_order` int(11) DEFAULT 0,
+  `status` enum('active','inactive') DEFAULT 'active',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `core_values`
+--
+
+INSERT INTO `core_values` (`id`, `title`, `description`, `icon_class`, `display_order`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Excellence', 'We strive for the highest standards in academics, character, and service.', 'fas fa-trophy', 1, 'active', '2026-04-21 13:21:08', '2026-04-21 13:21:08'),
+(2, 'Faith', 'We nurture spiritual growth and moral integrity based on Christian values.', 'fas fa-hands-helping', 2, 'active', '2026-04-21 13:21:08', '2026-04-21 13:21:08'),
+(3, 'Service', 'We develop compassionate leaders who serve their communities.', 'fas fa-heart', 3, 'active', '2026-04-21 13:21:08', '2026-04-21 13:21:08'),
+(4, 'Global Citizenship', 'We prepare students to thrive in an interconnected world while staying rooted in Filipino culture.', 'fas fa-globe-asia', 4, 'active', '2026-04-21 13:21:08', '2026-04-21 13:21:08'),
+(5, 'Innovation', 'We embrace creativity and adapt to changing educational needs.a', 'fas fa-lightbulb', 5, 'active', '2026-04-21 13:21:08', '2026-04-21 13:22:55');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `features`
 --
 
@@ -402,7 +430,7 @@ CREATE TABLE `hero_content` (
 --
 
 INSERT INTO `hero_content` (`id`, `title`, `subtitle`, `cta_text`, `cta_link`, `background_image`, `updated_at`) VALUES
-(1, '🦅 Soaring to Excellence in International Education', 'Inspired by the majesty of the Philippine Eagle, Bethel International School in Pawing, Palo, Leyte nurtures global citizens with strong Filipino values, academic excellence, and holistic development from kindergarten through senior high school.', 'Explore Our Programs', 'academics.php', NULL, '2026-04-06 15:51:10');
+(1, 'Soaring to Excellence in International Education', 'Inspired by the majesty of the Philippine Eagle, Bethel International School in Pawing, Palo, Leyte nurtures global citizens with strong Filipino values, academic excellence, and holistic development from kindergarten through senior high school.', 'Explore Our Programs', 'academics.php', '', '2026-04-21 11:59:22');
 
 -- --------------------------------------------------------
 
@@ -462,6 +490,7 @@ CREATE TABLE `news_articles` (
   `views` int(11) DEFAULT 0,
   `status` enum('draft','published') DEFAULT 'published',
   `is_highlight` tinyint(1) DEFAULT 0,
+  `is_featured` tinyint(1) DEFAULT 0,
   `highlight_order` int(11) DEFAULT 0,
   `published_date` date DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -472,12 +501,12 @@ CREATE TABLE `news_articles` (
 -- Dumping data for table `news_articles`
 --
 
-INSERT INTO `news_articles` (`id`, `title`, `excerpt`, `content`, `image_url`, `category`, `author`, `views`, `status`, `is_highlight`, `highlight_order`, `published_date`, `created_at`, `updated_at`) VALUES
-(1, 'Bethel International School Ranks Top 10 in Regional Science Fair', 'Our students brought home 5 awards from the Regional Schools Press Conference, showcasing excellence in journalism and public speaking.', 'Our students showcased exceptional talent at the Regional Schools Press Conference. The team won first place in science investigatory project, second place in robotics competition, and received special awards for innovation and creativity. This achievement reflects our commitment to STEM education and research excellence.', 'https://placehold.co/800x600/002366/FFD700?text=Science+Fair', 'news', 'Bethel International School', 0, 'published', 1, 1, '2026-04-06', '2026-04-06 15:51:11', '2026-04-06 16:02:37'),
-(2, 'Annual Sports Festival 2026', 'Join us for a week of friendly competition, sportsmanship, and athletic excellence.', 'The Annual Sports Festival will take place from April 5-10, 2026. Events include basketball, volleyball, badminton, swimming, and track and field. All students are encouraged to participate. The event will culminate with the awarding ceremony on April 10.', 'https://placehold.co/800x600/002366/FFD700?text=Sports+Festival', 'event', 'Bethel International School', 0, 'published', 1, 2, '2026-04-16', '2026-04-06 15:51:11', '2026-04-06 16:02:37'),
-(3, 'Early Registration for SY 2026-2027 Now Open', 'Secure your child\'s slot with a 10% discount on tuition fees.', 'Early registration for School Year 2026-2027 is now open until May 30, 2026. Enroll now to enjoy a 10% discount on tuition fees and free school supplies. Visit our admissions office or register online through our website.', 'https://placehold.co/800x600/002366/FFD700?text=Early+Registration', 'announcement', 'Bethel International School', 0, 'published', 1, 3, '2026-04-06', '2026-04-06 15:51:11', '2026-04-06 16:02:37'),
-(4, 'New Library and Learning Resource Center Opens', 'State-of-the-art library facility now open for students.', 'Our new library features digital resources, study hubs, collaborative spaces, and a modern learning environment. Students can now access thousands of e-books and online resources.', 'https://placehold.co/800x600/002366/FFD700?text=New+Library', 'news', 'Bethel International School', 0, 'published', 0, 0, '2026-04-06', '2026-04-06 15:51:11', '2026-04-06 16:02:37'),
-(5, 'Parents-Teachers Conference Scheduled', 'Meet your child\'s teachers and discuss academic progress.', 'The annual Parents-Teachers Conference will be held on May 10, 2026. All parents are encouraged to attend and discuss their child\'s academic progress and development.', 'https://placehold.co/800x600/002366/FFD700?text=PT+Conference', 'event', 'Bethel International School', 0, 'published', 0, 0, '2026-04-26', '2026-04-06 15:51:11', '2026-04-06 16:02:37');
+INSERT INTO `news_articles` (`id`, `title`, `excerpt`, `content`, `image_url`, `category`, `author`, `views`, `status`, `is_highlight`, `is_featured`, `highlight_order`, `published_date`, `created_at`, `updated_at`) VALUES
+(1, 'Bethel International School Ranks Top 10 in Regional Science Fair', 'Our students brought home 5 awards from the Regional Schools Press Conference, showcasing excellence in journalism and public speaking.', 'Our students showcased exceptional talent at the Regional Schools Press Conference. The team won first place in science investigatory project, second place in robotics competition, and received special awards for innovation and creativity. This achievement reflects our commitment to STEM education and research excellence.', 'https://placehold.co/800x600/002366/FFD700?text=Science+Fair', 'news', 'Bethel International School', 0, 'published', 1, 1, 1, '2026-04-06', '2026-04-06 15:51:11', '2026-04-21 11:48:48'),
+(2, 'Annual Sports Festival 2026', 'Join us for a week of friendly competition, sportsmanship, and athletic excellence.', 'The Annual Sports Festival will take place from April 5-10, 2026. Events include basketball, volleyball, badminton, swimming, and track and field. All students are encouraged to participate. The event will culminate with the awarding ceremony on April 10.', 'https://placehold.co/800x600/002366/FFD700?text=Sports+Festival', 'event', 'Bethel International School', 0, 'published', 1, 0, 2, '2026-04-16', '2026-04-06 15:51:11', '2026-04-21 11:46:30'),
+(3, 'Early Registration for SY 2026-2027 Now Open', 'Secure your child\'s slot with a 10% discount on tuition fees.', 'Early registration for School Year 2026-2027 is now open until May 30, 2026. Enroll now to enjoy a 10% discount on tuition fees and free school supplies. Visit our admissions office or register online through our website.', 'https://placehold.co/800x600/002366/FFD700?text=Early+Registration', 'announcement', 'Bethel International School', 0, 'published', 0, 0, 3, '2026-04-06', '2026-04-06 15:51:11', '2026-04-21 11:48:52'),
+(4, 'New Library and Learning Resource Center Opens', 'State-of-the-art library facility now open for students.', 'Our new library features digital resources, study hubs, collaborative spaces, and a modern learning environment. Students can now access thousands of e-books and online resources.', 'https://placehold.co/800x600/002366/FFD700?text=New+Library', 'news', 'Bethel International School', 0, 'published', 0, 0, 0, '2026-04-06', '2026-04-06 15:51:11', '2026-04-06 16:02:37'),
+(5, 'Parents-Teachers Conference Scheduled', 'Meet your child\'s teachers and discuss academic progress.', 'The annual Parents-Teachers Conference will be held on May 10, 2026. All parents are encouraged to attend and discuss their child\'s academic progress and development.', 'https://placehold.co/800x600/002366/FFD700?text=PT+Conference', 'event', 'Bethel International School', 0, 'published', 1, 0, 0, '2026-04-26', '2026-04-06 15:51:11', '2026-04-21 11:48:54');
 
 -- --------------------------------------------------------
 
@@ -549,8 +578,8 @@ INSERT INTO `school_settings` (`id`, `setting_key`, `setting_value`, `setting_ty
 (5, 'facebook_url', 'https://www.facebook.com/BethelInternationalSchool', 'text', '2026-04-06 15:51:17'),
 (6, 'instagram_url', 'https://www.instagram.com/bethel.sc/', 'text', '2026-04-06 15:51:17'),
 (7, 'emergency_hotline', '0917-173-0284', 'text', '2026-04-06 15:51:17'),
-(8, 'newsletter_coming_soon', '0', 'text', '2026-04-06 15:51:17'),
-(9, 'calendar_coming_soon', '0', 'text', '2026-04-06 15:51:17');
+(8, 'newsletter_coming_soon', '1', 'text', '2026-04-21 13:08:18'),
+(9, 'calendar_coming_soon', '1', 'text', '2026-04-21 12:04:00');
 
 -- --------------------------------------------------------
 
@@ -574,7 +603,7 @@ CREATE TABLE `special_programs` (
 
 INSERT INTO `special_programs` (`id`, `title`, `description`, `icon_class`, `display_order`, `status`, `created_at`) VALUES
 (1, 'International Exchange', 'Student exchange programs with partner schools in Japan, South Korea, and the United States.', 'fas fa-globe', 1, 'active', '2026-04-06 15:51:13'),
-(2, 'Robotics Club', 'After-school program teaching robotics, programming, and emerging technologies to interested students.', 'fas fa-robot', 2, 'active', '2026-04-06 15:51:13'),
+(2, 'Chess Club', 'After-school program every Wednesday where students can learn, grow, and engage in healthy competition over the game of chess.', 'fas fa-chess', 2, 'active', '2026-04-06 15:51:13'),
 (3, 'Center for the Arts', 'Specialized training in music, dance, theater, and visual arts with regular performances and exhibits.', 'fas fa-music', 3, 'active', '2026-04-06 15:51:13'),
 (4, 'Values Formation', 'Weekly sessions focusing on character development, leadership, and community service.', 'fas fa-hand-holding-heart', 4, 'active', '2026-04-06 15:51:13');
 
@@ -669,7 +698,8 @@ ALTER TABLE `admin_users`
 -- Indexes for table `admissions_content`
 --
 ALTER TABLE `admissions_content`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `section` (`section`);
 
 --
 -- Indexes for table `admission_steps`
@@ -696,6 +726,12 @@ ALTER TABLE `calendar_pdfs`
 ALTER TABLE `contact_messages`
   ADD PRIMARY KEY (`id`),
   ADD KEY `idx_contact_status` (`status`,`created_at`);
+
+--
+-- Indexes for table `core_values`
+--
+ALTER TABLE `core_values`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `features`
@@ -812,6 +848,12 @@ ALTER TABLE `calendar_pdfs`
 --
 ALTER TABLE `contact_messages`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `core_values`
+--
+ALTER TABLE `core_values`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `features`

@@ -1,7 +1,18 @@
 <?php
-// academics.php
+// academics.php - FIXED with dynamic icons from database
 require_once 'includes/db.php';
 $page_title = 'Academics | Bethel International School';
+
+// Fetch data
+$levels = $pdo->query("SELECT * FROM academic_levels WHERE status='active' ORDER BY display_order")->fetchAll();
+$programs = $pdo->query("SELECT p.*, l.level_name FROM academic_programs p LEFT JOIN academic_levels l ON p.level_id = l.id WHERE p.status='active' ORDER BY l.display_order, p.display_order")->fetchAll();
+$special_programs = $pdo->query("SELECT * FROM special_programs WHERE status='active' ORDER BY display_order")->fetchAll();
+
+// Group programs by level
+$programs_by_level = [];
+foreach($programs as $program) {
+    $programs_by_level[$program['level_name']][] = $program;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +22,7 @@ $page_title = 'Academics | Bethel International School';
     <title><?php echo $page_title; ?></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Copy ALL CSS from about.php here (same styles) */
+        /* Your existing CSS - keep everything the same */
         * {
             margin: 0;
             padding: 0;
@@ -25,12 +36,15 @@ $page_title = 'Academics | Bethel International School';
             --accent-color: #FFD700;
             --light-color: #ffffff;
             --dark-color: #1a1a2e;
+            --gray-light: #f8fafc;
+            --gray-border: #e0e0e0;
+            --text-gray: #4a5568;
         }
 
         body {
             line-height: 1.6;
             color: var(--dark-color);
-            background-color: #f8fafc;
+            background-color: var(--gray-light);
         }
 
         .container {
@@ -40,6 +54,7 @@ $page_title = 'Academics | Bethel International School';
             padding: 0 20px;
         }
 
+        /* Header Styles */
         header {
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             color: white;
@@ -169,6 +184,7 @@ $page_title = 'Academics | Bethel International School';
             padding: 5px;
         }
 
+        /* Page Banner */
         .page-banner {
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             color: white;
@@ -182,90 +198,88 @@ $page_title = 'Academics | Bethel International School';
             color: var(--accent-color);
         }
 
-        .academic-content {
-            padding: 60px 0;
+        .page-banner p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
+        /* Level Section */
         .level-section {
-            margin-bottom: 60px;
+            margin-bottom: 50px;
         }
 
         .level-title {
+            font-size: 1.8rem;
             color: var(--primary-color);
-            font-size: 2rem;
-            margin-bottom: 30px;
-            text-align: center;
-            position: relative;
-            padding-bottom: 15px;
-        }
-
-        .level-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background: var(--accent-color);
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--accent-color);
+            display: inline-block;
         }
 
         .programs-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
+            gap: 25px;
         }
 
+        /* Program Card */
         .program-card {
             background: white;
-            border-radius: 15px;
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0, 35, 102, 0.1);
-            transition: transform 0.3s;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            border: 1px solid var(--gray-border);
         }
 
         .program-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,35,102,0.1);
+            border-color: var(--accent-color);
         }
 
-        .program-icon {
+        .program-header {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            padding: 30px;
+            padding: 25px;
             text-align: center;
         }
 
-        .program-icon i {
-            font-size: 3rem;
+        .program-header i {
+            font-size: 2rem;
             color: var(--accent-color);
+            margin-bottom: 10px;
+            display: block;
         }
 
-        .program-content {
+        .program-header h3 {
+            color: white;
+            font-size: 1.3rem;
+        }
+
+        .program-body {
             padding: 25px;
         }
 
-        .program-content h3 {
-            color: var(--primary-color);
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-        }
-
-        .program-content p {
-            color: #555;
-            margin-bottom: 15px;
+        .program-description {
+            color: var(--text-gray);
+            line-height: 1.7;
+            margin-bottom: 20px;
         }
 
         .program-features {
             list-style: none;
-            margin-top: 15px;
         }
 
         .program-features li {
             padding: 8px 0;
-            border-bottom: 1px solid #eee;
-            color: #666;
+            border-bottom: 1px solid var(--gray-border);
             display: flex;
             align-items: center;
             gap: 10px;
+            font-size: 0.9rem;
+            color: var(--text-gray);
         }
 
         .program-features li i {
@@ -273,50 +287,66 @@ $page_title = 'Academics | Bethel International School';
             width: 20px;
         }
 
-        .special-programs {
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            padding: 50px;
-            border-radius: 20px;
-            margin: 50px 0;
+        /* Special Programs */
+        .special-section {
+            margin-top: 60px;
+            padding: 50px 0;
+            background: white;
+            border-radius: 24px;
         }
 
-        .special-programs h2 {
-            color: var(--primary-color);
+        .special-title {
             text-align: center;
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .special-subtitle {
+            text-align: center;
+            color: var(--text-gray);
             margin-bottom: 40px;
-            font-size: 2rem;
         }
 
         .special-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
         }
 
         .special-card {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
             text-align: center;
-            transition: transform 0.3s;
+            padding: 30px;
+            background: var(--gray-light);
+            border-radius: 16px;
+            transition: all 0.3s;
+            border: 1px solid var(--gray-border);
         }
 
         .special-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-3px);
+            border-color: var(--accent-color);
+            background: white;
         }
 
         .special-card i {
             font-size: 2rem;
-            color: var(--accent-color);
+            color: var(--primary-color);
             margin-bottom: 15px;
         }
 
         .special-card h3 {
+            font-size: 1.1rem;
             color: var(--primary-color);
             margin-bottom: 10px;
         }
 
-        /* Footer Styles */
+        .special-card p {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+        }
+
+        /* Footer */
         footer {
             background: linear-gradient(145deg, var(--dark-color) 0%, var(--primary-color) 100%);
             color: white;
@@ -383,10 +413,6 @@ $page_title = 'Academics | Bethel International School';
             font-size: 0.9rem;
         }
 
-        .hours-item span:first-child {
-            font-weight: 600;
-        }
-
         .emergency-number {
             background: rgba(255, 215, 0, 0.15);
             padding: 12px;
@@ -396,21 +422,14 @@ $page_title = 'Academics | Bethel International School';
             border: 1px solid var(--accent-color);
         }
 
-        .emergency-number p {
-            margin-bottom: 5px;
-            font-size: 0.85rem;
-        }
-
         .emergency-number a {
             color: var(--accent-color);
             text-decoration: none;
-            font-size: 1.1rem;
             font-weight: bold;
         }
 
         .social-icons {
             display: flex;
-            flex-direction: row;
             gap: 12px;
             margin-top: 15px;
         }
@@ -421,7 +440,7 @@ $page_title = 'Academics | Bethel International School';
             justify-content: center;
             width: 38px;
             height: 38px;
-            background-color: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.1);
             border-radius: 50%;
             transition: all 0.3s;
         }
@@ -429,13 +448,11 @@ $page_title = 'Academics | Bethel International School';
         .social-icons a svg {
             width: 16px;
             height: 16px;
-            display: block;
             fill: var(--accent-color);
-            transition: fill 0.3s ease;
         }
 
         .social-icons a:hover {
-            background-color: var(--accent-color);
+            background: var(--accent-color);
             transform: translateY(-3px);
         }
 
@@ -462,12 +479,6 @@ $page_title = 'Academics | Bethel International School';
             text-decoration: none;
             font-size: 12px;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-
-        .admin-login-btn:hover {
-            background: var(--accent-color);
-            color: var(--primary-color);
         }
 
         @media (max-width: 992px) {
@@ -476,7 +487,10 @@ $page_title = 'Academics | Bethel International School';
         }
 
         @media (max-width: 768px) {
-            .header-container { flex-direction: row; justify-content: space-between; }
+            .header-container {
+                flex-direction: row;
+                justify-content: space-between;
+            }
             .logo { flex: 1; }
             nav ul {
                 display: none;
@@ -500,15 +514,12 @@ $page_title = 'Academics | Bethel International School';
             .footer-column h3 { border-left: none; padding-left: 0; text-align: center; }
             .hours-item { justify-content: center; gap: 20px; }
             .social-icons { justify-content: center; }
-            .footer-links li a { justify-content: center; }
         }
 
         @media (max-width: 576px) {
             .logo { gap: 10px; }
             .logo-icon { width: 45px; height: 45px; }
             .logo-text h1 { font-size: 1.2rem; }
-            .logo-text p { font-size: 0.65rem; }
-            .special-programs { padding: 30px; }
         }
     </style>
 </head>
@@ -518,10 +529,9 @@ $page_title = 'Academics | Bethel International School';
             <div class="logo">
                 <div class="logo-icon">
                     <div class="eagle-icon">
-                       <img src="images/bethel-logo.png" alt="Bethel International School Logo">
+                        <img src="images/bethel-logo.png" alt="Bethel International School Logo">
                     </div>
                 </div>
-
                 <div class="logo-text">
                     <h1><span class="school-name">Bethel International School</span></h1>
                     <p>Pawing, Palo, Leyte</p>
@@ -552,141 +562,63 @@ $page_title = 'Academics | Bethel International School';
         </div>
     </section>
 
-    <div class="container academic-content">
-        <!-- Kindergarten -->
-        <div class="level-section">
-            <h2 class="level-title">Kindergarten (Ages 3-6)</h2>
-            <div class="programs-grid">
-                <div class="program-card">
-                    <div class="program-icon"><i class="fas fa-child"></i></div>
-                    <div class="program-content">
-                        <h3>Early Childhood Education</h3>
-                        <p>Play-based learning that develops foundational skills in literacy, numeracy, and social interaction.</p>
-                        <ul class="program-features">
-                            <li><i class="fas fa-check"></i> Montessori-inspired approach</li>
-                            <li><i class="fas fa-check"></i> Filipino and English languages</li>
-                            <li><i class="fas fa-check"></i> Music and movement classes</li>
-                            <li><i class="fas fa-check"></i> Arts and crafts activities</li>
-                        </ul>
+    <div class="container" style="padding: 60px 0;">
+        <?php foreach($levels as $level): ?>
+            <?php if(isset($programs_by_level[$level['level_name']])): ?>
+            <div class="level-section">
+                <h2 class="level-title"><?php echo htmlspecialchars($level['level_name']); ?></h2>
+                <div class="programs-grid">
+                    <?php foreach($programs_by_level[$level['level_name']] as $program): ?>
+                    <div class="program-card">
+                        <div class="program-header">
+                            <!-- FIXED: Use icon from database instead of hardcoded -->
+                            <i class="<?php echo htmlspecialchars($program['icon_class'] ?: 'fas fa-graduation-cap'); ?>"></i>
+                            <h3><?php echo htmlspecialchars($program['title']); ?></h3>
+                        </div>
+                        <div class="program-body">
+                            <p class="program-description"><?php echo nl2br(htmlspecialchars($program['description'])); ?></p>
+                            <?php 
+                            $features = json_decode($program['features'], true);
+                            if(is_array($features) && count($features) > 0):
+                            ?>
+                            <ul class="program-features">
+                                <?php foreach($features as $feature): ?>
+                                <li><i class="fas fa-check-circle"></i> <?php echo htmlspecialchars($feature); ?></li>
+                                <?php endforeach; ?>
+                            </ul>
+                            <?php endif; ?>
+                        </div>
                     </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
-        </div>
+            <?php endif; ?>
+        <?php endforeach; ?>
 
-        <!-- Elementary -->
-        <div class="level-section">
-            <h2 class="level-title">Elementary (Grades 1-6)</h2>
-            <div class="programs-grid">
-                <div class="program-card">
-                    <div class="program-icon"><i class="fas fa-book"></i></div>
-                    <div class="program-content">
-                        <h3>Enhanced Basic Education</h3>
-                        <p>Comprehensive curriculum focusing on core subjects with integrated values education.</p>
-                        <ul class="program-features">
-                            <li><i class="fas fa-check"></i> Mathematics, Science, English, Filipino</li>
-                            <li><i class="fas fa-check"></i> Computer and Technology classes</li>
-                            <li><i class="fas fa-check"></i> Character Education program</li>
-                            <li><i class="fas fa-check"></i> Weekly enrichment activities</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Junior High -->
-        <div class="level-section">
-            <h2 class="level-title">Junior High School (Grades 7-10)</h2>
-            <div class="programs-grid">
-                <div class="program-card">
-                    <div class="program-icon"><i class="fas fa-flask"></i></div>
-                    <div class="program-content">
-                        <h3>Junior High School Program</h3>
-                        <p>Advanced curriculum preparing students for Senior High School tracks.</p>
-                        <ul class="program-features">
-                            <li><i class="fas fa-check"></i> Specialized Science and Math</li>
-                            <li><i class="fas fa-check"></i> Research and ICT skills</li>
-                            <li><i class="fas fa-check"></i> Leadership training</li>
-                            <li><i class="fas fa-check"></i> Career guidance seminars</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Senior High -->
-        <div class="level-section">
-            <h2 class="level-title">Senior High School (Grades 11-12)</h2>
-            <div class="programs-grid">
-                <div class="program-card">
-                    <div class="program-icon"><i class="fas fa-microscope"></i></div>
-                    <div class="program-content">
-                        <h3>STEM Strand</h3>
-                        <p>Science, Technology, Engineering, and Mathematics</p>
-                        <ul class="program-features">
-                            <li><i class="fas fa-check"></i> Pre-Calculus & Basic Calculus</li>
-                            <li><i class="fas fa-check"></i> General Biology, Chemistry, Physics</li>
-                            <li><i class="fas fa-check"></i> Research Capstone Project</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="program-card">
-                    <div class="program-icon"><i class="fas fa-chart-line"></i></div>
-                    <div class="program-content">
-                        <h3>ABM Strand</h3>
-                        <p>Accountancy, Business, and Management</p>
-                        <ul class="program-features">
-                            <li><i class="fas fa-check"></i> Fundamentals of Accounting</li>
-                            <li><i class="fas fa-check"></i> Business Mathematics & Finance</li>
-                            <li><i class="fas fa-check"></i> Organizational Management</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="program-card">
-                    <div class="program-icon"><i class="fas fa-gavel"></i></div>
-                    <div class="program-content">
-                        <h3>HUMSS Strand</h3>
-                        <p>Humanities and Social Sciences</p>
-                        <ul class="program-features">
-                            <li><i class="fas fa-check"></i> Philippine Politics & Governance</li>
-                            <li><i class="fas fa-check"></i> Creative Writing & Journalism</li>
-                            <li><i class="fas fa-check"></i> Introduction to World Religions</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="program-card">
-                    <div class="program-icon"><i class="fas fa-laptop-code"></i></div>
-                    <div class="program-content">
-                        <h3>TVL Track</h3>
-                        <p>Technical-Vocational-Livelihood</p>
-                        <ul class="program-features">
-                            <li><i class="fas fa-check"></i> ICT - Computer Systems Servicing</li>
-                            <li><i class="fas fa-check"></i> Home Economics - Bread & Pastry</li>
-                            <li><i class="fas fa-check"></i> Work Immersion Program</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Special Programs -->
-        <div class="special-programs">
-            <h2>Special Programs</h2>
+        <?php if(count($special_programs) > 0): ?>
+        <div class="special-section">
+            <h2 class="special-title">Special Programs</h2>
+            <p class="special-subtitle">Enriching experiences beyond the classroom</p>
             <div class="special-grid">
-                <div class="special-card"><i class="fas fa-globe"></i><h3>International Exchange</h3><p>Student exchange programs with partner schools abroad.</p></div>
-                <div class="special-card"><i class="fas fa-robot"></i><h3>Robotics Club</h3><p>After-school robotics and programming classes.</p></div>
-                <div class="special-card"><i class="fas fa-music"></i><h3>Center for the Arts</h3><p>Training in music, dance, theater, and visual arts.</p></div>
-                <div class="special-card"><i class="fas fa-hand-holding-heart"></i><h3>Values Formation</h3><p>Character development and community service.</p></div>
+                <?php foreach($special_programs as $special): ?>
+                <div class="special-card">
+                    <i class="<?php echo htmlspecialchars($special['icon_class'] ?: 'fas fa-star'); ?>"></i>
+                    <h3><?php echo htmlspecialchars($special['title']); ?></h3>
+                    <p><?php echo htmlspecialchars($special['description']); ?></p>
+                </div>
+                <?php endforeach; ?>
             </div>
         </div>
+        <?php endif; ?>
     </div>
 
-        <!-- Footer -->
+    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
                 <!-- School Info -->
                 <div class="footer-column">
-                    <h3>🏫 Bethel International School</h3>
+                    <h3>Bethel International School</h3>
                     <p><i class="fas fa-map-marker-alt"></i> Pawing, Palo, Leyte, Philippines 6501</p>
                     <p><i class="fas fa-phone-alt"></i> 0917-173-0284</p>
                     <p><i class="fas fa-envelope"></i> secretary@bethel.edu.ph</p>
@@ -706,7 +638,7 @@ $page_title = 'Academics | Bethel International School';
 
                 <!-- Resources - PDF Links -->
                 <div class="footer-column">
-                    <h3>📚 Resources</h3>
+                    <h3>Resources</h3>
                     <ul class="footer-links">
                         <li><a href="calendar.php"><i class="fas fa-calendar-alt"></i> Academic Calendar</a></li>
                         <li><a href="newsletter.php"><i class="fas fa-newspaper"></i> School Newsletter</a></li>
@@ -715,28 +647,29 @@ $page_title = 'Academics | Bethel International School';
 
                 <!-- Hours -->
                 <div class="footer-column">
-                    <h3>⏰ Hours</h3>
+                    <h3>Hours</h3>
                     <div class="hours-item"><span>Mon-Fri:</span><span>8AM - 5PM</span></div>
                     <div class="hours-item"><span>Sat:</span><span>9AM - 12PM</span></div>
                     <div class="hours-item"><span>Sun:</span><span>Closed</span></div>
                     <div class="emergency-number">
-                        <p>📞 Emergency</p>
+                        <p>Emergency</p>
                         <a href="tel:+639171730284">0917-173-0284</a>
                     </div>
                 </div>
             </div>
             <div class="copyright">
-                <p>© 2026 Bethel International School, Pawing, Palo, Leyte. All Rights Reserved.</p>
+                <p>&copy; 2026 Bethel International School, Pawing, Palo, Leyte. All Rights Reserved.</p>
                 <p style="font-size: 0.75rem; margin-top: 8px;">The Philippine Eagle symbolizes our commitment to strength, vision, and soaring excellence.</p>
             </div>
         </div>
     </footer>
 
-    <a href="admin/login.php" class="admin-login-btn">🔧 Admin</a>
+    <a href="admin/login.php" class="admin-login-btn">Admin</a>
 
     <script>
         const mobileBtn = document.getElementById('mobileMenuBtn');
         const mainNav = document.getElementById('mainNav');
+        
         if(mobileBtn && mainNav) {
             mobileBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
@@ -750,6 +683,7 @@ $page_title = 'Academics | Bethel International School';
                     icon.classList.add('fa-bars');
                 }
             });
+
             document.querySelectorAll('#mainNav a').forEach(link => {
                 link.addEventListener('click', function() {
                     mainNav.classList.remove('active');

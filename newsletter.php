@@ -569,13 +569,13 @@ if($coming_soon == '1') {
         <?php endif; ?>
     </div>
 
-        <!-- Footer -->
+     <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
                 <!-- School Info -->
                 <div class="footer-column">
-                    <h3>🏫 Bethel International School</h3>
+                    <h3>Bethel International School</h3>
                     <p><i class="fas fa-map-marker-alt"></i> Pawing, Palo, Leyte, Philippines 6501</p>
                     <p><i class="fas fa-phone-alt"></i> 0917-173-0284</p>
                     <p><i class="fas fa-envelope"></i> secretary@bethel.edu.ph</p>
@@ -595,7 +595,7 @@ if($coming_soon == '1') {
 
                 <!-- Resources - PDF Links -->
                 <div class="footer-column">
-                    <h3>📚 Resources</h3>
+                    <h3>Resources</h3>
                     <ul class="footer-links">
                         <li><a href="calendar.php"><i class="fas fa-calendar-alt"></i> Academic Calendar</a></li>
                         <li><a href="newsletter.php"><i class="fas fa-newspaper"></i> School Newsletter</a></li>
@@ -604,18 +604,18 @@ if($coming_soon == '1') {
 
                 <!-- Hours -->
                 <div class="footer-column">
-                    <h3>⏰ Hours</h3>
+                    <h3>Hours</h3>
                     <div class="hours-item"><span>Mon-Fri:</span><span>8AM - 5PM</span></div>
                     <div class="hours-item"><span>Sat:</span><span>9AM - 12PM</span></div>
                     <div class="hours-item"><span>Sun:</span><span>Closed</span></div>
                     <div class="emergency-number">
-                        <p>📞 Emergency</p>
+                        <p>Emergency</p>
                         <a href="tel:+639171730284">0917-173-0284</a>
                     </div>
                 </div>
             </div>
             <div class="copyright">
-                <p>© 2026 Bethel International School, Pawing, Palo, Leyte. All Rights Reserved.</p>
+                <p>&copy; 2026 Bethel International School, Pawing, Palo, Leyte. All Rights Reserved.</p>
                 <p style="font-size: 0.75rem; margin-top: 8px;">The Philippine Eagle symbolizes our commitment to strength, vision, and soaring excellence.</p>
             </div>
         </div>

@@ -1,5 +1,5 @@
 <?php
-// about.php - UPDATED to use database content
+// about.php - COMPLETE UPDATED VERSION with database-driven core values
 require_once 'includes/db.php';
 $page_title = 'About Us | Bethel International School';
 
@@ -12,6 +12,9 @@ foreach($sections as $section) {
 
 // Fetch statistics
 $statistics = $pdo->query("SELECT * FROM about_stats WHERE status='active' ORDER BY display_order")->fetchAll();
+
+// Fetch core values from database
+$core_values = $pdo->query("SELECT * FROM core_values WHERE status = 'active' ORDER BY display_order ASC")->fetchAll();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,9 +23,7 @@ $statistics = $pdo->query("SELECT * FROM about_stats WHERE status='active' ORDER
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $page_title; ?></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <style>
-        /* Copy ALL CSS from index.php here (same styles) */
         * {
             margin: 0;
             padding: 0;
@@ -36,12 +37,18 @@ $statistics = $pdo->query("SELECT * FROM about_stats WHERE status='active' ORDER
             --accent-color: #FFD700;
             --light-color: #ffffff;
             --dark-color: #1a1a2e;
+            --gray-light: #f8fafc;
+            --gray-border: #dee2e6;
+            --text-dark: #1a1a2e;
+            --text-gray: #2d3748;
+            --story-bg: #fafaf5;
+            --card-shadow: 0 10px 25px rgba(0, 35, 102, 0.08);
         }
 
         body {
-            line-height: 1.6;
-            color: var(--dark-color);
-            background-color: #f8fafc;
+            line-height: 1.7;
+            color: var(--text-dark);
+            background-color: var(--gray-light);
         }
 
         .container {
@@ -51,6 +58,7 @@ $statistics = $pdo->query("SELECT * FROM about_stats WHERE status='active' ORDER
             padding: 0 20px;
         }
 
+        /* Header Styles */
         header {
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             color: white;
@@ -112,6 +120,7 @@ $statistics = $pdo->query("SELECT * FROM about_stats WHERE status='active' ORDER
             margin: 0;
             color: white;
             line-height: 1.2;
+            font-weight: 700;
         }
 
         .logo-text .school-name {
@@ -180,88 +189,264 @@ $statistics = $pdo->query("SELECT * FROM about_stats WHERE status='active' ORDER
             padding: 5px;
         }
 
+        /* Page Banner */
         .page-banner {
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             color: white;
             padding: 60px 0;
             text-align: center;
+            margin-bottom: 40px;
         }
 
         .page-banner h1 {
             font-size: 2.5rem;
             margin-bottom: 15px;
             color: var(--accent-color);
+            font-weight: 700;
         }
 
-        .about-content {
-            padding: 60px 0;
+        .page-banner p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
         }
 
-        .mission-vision {
+        /* Section Cards */
+        .section-card {
+            background: white;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+        }
+
+        /* Mission + Vision Side by Side */
+        .mission-vision-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin: 40px 0;
+            gap: 0;
         }
 
-        .mv-card {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0, 35, 102, 0.1);
-            text-align: center;
-            transition: transform 0.3s;
+        .mission-card, .vision-card {
+            padding: 50px 45px;
         }
 
-        .mv-card:hover {
-            transform: translateY(-5px);
+        .mission-card {
+            border-right: 1px solid var(--gray-border);
         }
 
-        .mv-card i {
-            font-size: 3rem;
-            color: var(--accent-color);
-            margin-bottom: 20px;
-        }
-
-        .mv-card h3 {
+        .section-icon {
+            font-size: 2rem;
             color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .section-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #b8860b;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .mission-card h2, .vision-card h2 {
             font-size: 1.8rem;
+            color: var(--primary-color);
             margin-bottom: 20px;
+            font-weight: 700;
         }
 
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            margin: 50px 0;
+        .mission-text, .vision-text {
+            color: var(--text-gray);
+            line-height: 1.8;
+            font-size: 1rem;
+            font-weight: 500;
         }
 
-        .stat-box {
+        .mission-quote {
+            margin-top: 20px;
+            font-style: italic;
+            color: #b8860b;
+            border-left: 3px solid var(--accent-color);
+            padding-left: 18px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Our Story Card - Background closer to white */
+        .story-card {
+            background: var(--story-bg);
+            border-radius: 16px;
+            padding: 50px 45px;
             text-align: center;
-            padding: 30px;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            border-radius: 15px;
-            transition: transform 0.3s;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 30px;
         }
 
-        .stat-box:hover {
-            transform: scale(1.05);
+        .story-card h2 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .story-subtitle {
+            color: #b8860b;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .story-text {
+            color: var(--text-gray);
+            line-height: 1.8;
+            font-size: 1rem;
+            font-weight: 500;
+            text-align: left;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Core Values Card */
+        .values-card {
+            background: white;
+            border-radius: 16px;
+            padding: 50px 45px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 30px;
+        }
+
+        .values-card h2 {
+            text-align: center;
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .values-intro {
+            text-align: center;
+            color: var(--text-gray);
+            max-width: 600px;
+            margin: 0 auto 40px;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+        }
+
+        .value-item {
+            text-align: center;
+            padding: 25px 15px;
+            background: var(--gray-light);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            border: 1px solid var(--gray-border);
+        }
+
+        .value-item:hover {
+            transform: translateY(-3px);
+            background: white;
+            border-color: var(--accent-color);
+            box-shadow: 0 5px 15px rgba(0, 35, 102, 0.1);
+        }
+
+        .value-icon {
+            width: 55px;
+            height: 55px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .value-icon i {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+        }
+
+        .value-item h3 {
+            font-size: 1rem;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .value-item p {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            line-height: 1.5;
+            font-weight: 500;
+        }
+
+        /* Statistics Card */
+        .stats-card {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            border-radius: 16px;
+            padding: 50px 45px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .stats-card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+            color: white;
+            font-weight: 700;
+        }
+
+        .stats-subtitle {
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 40px;
+            font-size: 0.95rem;
+            font-weight: 400;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .stat-item {
+            text-align: center;
         }
 
         .stat-number {
-            font-size: 3rem;
-            font-weight: bold;
+            font-size: 2.2rem;
+            font-weight: 700;
             color: var(--accent-color);
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
 
-        /* Footer Styles */
+        .stat-label {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.65);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+
+        /* Footer */
         footer {
             background: linear-gradient(145deg, var(--dark-color) 0%, var(--primary-color) 100%);
             color: white;
             padding: 50px 0 20px;
-            margin-top: 70px;
+            margin-top: 20px;
         }
 
         .footer-content {
@@ -277,6 +462,7 @@ $statistics = $pdo->query("SELECT * FROM about_stats WHERE status='active' ORDER
             color: var(--accent-color);
             border-left: 4px solid var(--accent-color);
             padding-left: 12px;
+            font-weight: 700;
         }
 
         .footer-column p {
@@ -323,10 +509,6 @@ $statistics = $pdo->query("SELECT * FROM about_stats WHERE status='active' ORDER
             font-size: 0.9rem;
         }
 
-        .hours-item span:first-child {
-            font-weight: 600;
-        }
-
         .emergency-number {
             background: rgba(255, 215, 0, 0.15);
             padding: 12px;
@@ -350,7 +532,6 @@ $statistics = $pdo->query("SELECT * FROM about_stats WHERE status='active' ORDER
 
         .social-icons {
             display: flex;
-            flex-direction: row;
             gap: 12px;
             margin-top: 15px;
         }
@@ -361,7 +542,7 @@ $statistics = $pdo->query("SELECT * FROM about_stats WHERE status='active' ORDER
             justify-content: center;
             width: 38px;
             height: 38px;
-            background-color: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.1);
             border-radius: 50%;
             transition: all 0.3s;
         }
@@ -369,13 +550,11 @@ $statistics = $pdo->query("SELECT * FROM about_stats WHERE status='active' ORDER
         .social-icons a svg {
             width: 16px;
             height: 16px;
-            display: block;
             fill: var(--accent-color);
-            transition: fill 0.3s ease;
         }
 
         .social-icons a:hover {
-            background-color: var(--accent-color);
+            background: var(--accent-color);
             transform: translateY(-3px);
         }
 
@@ -405,14 +584,16 @@ $statistics = $pdo->query("SELECT * FROM about_stats WHERE status='active' ORDER
             box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
-        .admin-login-btn:hover {
-            background: var(--accent-color);
-            color: var(--primary-color);
-        }
-
         @media (max-width: 992px) {
             .logo-text h1 { font-size: 1.4rem; }
             .logo-icon { width: 50px; height: 50px; }
+            .mission-vision-grid { grid-template-columns: 1fr; }
+            .mission-card { border-right: none; border-bottom: 1px solid var(--gray-border); }
+            .mission-card, .vision-card { padding: 35px; }
+            .story-card, .values-card, .stats-card { padding: 35px; }
+            .values-grid { grid-template-columns: repeat(3, 1fr); }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .page-banner h1 { font-size: 2rem; }
         }
 
         @media (max-width: 768px) {
@@ -434,19 +615,24 @@ $statistics = $pdo->query("SELECT * FROM about_stats WHERE status='active' ORDER
             nav ul.active { display: flex; }
             nav ul li { margin: 0; text-align: center; padding: 12px 0; }
             .mobile-menu-btn { display: block; }
-            .mission-vision { grid-template-columns: 1fr; }
-            .footer-content { grid-template-columns: 1fr; text-align: center; gap: 30px; }
+            .mission-card h2, .vision-card h2 { font-size: 1.5rem; }
+            .values-grid { grid-template-columns: repeat(2, 1fr); }
+            .stats-grid { grid-template-columns: 1fr; gap: 20px; }
+            .footer-content { grid-template-columns: 1fr; text-align: center; }
             .footer-column h3 { border-left: none; padding-left: 0; text-align: center; }
             .hours-item { justify-content: center; gap: 20px; }
             .social-icons { justify-content: center; }
-            .footer-links li a { justify-content: center; }
         }
 
         @media (max-width: 576px) {
             .logo { gap: 10px; }
             .logo-icon { width: 45px; height: 45px; }
             .logo-text h1 { font-size: 1.2rem; }
-            .logo-text p { font-size: 0.65rem; }
+            .page-banner { padding: 40px 0; }
+            .page-banner h1 { font-size: 1.6rem; }
+            .values-grid { grid-template-columns: 1fr; }
+            .mission-card, .vision-card { padding: 25px; }
+            .story-card, .values-card, .stats-card { padding: 25px; }
         }
     </style>
 </head>
@@ -482,6 +668,7 @@ $statistics = $pdo->query("SELECT * FROM about_stats WHERE status='active' ORDER
         </div>
     </header>
 
+    <!-- Page Banner -->
     <section class="page-banner">
         <div class="container">
             <h1>About Bethel International School</h1>
@@ -489,56 +676,117 @@ $statistics = $pdo->query("SELECT * FROM about_stats WHERE status='active' ORDER
         </div>
     </section>
 
-    <div class="container about-content">
-        <!-- Mission & Vision -->
-        <div class="mission-vision">
-            <div class="mv-card">
-                <i class="fas fa-bullseye"></i>
-                <h3><?php echo htmlspecialchars($about_content['mission']['title'] ?? 'Our Mission'); ?></h3>
-                <p><?php echo nl2br(htmlspecialchars($about_content['mission']['content'] ?? 'To provide holistic, internationally-competitive education...')); ?></p>
-            </div>
-            <div class="mv-card">
-                <i class="fas fa-eye"></i>
-                <h3><?php echo htmlspecialchars($about_content['vision']['title'] ?? 'Our Vision'); ?></h3>
-                <p><?php echo nl2br(htmlspecialchars($about_content['vision']['content'] ?? 'To be a leading Christian educational institution...')); ?></p>
+    <div class="container">
+        <!-- Mission + Vision Card -->
+        <div class="section-card">
+            <div class="mission-vision-grid">
+                <div class="mission-card">
+                    <div class="section-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <div class="section-label">Our Purpose</div>
+                    <h2><?php echo htmlspecialchars($about_content['mission']['title'] ?? 'Mission'); ?></h2>
+                    <div class="mission-text">
+                        <?php echo nl2br(htmlspecialchars($about_content['mission']['content'] ?? 'To provide holistic, internationally-competitive education that nurtures students\' intellectual, spiritual, and social development while preserving Filipino values and cultural heritage.')); ?>
+                    </div>
+                    <div class="mission-quote">
+                        "Guiding every student to soar like an eagle"
+                    </div>
+                </div>
+                <div class="vision-card">
+                    <div class="section-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <div class="section-label">Our Aspiration</div>
+                    <h2><?php echo htmlspecialchars($about_content['vision']['title'] ?? 'Vision'); ?></h2>
+                    <div class="vision-text">
+                        <?php echo nl2br(htmlspecialchars($about_content['vision']['content'] ?? 'To be a leading Christian educational institution in the Visayas, producing globally competitive, values-driven leaders who soar like eagles in their chosen fields.')); ?>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- History -->
-        <div class="school-history">
+        <!-- Our Story Card -->
+        <div class="story-card">
+            <div class="story-subtitle">Since 2001</div>
             <h2><?php echo htmlspecialchars($about_content['history']['title'] ?? 'Our Story'); ?></h2>
-            <p><?php echo nl2br(htmlspecialchars($about_content['history']['content'] ?? 'Founded in 2001...')); ?></p>
-        </div>
-
-        <!-- Statistics -->
-        <div class="stats">
-            <?php foreach($statistics as $stat): ?>
-            <div class="stat-box">
-                <div class="stat-number"><?php echo htmlspecialchars($stat['stat_number']); ?></div>
-                <div class="stat-label"><?php echo htmlspecialchars($stat['stat_label']); ?></div>
+            <div class="story-text">
+                <?php echo nl2br(htmlspecialchars($about_content['history']['content'] ?? 'Founded in 2001, Bethel International School began with a simple yet powerful vision: to provide quality education that combines international standards with Filipino values. Located in the peaceful community of Pawing, Palo, Leyte, our school has grown from humble beginnings to become one of the region\'s most respected educational institutions.')); ?>
             </div>
-            <?php endforeach; ?>
         </div>
 
-        <!-- Core Values -->
-        <div class="about-section">
+        <!-- Core Values Card - UPDATED TO USE DATABASE -->
+        <div class="values-card">
             <h2><?php echo htmlspecialchars($about_content['core_values']['title'] ?? 'Our Core Values'); ?></h2>
-            <?php 
-            $values = explode(',', $about_content['core_values']['content'] ?? 'Excellence, Faith, Service, Global Citizenship, Innovation');
-            foreach($values as $value):
-            ?>
-            <p><strong>🦅 <?php echo trim($value); ?>:</strong> We strive for the highest standards in academics, character, and service.</p>
-            <?php endforeach; ?>
+            <div class="values-intro">
+                These values guide everything we do, shaping our students into well-rounded individuals.
+            </div>
+            <div class="values-grid">
+                <?php if(count($core_values) > 0): ?>
+                    <?php foreach($core_values as $value): ?>
+                    <div class="value-item">
+                        <div class="value-icon">
+                            <i class="<?php echo htmlspecialchars($value['icon_class'] ?: 'fas fa-star'); ?>"></i>
+                        </div>
+                        <h3><?php echo htmlspecialchars($value['title']); ?></h3>
+                        <p><?php echo nl2br(htmlspecialchars($value['description'])); ?></p>
+                    </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <!-- Default fallback values -->
+                    <div class="value-item">
+                        <div class="value-icon"><i class="fas fa-trophy"></i></div>
+                        <h3>Excellence</h3>
+                        <p>We strive for the highest standards in academics, character, and service.</p>
+                    </div>
+                    <div class="value-item">
+                        <div class="value-icon"><i class="fas fa-hands-helping"></i></div>
+                        <h3>Faith</h3>
+                        <p>We nurture spiritual growth and moral integrity based on Christian values.</p>
+                    </div>
+                    <div class="value-item">
+                        <div class="value-icon"><i class="fas fa-heart"></i></div>
+                        <h3>Service</h3>
+                        <p>We develop compassionate leaders who serve their communities.</p>
+                    </div>
+                    <div class="value-item">
+                        <div class="value-icon"><i class="fas fa-globe-asia"></i></div>
+                        <h3>Global Citizenship</h3>
+                        <p>We prepare students to thrive in an interconnected world while staying rooted in Filipino culture.</p>
+                    </div>
+                    <div class="value-item">
+                        <div class="value-icon"><i class="fas fa-lightbulb"></i></div>
+                        <h3>Innovation</h3>
+                        <p>We embrace creativity and adapt to changing educational needs.</p>
+                    </div>
+                <?php endif; ?>
+            </div>
         </div>
+
+        <!-- Statistics Card -->
+        <?php if(count($statistics) > 0): ?>
+        <div class="stats-card">
+            <h2>At a Glance</h2>
+            <div class="stats-subtitle">Our journey in numbers</div>
+            <div class="stats-grid">
+                <?php foreach($statistics as $stat): ?>
+                <div class="stat-item">
+                    <div class="stat-number"><?php echo htmlspecialchars($stat['stat_number']); ?></div>
+                    <div class="stat-label"><?php echo htmlspecialchars($stat['stat_label']); ?></div>
+                </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+        <?php endif; ?>
     </div>
 
-        <!-- Footer -->
+    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
                 <!-- School Info -->
                 <div class="footer-column">
-                    <h3>🏫 Bethel International School</h3>
+                    <h3>Bethel International School</h3>
                     <p><i class="fas fa-map-marker-alt"></i> Pawing, Palo, Leyte, Philippines 6501</p>
                     <p><i class="fas fa-phone-alt"></i> 0917-173-0284</p>
                     <p><i class="fas fa-envelope"></i> secretary@bethel.edu.ph</p>
@@ -558,7 +806,7 @@ $statistics = $pdo->query("SELECT * FROM about_stats WHERE status='active' ORDER
 
                 <!-- Resources - PDF Links -->
                 <div class="footer-column">
-                    <h3>📚 Resources</h3>
+                    <h3>Resources</h3>
                     <ul class="footer-links">
                         <li><a href="calendar.php"><i class="fas fa-calendar-alt"></i> Academic Calendar</a></li>
                         <li><a href="newsletter.php"><i class="fas fa-newspaper"></i> School Newsletter</a></li>
@@ -567,24 +815,24 @@ $statistics = $pdo->query("SELECT * FROM about_stats WHERE status='active' ORDER
 
                 <!-- Hours -->
                 <div class="footer-column">
-                    <h3>⏰ Hours</h3>
+                    <h3>Hours</h3>
                     <div class="hours-item"><span>Mon-Fri:</span><span>8AM - 5PM</span></div>
                     <div class="hours-item"><span>Sat:</span><span>9AM - 12PM</span></div>
                     <div class="hours-item"><span>Sun:</span><span>Closed</span></div>
                     <div class="emergency-number">
-                        <p>📞 Emergency</p>
+                        <p>Emergency</p>
                         <a href="tel:+639171730284">0917-173-0284</a>
                     </div>
                 </div>
             </div>
             <div class="copyright">
-                <p>© 2026 Bethel International School, Pawing, Palo, Leyte. All Rights Reserved.</p>
+                <p>&copy; 2026 Bethel International School, Pawing, Palo, Leyte. All Rights Reserved.</p>
                 <p style="font-size: 0.75rem; margin-top: 8px;">The Philippine Eagle symbolizes our commitment to strength, vision, and soaring excellence.</p>
             </div>
         </div>
     </footer>
 
-    <a href="admin/login.php" class="admin-login-btn">🔧 Admin</a>
+    <a href="admin/login.php" class="admin-login-btn">Admin</a>
 
     <script>
         const mobileBtn = document.getElementById('mobileMenuBtn');
