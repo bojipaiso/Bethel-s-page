@@ -188,6 +188,7 @@ bethel-school/
 │   └── news/               (News article images)
 │
 ├── uploads/                 (User uploaded files)
+│   ├── index.html          (Prevents directory listing)
 │   ├── calendar/           (Calendar PDFs)
 │   ├── newsletters/        (Newsletter PDFs)
 │   └── news/               (News article images)
