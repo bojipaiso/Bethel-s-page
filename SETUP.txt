@@ -61,6 +61,7 @@ Bethel-s-page-main/
 ├── images/
 │   └── bethel-logo.png
 ├── uploads/                  (user uploads)
+│   ├── index.html
 │   ├── calendar/
 │   ├── newsletters/
 │   └── news/
