@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 03, 2026 at 01:50 PM
+-- Generation Time: May 03, 2026 at 03:59 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -69,11 +69,7 @@ INSERT INTO `about_stats` (`id`, `stat_number`, `stat_label`, `display_order`, `
 (1, '20+', 'Years of Excellence', 1, 'active'),
 (2, '300+', 'Students Enrolled', 2, 'active'),
 (3, '100+', 'Qualified Faculty', 3, 'active'),
-(4, '98%', 'Graduation Rate', 4, 'active'),
-(0, '20+', 'Years of Excellence', 1, 'active'),
-(0, '1,500+', 'Students Enrolled', 2, 'active'),
-(0, '100+', 'Qualified Faculty', 3, 'active'),
-(0, '98%', 'Graduation Rate', 4, 'active');
+(4, '98%', 'Graduation Rate', 4, 'active');
 
 -- --------------------------------------------------------
 
@@ -98,14 +94,6 @@ CREATE TABLE `academic_calendar` (
 
 INSERT INTO `academic_calendar` (`id`, `event_name`, `event_date`, `description`, `event_type`, `display_order`, `status`, `created_at`) VALUES
 (1, 'Start of Enrollment', '2025-06-01', 'Early registration begins for all grade levels', 'event', 1, 'active', '2026-05-03 11:02:22'),
-(2, 'Enrollment Deadline', '2025-07-15', 'Last day for enrollment for SY 2025-2026', 'deadline', 2, 'active', '2026-05-03 11:02:22'),
-(3, 'First Day of Classes', '2025-08-04', 'Opening of School Year 2025-2026', 'regular', 3, 'active', '2026-05-03 11:02:22'),
-(4, 'Midterm Examinations', '2025-10-15', 'First quarter assessment period', 'exam', 4, 'active', '2026-05-03 11:02:22'),
-(5, 'Final Examinations (1st Sem)', '2025-12-18', 'End of first semester assessments', 'exam', 5, 'active', '2026-05-03 11:02:22'),
-(6, 'Resumption of Classes', '2026-01-05', 'Start of second semester', 'regular', 6, 'active', '2026-05-03 11:02:22'),
-(7, 'Final Examinations (2nd Sem)', '2026-03-23', 'End of school year assessments', 'exam', 7, 'active', '2026-05-03 11:02:22'),
-(8, 'Graduation Day', '2026-04-03', 'Commencement exercises for Grade 6, 10, and 12', 'event', 8, 'active', '2026-05-03 11:02:22'),
-(9, 'Start of Enrollment', '2025-06-01', 'Early registration begins for all grade levels', 'event', 1, 'active', '2026-05-03 11:22:48'),
 (10, 'Enrollment Deadline', '2025-07-15', 'Last day for enrollment for SY 2025-2026', 'deadline', 2, 'active', '2026-05-03 11:22:48'),
 (11, 'First Day of Classes', '2025-08-04', 'Opening of School Year 2025-2026', 'regular', 3, 'active', '2026-05-03 11:22:48'),
 (12, 'Midterm Examinations', '2025-10-15', 'First quarter assessment period', 'exam', 4, 'active', '2026-05-03 11:22:48'),
@@ -136,11 +124,7 @@ INSERT INTO `academic_levels` (`id`, `level_name`, `display_order`, `status`, `c
 (1, 'Kindergarten (Ages 3-6)', 1, 'active', '2026-05-03 11:02:18'),
 (2, 'Elementary (Grades 1-6)', 2, 'active', '2026-05-03 11:02:18'),
 (3, 'Junior High School (Grades 7-10)', 3, 'active', '2026-05-03 11:02:18'),
-(4, 'Senior High School (Grades 11-12)', 4, 'active', '2026-05-03 11:02:18'),
-(5, 'Kindergarten (Ages 3-6)', 1, 'active', '2026-05-03 11:22:47'),
-(6, 'Elementary (Grades 1-6)', 2, 'active', '2026-05-03 11:22:47'),
-(7, 'Junior High School (Grades 7-10)', 3, 'active', '2026-05-03 11:22:47'),
-(8, 'Senior High School (Grades 11-12)', 4, 'active', '2026-05-03 11:22:47');
+(4, 'Senior High School (Grades 11-12)', 4, 'active', '2026-05-03 11:02:18');
 
 -- --------------------------------------------------------
 
@@ -170,15 +154,8 @@ INSERT INTO `academic_programs` (`id`, `level_id`, `title`, `description`, `feat
 (3, 3, 'Junior High School Program', 'Advanced curriculum preparing students for Senior High School tracks with focus on critical thinking.', '[\"Specialized Science and Mathematics\",\"Research and ICT skills development\",\"Leadership training programs\",\"Career guidance seminars\"]', 'fas fa-flask', 1, 'active', '2026-05-03 11:02:19'),
 (4, 4, 'STEM Strand', 'Science, Technology, Engineering, and Mathematics', '[\"Pre-Calculus & Basic Calculus\",\"General Biology, Chemistry, Physics\",\"Research Capstone Project\",\"Robotics and Programming\"]', 'fas fa-microscope', 1, 'active', '2026-05-03 11:02:19'),
 (5, 4, 'ABM Strand', 'Accountancy, Business, and Management', '[\"Fundamentals of Accounting\",\"Business Mathematics & Finance\",\"Organizational Management\",\"Marketing Principles\"]', 'fas fa-chart-line', 2, 'active', '2026-05-03 11:02:19'),
-(6, 4, 'HUMSS Strand', 'Humanities and Social Sciences', '[\"Philippine Politics & Governance\",\"Creative Writing & Journalism\",\"Introduction to World Religions\",\"Social Sciences Research\"]', 'fas fa-gavel', 3, 'active', '2026-05-03 11:02:19'),
 (7, 4, 'TVL Track', 'Technical-Vocational-Livelihood', '[\"ICT - Computer Systems Servicing\",\"Home Economics - Bread & Pastry\",\"Industrial Arts - Electrical Installation\",\"Work Immersion Program (240 hours)\"]', 'fas fa-laptop-code', 4, 'active', '2026-05-03 11:02:19'),
-(8, 1, 'Early Childhood Education', 'Play-based learning that develops foundational skills in literacy, numeracy, and social interaction.', '[\"Montessori-inspired approach\",\"Filipino and English languages\",\"Music and movement classes\",\"Arts and crafts activities\"]', 'fas fa-child', 1, 'active', '2026-05-03 11:22:47'),
-(9, 2, 'Enhanced Basic Education', 'Comprehensive curriculum focusing on core subjects with integrated values education.', '[\"Mathematics, Science, English, Filipino\",\"Computer and Technology classes\",\"Character Education program\",\"Weekly enrichment activities\"]', 'fas fa-book', 1, 'active', '2026-05-03 11:22:47'),
-(10, 3, 'Junior High School Program', 'Advanced curriculum preparing students for Senior High School tracks with focus on critical thinking.', '[\"Specialized Science and Mathematics\",\"Research and ICT skills development\",\"Leadership training programs\",\"Career guidance seminars\"]', 'fas fa-flask', 1, 'active', '2026-05-03 11:22:47'),
-(11, 4, 'STEM Strand', 'Science, Technology, Engineering, and Mathematics', '[\"Pre-Calculus & Basic Calculus\",\"General Biology, Chemistry, Physics\",\"Research Capstone Project\",\"Robotics and Programming\"]', 'fas fa-microscope', 1, 'active', '2026-05-03 11:22:47'),
-(12, 4, 'ABM Strand', 'Accountancy, Business, and Management', '[\"Fundamentals of Accounting\",\"Business Mathematics & Finance\",\"Organizational Management\",\"Marketing Principles\"]', 'fas fa-chart-line', 2, 'active', '2026-05-03 11:22:47'),
-(13, 4, 'HUMSS Strand', 'Humanities and Social Sciences', '[\"Philippine Politics & Governance\",\"Creative Writing & Journalism\",\"Introduction to World Religions\",\"Social Sciences Research\"]', 'fas fa-gavel', 3, 'active', '2026-05-03 11:22:47'),
-(14, 4, 'TVL Track', 'Technical-Vocational-Livelihood', '[\"ICT - Computer Systems Servicing\",\"Home Economics - Bread & Pastry\",\"Industrial Arts - Electrical Installation\",\"Work Immersion Program (240 hours)\"]', 'fas fa-laptop-code', 4, 'active', '2026-05-03 11:22:47');
+(13, 4, 'HUMSS Strand', 'Humanities and Social Sciences', '[\"Philippine Politics & Governance\",\"Creative Writing & Journalism\",\"Introduction to World Religions\",\"Social Sciences Research\"]', 'fas fa-gavel', 3, 'active', '2026-05-03 11:22:47');
 
 -- --------------------------------------------------------
 
@@ -224,7 +201,7 @@ CREATE TABLE `admissions_content` (
 --
 
 INSERT INTO `admissions_content` (`id`, `section`, `title`, `content`, `display_order`, `status`, `updated_at`) VALUES
-(1, 'welcome', 'Welcome Future Eagles! 🦅', 'Bethel International School is now accepting applications for School Year 2025-2026. We invite you to become part of our growing community of learners who are committed to academic excellence, character development, and holistic growth.', 1, 'active', '2026-05-03 11:02:20'),
+(1, 'welcome', 'Welcome Future Eagles!', 'Bethel International School is now accepting applications for School Year 2025-2026. We invite you to become part of our growing community of learners who are committed to academic excellence, character development, and holistic growth.', 1, 'active', '2026-05-03 13:25:37'),
 (2, 'enrollment_period', 'Enrollment Period', 'March 1 - July 15, 2025', 2, 'active', '2026-05-03 11:02:20'),
 (3, 'classes_start', 'Classes Start', 'August 4, 2025', 3, 'active', '2026-05-03 11:02:20'),
 (4, 'requirements', 'Requirements for Admission', 'Completed Application Form\nPSA Birth Certificate (Original & Photocopy)\nReport Card (SF9) from previous school\nGood Moral Certificate\n2 pcs. 2x2 ID picture (white background)\nMedical Certificate', 4, 'active', '2026-05-03 11:02:20');
@@ -252,10 +229,6 @@ CREATE TABLE `admission_steps` (
 INSERT INTO `admission_steps` (`id`, `step_number`, `title`, `description`, `display_order`, `status`, `created_at`) VALUES
 (1, 1, 'Submit Application', 'Fill out the application form and submit required documents.', 1, 'active', '2026-05-03 11:02:21'),
 (2, 2, 'Entrance Assessment', 'Schedule and take the entrance examination for your grade level.', 2, 'active', '2026-05-03 11:02:21'),
-(3, 3, 'Interview', 'Parent and student interview with the school administration.', 3, 'active', '2026-05-03 11:02:21'),
-(4, 4, 'Enrollment', 'Complete enrollment requirements and pay initial fees.', 4, 'active', '2026-05-03 11:02:21'),
-(5, 1, 'Submit Application', 'Fill out the application form and submit required documents.', 1, 'active', '2026-05-03 11:22:47'),
-(6, 2, 'Entrance Assessment', 'Schedule and take the entrance examination for your grade level.', 2, 'active', '2026-05-03 11:22:47'),
 (7, 3, 'Interview', 'Parent and student interview with the school administration.', 3, 'active', '2026-05-03 11:22:47'),
 (8, 4, 'Enrollment', 'Complete enrollment requirements and pay initial fees.', 4, 'active', '2026-05-03 11:22:47');
 
@@ -282,9 +255,6 @@ CREATE TABLE `announcements` (
 --
 
 INSERT INTO `announcements` (`id`, `day`, `month`, `title`, `description`, `display_order`, `status`, `created_at`, `updated_at`) VALUES
-(1, 15, 'June', 'Enrollment for SY 2025-2026', 'Enrollment for the School Year 2025-2026 is now open. Visit our campus in Pawing, Palo, Leyte for inquiries and campus tours.', 1, 'active', '2026-05-03 11:02:16', '2026-05-03 11:02:16'),
-(2, 25, 'June', 'Philippine Eagle Festival', 'Join us for our annual Philippine Eagle Festival celebrating Filipino heritage and environmental conservation on June 25-29.', 2, 'active', '2026-05-03 11:02:16', '2026-05-03 11:02:16'),
-(3, 12, 'June', 'Independence Day Celebration', 'Celebrate Philippine Independence Day with us on June 12 featuring cultural performances, historical exhibits, and patriotic activities.', 3, 'active', '2026-05-03 11:02:16', '2026-05-03 11:02:16'),
 (4, 15, 'June', 'Enrollment for SY 2025-2026', 'Enrollment for the School Year 2025-2026 is now open. Visit our campus in Pawing, Palo, Leyte for inquiries and campus tours.', 1, 'active', '2026-05-03 11:22:46', '2026-05-03 11:22:46'),
 (5, 25, 'June', 'Philippine Eagle Festival', 'Join us for our annual Philippine Eagle Festival celebrating Filipino heritage and environmental conservation on June 25-29.', 2, 'active', '2026-05-03 11:22:46', '2026-05-03 11:22:46'),
 (6, 12, 'June', 'Independence Day Celebration', 'Celebrate Philippine Independence Day with us on June 12 featuring cultural performances, historical exhibits, and patriotic activities.', 3, 'active', '2026-05-03 11:22:46', '2026-05-03 11:22:46');
@@ -374,9 +344,6 @@ CREATE TABLE `features` (
 --
 
 INSERT INTO `features` (`id`, `title`, `description`, `image_url`, `icon_class`, `display_order`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'World-Class Facilities', 'Our campus in Pawing, Palo features modern classrooms, science labs, sports facilities, and a well-stocked library to support holistic learning and innovation.', 'Images/Campus.png', NULL, 1, 'active', '2026-05-03 11:02:17', '2026-05-03 11:02:17'),
-(2, 'International Curriculum', 'We offer an internationally-recognized curriculum combined with Filipino values and context to prepare students for global opportunities while remaining rooted in Philippine heritage.', 'Images/International.jpg', NULL, 2, 'active', '2026-05-03 11:02:17', '2026-05-03 11:02:17'),
-(3, 'Soaring Talents Program', 'Inspired by the Philippine Eagle, our Soaring Talents Program offers sports, arts, music, leadership, and cultural activities to help students discover and develop their unique talents.', 'Images/Play.jpg', NULL, 3, 'active', '2026-05-03 11:02:17', '2026-05-03 11:02:17'),
 (4, 'World-Class Facilities', 'Our campus in Pawing, Palo features modern classrooms, science labs, sports facilities, and a well-stocked library to support holistic learning and innovation.', 'Images/Campus.png', NULL, 1, 'active', '2026-05-03 11:22:46', '2026-05-03 11:22:46'),
 (5, 'International Curriculum', 'We offer an internationally-recognized curriculum combined with Filipino values and context to prepare students for global opportunities while remaining rooted in Philippine heritage.', 'Images/International.jpg', NULL, 2, 'active', '2026-05-03 11:22:46', '2026-05-03 11:22:46'),
 (6, 'Soaring Talents Program', 'Inspired by the Philippine Eagle, our Soaring Talents Program offers sports, arts, music, leadership, and cultural activities to help students discover and develop their unique talents.', 'Images/Play.jpg', NULL, 3, 'active', '2026-05-03 11:22:46', '2026-05-03 11:22:46');
@@ -403,7 +370,7 @@ CREATE TABLE `hero_content` (
 
 INSERT INTO `hero_content` (`id`, `title`, `subtitle`, `cta_text`, `cta_link`, `background_image`, `updated_at`) VALUES
 (1, '🦅 Soaring to Excellence in International Education', 'Inspired by the majesty of the Philippine Eagle, Bethel International School in Pawing, Palo, Leyte nurtures global citizens with strong Filipino values, academic excellence, and holistic development from kindergarten through senior high school.', 'Explore Our Programs', 'academics.php', NULL, '2026-05-03 11:02:17'),
-(2, '🦅 Soaring to Excellence in International Education', 'Inspired by the majesty of the Philippine Eagle, Bethel International School in Pawing, Palo, Leyte nurtures global citizens with strong Filipino values, academic excellence, and holistic development from kindergarten through senior high school.', 'Explore Our Programs', 'academics.php', NULL, '2026-05-03 11:22:46');
+(2, 'Soaring to Excellence in International Education', 'Inspired by the majesty of the Philippine Eagle, Bethel International School in Pawing, Palo, Leyte nurtures global citizens with strong Filipino values, academic excellence, and holistic development from kindergarten through senior high school.', 'Explore Our Programs', 'academics.php', '', '2026-05-03 13:10:26');
 
 -- --------------------------------------------------------
 
@@ -468,9 +435,6 @@ CREATE TABLE `news_articles` (
 --
 
 INSERT INTO `news_articles` (`id`, `title`, `excerpt`, `content`, `image_url`, `category`, `author`, `views`, `status`, `is_highlight`, `is_featured`, `highlight_order`, `published_date`, `created_at`, `updated_at`) VALUES
-(1, 'Bethel International School Ranks Top 10 in Regional Science Fair', 'Our students brought home 5 awards from the Regional Schools Press Conference, showcasing excellence in journalism and public speaking.', 'Our students showcased exceptional talent at the Regional Schools Press Conference. The team won first place in science investigatory project, second place in robotics competition, and received special awards for innovation and creativity. This achievement reflects our commitment to STEM education and research excellence.', 'https://images.unsplash.com/photo-1562774053-701939374585?w=600', 'news', 'Bethel International School', 0, 'published', 1, 1, 1, '2026-05-03', '2026-05-03 11:02:18', '2026-05-03 11:02:18'),
-(2, 'Annual Sports Festival 2026', 'Join us for a week of friendly competition, sportsmanship, and athletic excellence.', 'The Annual Sports Festival will take place from April 5-10, 2026. Events include basketball, volleyball, badminton, swimming, and track and field. All students are encouraged to participate.', 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=600', 'event', 'Bethel International School', 0, 'published', 1, 0, 2, '2026-05-13', '2026-05-03 11:02:18', '2026-05-03 11:02:18'),
-(3, 'Early Registration for SY 2026-2027 Now Open', 'Secure your child\'s slot with a 10% discount on tuition fees.', 'Early registration for School Year 2026-2027 is now open until May 30, 2026. Enroll now to enjoy a 10% discount on tuition fees and free school supplies.', 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600', 'announcement', 'Bethel International School', 0, 'published', 1, 0, 3, '2026-05-03', '2026-05-03 11:02:18', '2026-05-03 11:02:18'),
 (4, 'Bethel International School Ranks Top 10 in Regional Science Fair', 'Our students brought home 5 awards from the Regional Schools Press Conference, showcasing excellence in journalism and public speaking.', 'Our students showcased exceptional talent at the Regional Schools Press Conference. The team won first place in science investigatory project, second place in robotics competition, and received special awards for innovation and creativity. This achievement reflects our commitment to STEM education and research excellence.', 'https://images.unsplash.com/photo-1562774053-701939374585?w=600', 'news', 'Bethel International School', 0, 'published', 1, 1, 1, '2026-05-03', '2026-05-03 11:22:46', '2026-05-03 11:22:46'),
 (5, 'Annual Sports Festival 2026', 'Join us for a week of friendly competition, sportsmanship, and athletic excellence.', 'The Annual Sports Festival will take place from April 5-10, 2026. Events include basketball, volleyball, badminton, swimming, and track and field. All students are encouraged to participate.', 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=600', 'event', 'Bethel International School', 0, 'published', 1, 0, 2, '2026-05-13', '2026-05-03 11:22:46', '2026-05-03 11:22:46'),
 (6, 'Early Registration for SY 2026-2027 Now Open', 'Secure your child\'s slot with a 10% discount on tuition fees.', 'Early registration for School Year 2026-2027 is now open until May 30, 2026. Enroll now to enjoy a 10% discount on tuition fees and free school supplies.', 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600', 'announcement', 'Bethel International School', 0, 'published', 1, 0, 3, '2026-05-03', '2026-05-03 11:22:46', '2026-05-03 11:22:46');
@@ -501,8 +465,8 @@ INSERT INTO `school_settings` (`id`, `setting_key`, `setting_value`, `setting_ty
 (5, 'facebook_url', 'https://www.facebook.com/BethelInternationalSchool', 'text', '2026-05-03 11:02:25'),
 (6, 'instagram_url', 'https://www.instagram.com/bethel.sc/', 'text', '2026-05-03 11:02:25'),
 (7, 'emergency_hotline', '0917-173-0284', 'text', '2026-05-03 11:02:25'),
-(8, 'newsletter_coming_soon', '0', 'text', '2026-05-03 11:02:25'),
-(9, 'calendar_coming_soon', '0', 'text', '2026-05-03 11:02:25');
+(8, 'newsletter_coming_soon', '1', 'text', '2026-05-03 13:58:55'),
+(9, 'calendar_coming_soon', '1', 'text', '2026-05-03 13:58:59');
 
 -- --------------------------------------------------------
 
@@ -526,10 +490,6 @@ CREATE TABLE `special_programs` (
 
 INSERT INTO `special_programs` (`id`, `title`, `description`, `icon_class`, `display_order`, `status`, `created_at`) VALUES
 (1, 'International Exchange', 'Student exchange programs with partner schools in Japan, South Korea, and the United States.', 'fas fa-globe', 1, 'active', '2026-05-03 11:02:19'),
-(2, 'Robotics Club', 'After-school program teaching robotics, programming, and emerging technologies.', 'fas fa-robot', 2, 'active', '2026-05-03 11:02:19'),
-(3, 'Center for the Arts', 'Specialized training in music, dance, theater, and visual arts.', 'fas fa-music', 3, 'active', '2026-05-03 11:02:19'),
-(4, 'Values Formation', 'Weekly sessions focusing on character development, leadership, and community service.', 'fas fa-hand-holding-heart', 4, 'active', '2026-05-03 11:02:19'),
-(5, 'International Exchange', 'Student exchange programs with partner schools in Japan, South Korea, and the United States.', 'fas fa-globe', 1, 'active', '2026-05-03 11:22:47'),
 (6, 'Robotics Club', 'After-school program teaching robotics, programming, and emerging technologies.', 'fas fa-robot', 2, 'active', '2026-05-03 11:22:47'),
 (7, 'Center for the Arts', 'Specialized training in music, dance, theater, and visual arts.', 'fas fa-music', 3, 'active', '2026-05-03 11:22:47'),
 (8, 'Values Formation', 'Weekly sessions focusing on character development, leadership, and community service.', 'fas fa-hand-holding-heart', 4, 'active', '2026-05-03 11:22:47');
