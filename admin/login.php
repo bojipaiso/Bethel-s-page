@@ -87,7 +87,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
                 <button type="submit" class="btn-primary">Login</button>
             </form>
-            <p class="login-note">Default: admin / admin123</p>
+            <p class="login-note">Default: admin / password</p>
         </div>
     </div>
 </body>
