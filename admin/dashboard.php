@@ -1,5 +1,5 @@
 <?php
-// admin/dashboard.php - BETHEL BLUE THEME with smaller stat icons
+// admin/dashboard.php - ICONS REMOVED FROM STAT CARDS
 require_once '../includes/auth.php';
 requireAdmin();
 require_once '../includes/db.php';
@@ -135,7 +135,7 @@ $recent_messages = $pdo->query("SELECT * FROM contact_messages ORDER BY created_
             color: #666;
         }
 
-        /* Statistics Cards - Bethel Blue with Smaller Icons */
+        /* Statistics Cards - Without Icons */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -156,12 +156,6 @@ $recent_messages = $pdo->query("SELECT * FROM contact_messages ORDER BY created_
         .stat-card:hover {
             transform: translateY(-3px);
             box-shadow: 0 5px 20px rgba(0, 35, 102, 0.12);
-        }
-
-        .stat-icon {
-            font-size: 1.4rem;
-            color: var(--primary-color);
-            margin-bottom: 8px;
         }
 
         .stat-number {
@@ -543,38 +537,33 @@ $recent_messages = $pdo->query("SELECT * FROM contact_messages ORDER BY created_
                 <p>Welcome to your website management panel. Manage content, view statistics, and control site settings.</p>
             </div>
             
-            <!-- Statistics Cards with Smaller Icons -->
+            <!-- Statistics Cards - No Icons -->
             <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-bullhorn"></i></div>
                     <div class="stat-number"><?php echo $announcementCount; ?></div>
                     <div class="stat-label">Active Announcements</div>
                     <a href="manage-announcements.php" class="stat-link">Manage →</a>
                 </div>
                 
                 <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-star"></i></div>
                     <div class="stat-number"><?php echo $featureCount; ?></div>
                     <div class="stat-label">Active Features</div>
                     <a href="manage-features.php" class="stat-link">Manage →</a>
                 </div>
                 
                 <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-newspaper"></i></div>
                     <div class="stat-number"><?php echo $newsCount; ?></div>
                     <div class="stat-label">Published Articles</div>
                     <a href="manage-news.php" class="stat-link">Manage →</a>
                 </div>
                 
                 <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-envelope-open-text"></i></div>
                     <div class="stat-number"><?php echo $newsletterCount; ?></div>
                     <div class="stat-label">Newsletters</div>
                     <a href="manage-newsletters.php" class="stat-link">Manage →</a>
                 </div>
                 
                 <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-calendar-alt"></i></div>
                     <div class="stat-number"><?php echo $calendarCount; ?></div>
                     <div class="stat-label">Calendar PDFs</div>
                     <a href="manage-calendar.php" class="stat-link">Manage →</a>
