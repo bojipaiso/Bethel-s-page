@@ -49,6 +49,7 @@ Bethel-s-page-main/
 │   ├── manage-newsletters.php
 │   ├── manage-about.php
 │   ├── manage-messages.php
+│   └── view-message.php
 ├── includes/
 │   ├── db.php
 │   ├── auth.php
