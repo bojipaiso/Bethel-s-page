@@ -175,7 +175,6 @@ bethel-school/
 │   ├── manage-about.php
 │   ├── manage-messages.php
 │   ├── view-message.php
-│   └── uploads/
 │
 ├── includes/                (PHP includes)
 │   ├── db.php              (Database connection)
