@@ -1,5 +1,5 @@
 <?php
-// admin/manage-calendar.php (cleaned)
+// admin/manage-calendar.php
 require_once '../includes/auth.php';
 requireAdmin();
 require_once '../includes/db.php';

@@ -1,5 +1,5 @@
 <?php
-// admissions.php (corrected spacing)
+// admissions.php
 require_once 'includes/db.php';
 
 $welcome = $pdo->query("SELECT * FROM admissions_content WHERE section = 'welcome'")->fetch();

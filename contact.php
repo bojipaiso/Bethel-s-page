@@ -1,5 +1,5 @@
 <?php
-// contact.php - with full form styling
+// contact.php
 require_once 'includes/db.php';
 
 $success_message = '';

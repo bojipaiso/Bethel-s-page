@@ -1,5 +1,5 @@
 <?php
-// admin/manage-newsletters.php (cleaned)
+// admin/manage-newsletters.php
 require_once '../includes/auth.php';
 requireAdmin();
 require_once '../includes/db.php';

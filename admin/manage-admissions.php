@@ -1,5 +1,5 @@
 <?php
-// admin/manage-admissions.php – buttons vertically stacked, no underline
+// admin/manage-admissions.php
 require_once '../includes/auth.php';
 requireAdmin();
 require_once '../includes/db.php';

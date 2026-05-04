@@ -134,7 +134,7 @@ $next_order = $pdo->query("SELECT COALESCE(MAX(display_order),0)+1 FROM about_st
             <div class="simple-section"><h3><i class="fas fa-history"></i> Our Story</h3><form method="POST"><div class="form-group"><label>Title</label><input type="text" name="history_title" value="<?php echo htmlspecialchars($history['title']); ?>"></div><div class="form-group"><label>Content</label><textarea name="history_content" rows="6"><?php echo htmlspecialchars($history['content']); ?></textarea></div><button type="submit" name="update_history" class="btn-primary">Save Story</button></form></div>
         </div>
 
-        <!-- Core Values (now stored in separate `core_values` table) -->
+        <!-- Core Values  -->
         <div class="simple-section">
             <h3><i class="fas fa-gem"></i> Core Values</h3>
             <form method="POST" id="coreValuesForm">

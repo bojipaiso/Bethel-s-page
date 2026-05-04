@@ -1,10 +1,10 @@
 <?php
-// admin/dashboard.php - Bethel Blue Theme, no "Manage News" quick action
+// admin/dashboard.php
 require_once '../includes/auth.php';
 requireAdmin();
 require_once '../includes/db.php';
 
-// Toggle Coming Soon modes (unchanged)
+// Toggle Coming Soon modes
 if(isset($_GET['toggle_newsletter'])) {
     $current = $pdo->query("SELECT setting_value FROM school_settings WHERE setting_key = 'newsletter_coming_soon'")->fetchColumn();
     $new = ($current == '1') ? '0' : '1';
@@ -433,7 +433,7 @@ $recent_messages = $pdo->query("SELECT * FROM contact_messages ORDER BY created_
             </div>
         </div>
 
-        <!-- Quick Actions (without "Manage News") -->
+        <!-- Quick Actions -->
         <h2 class="section-title">⚡ Quick Actions</h2>
         <div class="quick-actions-grid">
             <a href="manage-hero.php" class="quick-action-card">
